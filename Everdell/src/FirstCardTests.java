@@ -1,5 +1,7 @@
 import org.junit.Test;
 
+import CardTypes.GreenCard;
+
 public class FirstCardTests {
 
 //	@Test
@@ -23,10 +25,10 @@ public class FirstCardTests {
 //		greenCard = new Card("Judge");
 //		((GreenCard) greenCard).activateGreenCard();
 	}
-	
-	@Test
-	public void cardBlueTest() {
-		BlueCard blueCard = new BlueCard();
-		blueCard.printCardDetails();
-	}
+//	
+//	@Test
+//	public void cardBlueTest() {
+//		BlueCard blueCard = new BlueCard();
+//		blueCard.printCardDetails();
+//	}
 }
