@@ -3,17 +3,15 @@ package GreenConstructions;
 import Main.Requirements;
 import Main.Town;
 
-public class Farm extends GreenConstruction{
+public class Mine extends GreenConstruction{
 	
-	String secondRelatedCard;
-	
-	public Farm() {
-		super("Farm",new Requirements(2,1,0,0),false,1,"Husband");
-		this.secondRelatedCard = "Wife";
+	public Mine() {
+		super("Mine", new Requirements(1,1,1,0),false,2,"Miner Mole");
+		notACritter();
 	}
 	
 	public void playCard(Town town){
-		town.addRequirementsToTown(0, 0, 0, 1);
+		town.addRequirementsToTown(0, 0, 1, 0);
 		System.out.println("A " + this.name + " card is played by " + town.playersName + ".");
 	}
 	

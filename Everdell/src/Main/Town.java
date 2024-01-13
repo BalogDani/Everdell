@@ -1,8 +1,10 @@
 package Main;
 import java.util.*;
 
+import GreenConstructions.GreenConstruction;
+
 public class Town {
-	String playersName;
+	public String playersName;
 	int workers;
 	Requirements requirements;
 	List<Card> cards;
@@ -45,25 +47,28 @@ public class Town {
 	}
 	
 	public void playACard(Card cardToPlay){
-		Boolean playable = true; 
+		boolean playable = true;
+		boolean occupied = false;
 		int n = cards.size();
 		
 		if(cardToPlay.cityLimit){
 			playable = !isTheCardInTown(cardToPlay.name);
 		}
-		if(playable==false) {			
+		if(!playable) {			
 			System.out.println(cardToPlay.name+" is already in your town.");
 		}
-		if(n<16 && playable==true) {
-			if(isTheCardInTown(cardToPlay.relatedCard)) {
-//				cards.add(cardToPlay);
+		if(n<16 && playable) {
+			if(occupieConstructionCardInTown(cardToPlay)) {
+				playable = false;
+				occupied = true;
 			}
-			if(this.requirements.twig>=cardToPlay.requirements.twig && this.requirements.resin>=cardToPlay.requirements.resin && this.requirements.pebble>=cardToPlay.requirements.pebble && this.requirements.berry>=cardToPlay.requirements.berry) {
+			if(playable && this.requirements.twig>=cardToPlay.requirements.twig && this.requirements.resin>=cardToPlay.requirements.resin && this.requirements.pebble>=cardToPlay.requirements.pebble && this.requirements.berry>=cardToPlay.requirements.berry) {
 				cards.add(cardToPlay);
 				cardToPlay.playCard(this);
 				takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
+				playable = false;
 			}
-			else {
+			if(playable && !occupied) {
 //			if(this.requirements.twig<cardToPlay.requirements.twig || this.requirements.resin<cardToPlay.requirements.resin || this.requirements.pebble<cardToPlay.requirements.pebble || this.requirements.berry<cardToPlay.requirements.berry) {
 				System.out.println("You don't have enough requirements.");
 			}
@@ -86,8 +91,24 @@ public class Town {
 		return isTheCardInTown;
 	}
 	
+	public boolean occupieConstructionCardInTown(Card cardToplay) {
+		boolean isCardPlayed = false;;
+		for(Card card: cards) {
+			if (card instanceof GreenConstruction && card.name==cardToplay.relatedCard) {
+				GreenConstruction constructionCard = (GreenConstruction) card;
+				if(!constructionCard.occupied) {					
+					constructionCard.occupie(cardToplay.name);
+					cards.add(cardToplay);
+					isCardPlayed = true;
+					break;
+				}
+			}
+		}
+		return isCardPlayed;
+	}
+	
 	public void printCardsInTown() {
-		String inTown = "";
+		String inTown = cards.size() + " card in " + this.playersName + "'s town: ";
 		for(Card card: cards) {
 			inTown += card.name + " ";
 		}

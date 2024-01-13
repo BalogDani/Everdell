@@ -2,5 +2,5 @@ package CardTypes;
 
 public interface Construction {
 	public void notACritter();
-	public boolean occupie();
+	public void occupie(String name);
 }

@@ -40,7 +40,7 @@ public class FinalCardTests {
 		Farm Farm = new Farm();
 		newTown.playACard(Farm);
 		System.out.println("Is it occupied? " + Farm.occupied);
-		Farm.occupie();
+		Farm.occupie("Wife");
 		Farm.printCardDetails();
 	}
 	
@@ -48,10 +48,14 @@ public class FinalCardTests {
 	public void relatedCardPlayTest() {
 		Town newTown = new Town("Dani");
 		newTown.addRequirementsToTown(20, 20, 20, 20);
-		GreenCard Farm = new GreenCard();
+		System.out.println("Let's begin with 20 resource from everything!\n");
+		Farm Farm = new Farm();
 		newTown.playACard(Farm);
+		System.out.println("");
 		GreenCard Husband = new GreenCard("Husband", new Requirements(0,0,0,3),false,2,"Farm");
-		newTown.playACard(Husband);
+		GreenCard Wife = new GreenCard("Wife", new Requirements(0,0,0,2),false,2,"Farm");
+		newTown.playACard(Wife);
+		System.out.println("");
 		newTown.playACard(Husband);
 	}
 }

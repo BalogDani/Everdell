@@ -1,9 +1,7 @@
 package Main;
 
-import CardTypes.GreenCard;
-
 public class Card {
-	String name;
+	public String name;
 	Boolean critter = true;
 	Requirements requirements;
 	Boolean cityLimit;
@@ -11,7 +9,7 @@ public class Card {
 	String relatedCard;
 	
 	public Card(){
-		new GreenCard("Farm", new Requirements(2,1,0,0),false,1,"Husband","Wife");
+		this("Husband", new Requirements(0,0,0,2),false,2,"Farm");
 	}
 	
 	public Card(String name, Requirements requirements, Boolean cityLimit, int points, String relatedCard) {
@@ -36,7 +34,7 @@ public class Card {
 	}
 	
 	public void playCard(Town town){
-		System.out.println("A " + this.name + "card is played.");
+		System.out.println("A " + this.name + " card is played by " + town.playersName + ".");
 	}
 	
 	public void printCardDetails() {
