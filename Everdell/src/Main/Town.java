@@ -12,6 +12,7 @@ public class Town {
 	public int spaces = 0;
 	public Requirements requirements;
 	public List<Card> cards;
+	public List<Card> hand;
 	public int points = 0;
 	
 	public Town(String playersName, Players players) {
