@@ -11,7 +11,7 @@ public class ResinRefinery extends GreenConstruction {
 	}
 	
 	public void playCard(Town town){
-		town.addRequirementsToTown(0, 1, 0, 0);
+		town.addSpecificRequirementsToTown("resin",1);
 		System.out.println("A " + this.name + " card is played by " + town.playersName + ".");
 	}
 	

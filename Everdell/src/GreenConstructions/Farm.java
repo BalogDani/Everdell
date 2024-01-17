@@ -12,6 +12,7 @@ public class Farm extends GreenConstruction{
 	public Farm() {
 		super("Farm",new Requirements(2,1,0,0),false,1,"Husband");
 		this.secondRelatedCard = "Wife";
+		notACritter();
 	}
 	
 	public void occupieHusband() {

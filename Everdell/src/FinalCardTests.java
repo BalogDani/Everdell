@@ -3,9 +3,12 @@ import org.junit.Test;
 import CardTypes.*;
 import GreenConstructions.*;
 import GreenCritters.Husband;
+import Main.Card;
+import Main.Deck;
 import Main.Players;
 import Main.Town;
 import PurpleCritters.Wife;
+import TanCritters.Fool;
 
 public class FinalCardTests {
 		
@@ -26,35 +29,26 @@ public class FinalCardTests {
 	}
 
 	@Test
-	public void sameUniqueCardPlayTest() {
+	public void sameUniqueCardPlayTest() throws Exception {
 		Players players = new Players();
+		Deck deck = new Deck("deck");
 		Town newTown = new Town("Dani",players);
 		newTown.addRequirementsToTown(20, 20, 20, 20);
 		TanCard tanCard = new TanCard();
-		newTown.playACard(tanCard);
+		newTown.playACard(tanCard, players, deck);
 		GreenCard greenCard = new GreenCard();
-		newTown.playACard(greenCard);
-		newTown.playACard(tanCard);
+		newTown.playACard(greenCard, players, deck);
+		newTown.playACard(tanCard, players, deck);
 	}
 	
 	@Test
-	public void farmTest() {
-		Players players = new Players();
-		Town newTown = new Town("Dani",players);
-		newTown.addRequirementsToTown(20, 20, 20, 20);
-		newTown.printTownDetails();
-		System.out.println("Let's begin with 20 resource from everything!\n");
-		Farm Farm = new Farm();
-		Husband HusbandOne = new Husband();
-		Husband HusbandTwo = new Husband();
-		Wife Wife = new Wife();
-		newTown.playACard(Farm);
-		newTown.printTownDetails();
-		newTown.playACard(Wife);
-		newTown.printTownDetails();
-		newTown.playACard(HusbandOne);
-		newTown.printTownDetails();
-		newTown.playACard(HusbandTwo);
-		newTown.printTownDetails();
+	public void deckTest() {
+		Deck makeIt = new Deck("makeIt");
+		System.out.println("");
+		Deck deck = new Deck("deck");
+		Deck discard = new Deck("discard");
+		discard.printDeckDetails(discard);
+		deck.printDeckDetails(deck);
+		System.out.println("Random card from deck: " + deck.chooseRandomCard());
 	}
 }

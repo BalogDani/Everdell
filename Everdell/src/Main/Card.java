@@ -20,21 +20,20 @@ public class Card {
 		this.relatedCard = relatedCard;
 	}
 	
-//	public Card(String name, Requirements requirements, Boolean cityLimit, int points, String relatedCard, String secondRelatedCard) {
-//		this.name = name;
-//		this.requirements = requirements;
-//		this.cityLimit = cityLimit;
-//		this.points = points;
-//		this.relatedCard = relatedCard;
-//		this.secondRelatedCard = secondRelatedCard;
-//	}
-	
 	public void notACritter() {
 		this.critter = false;
 	}
 	
 	public void playCard(Town town){
 		System.out.println("A " + this.name + " card is played by " + town.playersName + ".");
+	}
+	
+	public void copyCard(Card card) {
+		this.name = card.name;
+		this.requirements = card.requirements;
+		this.cityLimit = card.cityLimit;
+		this.points = card.points;
+		this.relatedCard = card.relatedCard;
 	}
 	
 	public void printCardDetails() {

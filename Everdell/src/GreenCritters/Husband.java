@@ -19,7 +19,7 @@ public class Husband extends GreenCard{
 			System.out.println("Select a type of resource: ");
 			try (Scanner scanner = new Scanner(System.in)) {
 				String resource = scanner.next();
-				town.addOneSpecificRequirementToTown(resource);
+				town.addSpecificRequirementsToTown(resource,1);
 			}
 		}
 		System.out.println("A " + this.name + " card is played by " + town.playersName + ".");

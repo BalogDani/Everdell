@@ -5,14 +5,15 @@ import GreenConstructions.*;
 import GreenCritters.*;
 import PurpleCritters.*;
 import TanCritters.Fool;
+import TanCritters.Wanderer;
 
 public class Town {
 	public String playersName;
 	public int workers;
 	public int spaces = 0;
 	public Requirements requirements;
-	public List<Card> cards;
-	public List<Card> hand;
+	public ArrayList<Card> cards;
+	public ArrayList<Card> hand;
 	public int points = 0;
 	
 	public Town(String playersName, Players players) {
@@ -20,6 +21,7 @@ public class Town {
 		this.workers = 2;
 		this.requirements = new Requirements(0,0,0,0);
 		this.cards = new ArrayList<Card>();
+		this.hand = new ArrayList<Card>();
 		players.addPlayer(this);
 	}
 	
@@ -37,18 +39,18 @@ public class Town {
 		printRequirementsInTown();
 	}
 	
-	public void addOneSpecificRequirementToTown(String resourceName) {
+	public void addSpecificRequirementsToTown(String resourceName, int quantity) {
 		if(resourceName.equals("twig")) {
-			requirements.twig++;
+			requirements.twig += quantity;
 		}
 		if(resourceName.equals("resin")){			
-			requirements.resin++;
+			requirements.resin += quantity;
 		}
 		if(resourceName.equals("pebble")) {
-			requirements.pebble++;
+			requirements.pebble += quantity;
 		}
 		if(resourceName.equals("berry")) {
-			requirements.berry++;
+			requirements.berry += quantity;
 		}
 	}
 	
@@ -66,7 +68,42 @@ public class Town {
 		requirements.berry-=berry;
 	}
 	
-	public void playACard(Card cardToPlay){
+//	public void playACard(Card cardToPlay){
+//		boolean playable = true;
+//		
+//		if(cardToPlay.cityLimit){
+//			playable = !isTheCardInTown(cardToPlay.name);
+//		}
+//		if(!playable) {			
+//			System.out.println(cardToPlay.name+" is already in your town.");
+//		}
+//		if(spaces<16 && playable) {
+//			if(cardToPlay instanceof Fool) {
+//				System.out.println("You can't play a Fool to your own town.");
+//				playable = false;
+//			}
+//			if(playable && occupieConstructionCardInTown(cardToPlay)) {
+//				playable = false;
+//				spaces++;
+//			}
+//			if(playable && this.requirements.twig>=cardToPlay.requirements.twig && this.requirements.resin>=cardToPlay.requirements.resin && this.requirements.pebble>=cardToPlay.requirements.pebble && this.requirements.berry>=cardToPlay.requirements.berry) {
+//				cards.add(cardToPlay);
+//				cardToPlay.playCard(this);
+//				takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
+//				playable = false;
+//				spaces++;
+//			}
+//			if(playable) {
+//				System.out.println("You don't have enough requirements.");
+//			}
+//		}
+//		if(spaces==15) {
+//			System.out.println("Your town is full.");
+//		}
+//		System.out.println("");
+//	}
+	
+	public void playACard(Card cardToPlay, Players players, Deck deck){
 		boolean playable = true;
 		
 		if(cardToPlay.cityLimit){
@@ -77,60 +114,52 @@ public class Town {
 		}
 		if(spaces<16 && playable) {
 			if(occupieConstructionCardInTown(cardToPlay)) {
+				if(cardToPlay instanceof Fool) {
+					Fool fool = (Fool) cardToPlay;
+					fool.playFoolToOtherTown(cardToPlay, this, players, deck);
+				}
+				else {
+					spaces++;
+				}
 				playable = false;
-				spaces++;
 			}
 			if(playable && this.requirements.twig>=cardToPlay.requirements.twig && this.requirements.resin>=cardToPlay.requirements.resin && this.requirements.pebble>=cardToPlay.requirements.pebble && this.requirements.berry>=cardToPlay.requirements.berry) {
 				if(cardToPlay instanceof Fool) {
-					System.out.println("You can't play a Fool to your own town.");
+					Fool fool = (Fool) cardToPlay;
+					boolean foolIsPlayed = fool.playFoolToOtherTown(cardToPlay, this, players, deck);
+//					System.out.println("Select another players town: ");
+//					try (Scanner scanner = new Scanner(System.in)) {
+//						String anotherPlayersTownName = scanner.next();
+//						Fool fool = (Fool) cardToPlay;
+//						foolIsPlayed = fool.playCard(anotherPlayersTownName, this, players, deck);
+//						playable = false;
+//					}
+					if(foolIsPlayed) {
+						takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
+					}
+					spaces--;
 					playable = false;
 				}
-				else {					
+				if(playable && cardToPlay instanceof Fairgrounds) {
+					Fairgrounds fairgrounds = (Fairgrounds) cardToPlay;
+					cards.add(fairgrounds);
+					fairgrounds.playCard(this, deck);
+					takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
+					playable = false;
+				}
+				if(playable && cardToPlay instanceof Wanderer) {
+					Wanderer wanderer = (Wanderer) cardToPlay;
+					cards.add(wanderer);
+					wanderer.playCard(this, deck);
+					takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
+					spaces--;
+					playable = false;
+				}
+				if(playable) {					
 					cards.add(cardToPlay);
 					cardToPlay.playCard(this);
 					takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
-					playable = false;
-					spaces++;
 				}
-			}
-			if(playable) {
-				System.out.println("You don't have enough requirements.");
-			}
-		}
-		if(spaces==15) {
-			System.out.println("Your town is full.");
-		}
-		System.out.println("");
-	}
-	
-	public void playACard(Card cardToPlay, Players players){
-		boolean playable = true;
-		
-		if(cardToPlay.cityLimit){
-			playable = !isTheCardInTown(cardToPlay.name);
-		}
-		if(!playable) {			
-			System.out.println(cardToPlay.name+" is already in your town.");
-		}
-		if(spaces<16 && playable) {
-			if(occupieConstructionCardInTown(cardToPlay)) {
-				playable = false;
-				spaces++;
-			}
-			if(playable && this.requirements.twig>=cardToPlay.requirements.twig && this.requirements.resin>=cardToPlay.requirements.resin && this.requirements.pebble>=cardToPlay.requirements.pebble && this.requirements.berry>=cardToPlay.requirements.berry) {
-				if(cardToPlay instanceof Fool) {
-					System.out.println("Select another players town: ");
-					try (Scanner scanner = new Scanner(System.in)) {
-						String anotherPlayersTownName = scanner.next();
-						Fool fool = (Fool) cardToPlay;
-						fool.playCard(anotherPlayersTownName, this, players);
-					}
-				}
-				else {					
-					cards.add(cardToPlay);
-					cardToPlay.playCard(this);
-				}
-				takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
 				playable = false;
 				spaces++;
 			}
@@ -156,7 +185,7 @@ public class Town {
 	}
 	
 	public boolean occupieConstructionCardInTown(Card cardToPlay) {
-		boolean isCardPlayed = false;;
+		boolean isCardPlayed = false;
 		for(Card card: cards) {
 			if (card instanceof Farm && card.name==cardToPlay.relatedCard) {
 				Farm farm = (Farm) card;
@@ -189,16 +218,25 @@ public class Town {
 			}
 			if (card instanceof GreenConstruction && card.name==cardToPlay.relatedCard) {
 				GreenConstruction constructionCard = (GreenConstruction) card;
+				if((cardToPlay instanceof Fool) && !constructionCard.occupied) {
+					constructionCard.occupie(cardToPlay.name);
+					isCardPlayed = true;
+					break;
+				}
 				if(!constructionCard.occupied) {					
 					constructionCard.occupie(cardToPlay.name);
 					cards.add(cardToPlay);
 					isCardPlayed = true;
 					break;
 				}
-			}
-			if(cardToPlay instanceof Fool) {
-			}
-			else {	
+//				if(playable && cardToPlay instanceof Wanderer) {
+//					Wanderer wanderer = (Wanderer) cardToPlay;
+//					cards.add(wanderer);
+//					wanderer.playCard(this, deck);
+//					takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
+//					spaces--;
+//					playable = false;
+//				}
 			}
 		}
 		return isCardPlayed;
@@ -223,6 +261,64 @@ public class Town {
 				}
 			}
 		}
+	}
+	
+	public Card findCardInTown(String name) {
+		Card cardFound = null;
+		for(Card card: cards) {
+			if(card.name==name) {
+				cardFound = card;
+			}
+		}
+		return cardFound;
+	}
+	
+	public void addSpecificCardToHand(Card card) {
+		if(hand.size()<=8) {
+			this.hand.add(card);
+		}
+		else {
+			System.out.println(this.playersName + "'s hand is full.");
+		}
+	}
+	
+	public void removeCardToTheHand(Card card) {
+		this.hand.remove(card);
+	}
+	
+	public void addRandomCardFromDeckToHand(Deck deck) {
+		if(hand.size()<=8) {
+			Card randomCardFromDeck = deck.chooseRandomCard(); 
+			this.hand.add(randomCardFromDeck);
+			deck.takeFromDeck(randomCardFromDeck);
+		}
+		else {
+			System.out.println(this.playersName + "'s hand is full.");
+		}
+	}
+	
+//	public void addRandomCardFromDeckToHand(Deck deck) {
+//	//if(hand.size()<=8) {
+//	System.out.println("hand size " + hand);
+//		Card randomCardFromDeck = deck.chooseRandomCard();
+//		Card addThisCardToHand = new Card();
+//		System.out.println("rand from deck " + randomCardFromDeck + "\nName " + randomCardFromDeck.name);
+//		addThisCardToHand.copyCard(randomCardFromDeck);
+//		System.out.println("add to hand" + addThisCardToHand + "\nName " + addThisCardToHand.name);
+//		this.hand.add(addThisCardToHand);
+//		deck.takeFromDeck(randomCardFromDeck);
+//	//}
+//	//else {
+//	//	System.out.println(this.playersName + "'s hand is full.");
+//	//}
+//	}
+	
+	public void printHand() {
+		String inHand = this.hand.size() + " card is in " + this.playersName + "'s hand: ";
+		for(Card card: hand) {
+			inHand += card.name + " ";
+		}
+		System.out.println(inHand);
 	}
 	
 	public void addPoints(int points) {

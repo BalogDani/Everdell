@@ -17,9 +17,9 @@ public class Players {
 	
 	public void pointsOfPlayers() {
 		for(Town player: players) {
-			String name = player.playersName;
-			int points = player.points;
-			System.out.println("Player " + name + " has " + points + " points.");
+//			String name = player.playersName;
+			System.out.println("Player " + player.playersName);
+			player.printPointsInTown(player);
 		}
 	}
 }

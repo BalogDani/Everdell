@@ -1,12 +1,12 @@
 package TanCritters;
 
-import org.junit.Test;
+import java.io.BufferedReader;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import CardTypes.TanCard;
-import GreenConstructions.Farm;
-import Main.Players;
-import Main.Requirements;
-import Main.Town;
+import Main.*;
 
 public class Fool extends TanCard{
 
@@ -14,34 +14,52 @@ public class Fool extends TanCard{
 		super("Fool", new Requirements(0, 0, 0, 3), true, -2, "Fairgrounds");
 	}
 	
-	public void playCard(String anotherPlayersTownName, Town playersTown, Players players) {
+	public boolean playCard(String anotherPlayersTownName, Town playersTown, Players players, Deck deck) {
 		boolean anotherTownIsChoosed = false;
+		boolean isFoolInAnotherTown = false;
 		for(Town player: players.players) {
 			if(player.playersName.equals(anotherPlayersTownName) && !anotherPlayersTownName.equals(playersTown.playersName)) {
-				player.cards.add(this);
-				anotherTownIsChoosed = true;
-				break;
+				isFoolInAnotherTown = player.isTheCardInTown("Fool");
+				if(!isFoolInAnotherTown) {
+					player.cards.add(this);
+					player.spaces++;
+					anotherTownIsChoosed = true;
+					break;					
+				}
+				else {
+					System.out.println("Fool can't play to " + anotherPlayersTownName + "'s town.");
+				}
 			}
 		}
-		if(!anotherTownIsChoosed) {
-			playersTown.playACard(this, players);
+		if(!anotherTownIsChoosed && !isFoolInAnotherTown) {
+			playersTown.playACard(this, players, deck);
 		}
+		return anotherTownIsChoosed;
 	}
 	
-	@Test
-	public void foolTest() {
-		Players players = new Players();
-		Town dani = new Town("Dani",players);
-		dani.addRequirementsToTown(20, 20, 20, 20);
-		Town friendless = new Town("Friendless",players);
-		friendless.addRequirementsToTown(20, 20, 20, 20);
-		Fool Fool = new Fool();
-		Farm farm = new Farm();
-		dani.playACard(Fool);
-		friendless.playACard(farm);
-		dani.playACard(Fool,players);
-		dani.printTownDetails();
-		friendless.printTownDetails();
-		players.pointsOfPlayers();
+	public boolean playFoolToOtherTown(Card cardToplay, Town town, Players players, Deck deck) {
+		boolean foolIsPlayed = false;
+		System.out.println("Select another players town: ");
+		BufferedReader readTownName = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			String anotherPlayersTownName = readTownName.readLine();
+			Fool fool = (Fool) cardToplay;
+			foolIsPlayed = fool.playCard(anotherPlayersTownName, town, players, deck);
+//			readTownName.close();
+			return foolIsPlayed;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		try (Scanner scanner = new Scanner(System.in)) {
+//			while(!foolIsPlayed) {
+//				String anotherPlayersTownName = scanner.next();
+//				Fool fool = (Fool) cardToplay;
+//				foolIsPlayed = fool.playCard(anotherPlayersTownName, town, players, deck);
+//				return foolIsPlayed;
+//			}
+//			scanner.close();
+			return foolIsPlayed;
+//		}
 	}
 }

@@ -18,5 +18,4 @@ public class Wife extends PurpleCard{
 		}
 	}
 	
-	
 }
