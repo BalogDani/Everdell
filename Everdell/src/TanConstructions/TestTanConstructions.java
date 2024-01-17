@@ -2,12 +2,12 @@ package TanConstructions;
 
 import org.junit.Test;
 
+
 import GreenConstructions.Farm;
 import Main.Deck;
 import Main.Players;
 import Main.Town;
-import TanCritters.Fool;
-import TanCritters.Wanderer;
+import TanCritters.*;
 
 public class TestTanConstructions {
 
@@ -34,5 +34,29 @@ public class TestTanConstructions {
 		henike.printTownDetails();
 		henike.printHand();
 		players.pointsOfPlayers();
+	}
+	
+	@Test
+	public void bardTest() {
+		Players players = new Players();
+		Deck deck = new Deck("deck");
+		Town dani = new Town("Dani",players);
+		dani.addRequirementsToTown(20, 20, 20, 20);
+		deck.printDeckDetails(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.printHand();
+		Bard bard = new Bard();
+		dani.playACard(bard, players, deck);
+		dani.printTownDetails();
+		dani.printHand();
+		deck.printDeckDetails(deck);
 	}
 }

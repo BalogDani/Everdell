@@ -3,6 +3,7 @@ import java.util.*;
 
 import GreenConstructions.*;
 import GreenCritters.*;
+import PurpleConstructions.Theater;
 import PurpleCritters.*;
 import TanCritters.Fool;
 import TanCritters.Wanderer;
@@ -15,6 +16,7 @@ public class Town {
 	public ArrayList<Card> cards;
 	public ArrayList<Card> hand;
 	public int points = 0;
+	public int specialPoints = 0;
 	
 	public Town(String playersName, Players players) {
 		this.playersName = playersName;
@@ -107,7 +109,7 @@ public class Town {
 		boolean playable = true;
 		
 		if(cardToPlay.cityLimit){
-			playable = !isTheCardInTown(cardToPlay.name);
+			playable = !isTheCardInArrayList(cardToPlay.name, this.cards);
 		}
 		if(!playable) {			
 			System.out.println(cardToPlay.name+" is already in your town.");
@@ -157,7 +159,7 @@ public class Town {
 				}
 				if(playable) {					
 					cards.add(cardToPlay);
-					cardToPlay.playCard(this);
+					cardToPlay.playCard(this, deck);
 					takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
 				}
 				playable = false;
@@ -173,15 +175,28 @@ public class Town {
 		System.out.println("");
 	}
 	
-	public boolean isTheCardInTown(String cardName) {
-		boolean isTheCardInTown = false;
-		for(Card card: cards) {
-			if(card.name==cardName) {
-				isTheCardInTown = true;
+	public boolean isTheCardInArrayList(String cardName, ArrayList<Card> arrayList) {
+		boolean isTheCardInArrayList = false;
+		for(Card card: arrayList) {
+//			System.out.println(cardName + " is in the list " + card.name==cardName);
+			if(card.name.equals(cardName)) {
+				isTheCardInArrayList = true;
 				break;
 			}
 		}
-		return isTheCardInTown;
+		return isTheCardInArrayList;
+	}
+	
+	public Card removeCardFromTown(String cardName) {
+		Card thisCard = new Card();
+		for(Card card: cards) {
+			if(card.name==cardName) {
+				thisCard = card;
+				this.cards.remove(card);
+				break;
+			}
+		}
+		return thisCard;
 	}
 	
 	public boolean occupieConstructionCardInTown(Card cardToPlay) {
@@ -264,7 +279,7 @@ public class Town {
 	}
 	
 	public Card findCardInTown(String name) {
-		Card cardFound = null;
+		Card cardFound = new Card();
 		for(Card card: cards) {
 			if(card.name==name) {
 				cardFound = card;
@@ -282,12 +297,21 @@ public class Town {
 		}
 	}
 	
-	public void removeCardToTheHand(Card card) {
-		this.hand.remove(card);
+	public void removeCardFromHand(String cardName) {
+//		Card thisCard = new Card();
+		for(Card handCard: hand) {
+			if(handCard.name.equals(cardName)) {
+				System.out.println("Remove " + cardName + " from hand.");
+//				thisCard = handCard;
+				this.hand.remove(handCard);
+				break;
+			}
+		}
+//		return thisCard;
 	}
 	
 	public void addRandomCardFromDeckToHand(Deck deck) {
-		if(hand.size()<=8) {
+		if(hand.size()<8) {
 			Card randomCardFromDeck = deck.chooseRandomCard(); 
 			this.hand.add(randomCardFromDeck);
 			deck.takeFromDeck(randomCardFromDeck);
@@ -353,7 +377,11 @@ public class Town {
 			if (card instanceof Architect) {
 				((Architect) card).activatePurpleCard(town);	
 			}
+			if (card instanceof Theater) {
+				((Theater) card).activatePurpleCard(town);	
+			}
 			this.points += card.points;
+			this.points += specialPoints;
 		}
 		System.out.println("Points: " + points);
 	}

@@ -19,7 +19,7 @@ public class Fool extends TanCard{
 		boolean isFoolInAnotherTown = false;
 		for(Town player: players.players) {
 			if(player.playersName.equals(anotherPlayersTownName) && !anotherPlayersTownName.equals(playersTown.playersName)) {
-				isFoolInAnotherTown = player.isTheCardInTown("Fool");
+				isFoolInAnotherTown = player.isTheCardInArrayList("Fool", player.cards);
 				if(!isFoolInAnotherTown) {
 					player.cards.add(this);
 					player.spaces++;
@@ -34,6 +34,7 @@ public class Fool extends TanCard{
 		if(!anotherTownIsChoosed && !isFoolInAnotherTown) {
 			playersTown.playACard(this, players, deck);
 		}
+		super.playCard(playersTown, deck);
 		return anotherTownIsChoosed;
 	}
 	
@@ -51,15 +52,6 @@ public class Fool extends TanCard{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		try (Scanner scanner = new Scanner(System.in)) {
-//			while(!foolIsPlayed) {
-//				String anotherPlayersTownName = scanner.next();
-//				Fool fool = (Fool) cardToplay;
-//				foolIsPlayed = fool.playCard(anotherPlayersTownName, town, players, deck);
-//				return foolIsPlayed;
-//			}
-//			scanner.close();
-			return foolIsPlayed;
-//		}
+		return foolIsPlayed;
 	}
 }

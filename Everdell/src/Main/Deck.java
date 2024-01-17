@@ -2,8 +2,10 @@ package Main;
 
 import java.util.*;
 
+
 import GreenConstructions.*;
 import GreenCritters.*;
+import PurpleConstructions.*;
 import PurpleCritters.*;
 import TanCritters.*;
 
@@ -17,108 +19,67 @@ public class Deck {
 		if(deckOrDiscard.equals("deck")) {
 			this.cards = new ArrayList<Card>();
 			for (int i = 0; i < 2; i++) {
-				Card Architect = new Architect();
-				this.addToDeck(Architect);
-	//			Bard Bard = new Bard();
-	//			this.addToDeck(Bard);
-	//			Doctor Doctor = new Doctor();
-	//			this.addToDeck(Doctor);
-				Fool Fool = new Fool();
-				this.addToDeck(Fool);
-	//			Judge Judge = new Judge();
-	//			this.addToDeck(Judge);
-	//			King King = new King();
-	//			this.addToDeck(King);
-	//			Monk Monk = new Monk();
-	//			this.addToDeck(Monk);
-	//			Queen Queen = new Queen();
-	//			this.addToDeck(Queen);
-	//			Ranger Ranger = new Ranger();
-	//			this.addToDeck(Ranger);
-	//			Undertaker Undertaker = new Undertaker();
-	//			this.addToDeck(Undertaker);
-	//			Shepherd Shepherd = new Shepherd();
-	//			this.addToDeck(Shepherd);
-	//			Castle Castle = new Castle();
-	//			this.addToDeck(Castle);
-	//			Cemetery Cemetery = new Cemetery();
-	//			this.addToDeck(Cemetery);
-	//			Chapel Chapel = new Chapel();
-	//			this.addToDeck(Chapel);
-	//			Courthouse Courthouse = new Courthouse();
-	//			this.addToDeck(Courthouse);
-	//			Dungeon Dungeon = new Dungeon();
+				this.addToDeck("Architect");
+				this.addToDeck("Bard");
+				this.addToDeck("Doctor");
+				this.addToDeck("Fool");
+	//			this.addToDeck("Judge");
+	//			this.addToDeck("King");
+	//			this.addToDeck("Monk");
+	//			this.addToDeck("Queen");
+	//			this.addToDeck("Ranger");
+	//			this.addToDeck("Undertaker");
+	//			this.addToDeck("Shepherd");
+				this.addToDeck("Castle");
+	//			this.addToDeck("Cemetery");
+	//			this.addToDeck("Chapel");
+	//			this.addToDeck("Courthouse");
 	//			this.addToDeck(Dungeon);
-	//			EverTree EverTree = new EverTree();
 	//			this.addToDeck(EverTree);
-	//			Lookout Lookout = new Lookout();
 	//			this.addToDeck(Lookout);
-	//			Monastery Monastery = new Monastery();
 	//			this.addToDeck(Monastery);
-	//			Palace Palace = new Palace();
-	//			this.addToDeck(Palace);
-	//			School School = new School();
-	//			this.addToDeck(School);
-	//			Theater Theater = new Theater();
-	//			this.addToDeck(Theater);
-	//			University University = new University();
+				this.addToDeck("Palace");
+				this.addToDeck("School");
+				this.addToDeck("Theater");
 	//			this.addToDeck(University);
 			}
 			for (int i = 0; i < 3; i++) {
-	//			BargeToad BargeToad = new BargeToad();
-	//			this.addToDeck(BargeToad);
-	//			ChipSweep ChipSweep = new ChipSweep();
+				this.addToDeck("Barge Toad");
 	//			this.addToDeck(ChipSweep);
-	//			Historian Historian = new Historian();
 	//			this.addToDeck(Historian);
-	//			Innkeeper Innkeeper = new Innkeeper();
 	//			this.addToDeck(Innkeeper);
-	//			MinerMole MinerMole = new MinerMole();
 	//			this.addToDeck(MinerMole);
-	//			Peddler Peddler = new Peddler();
 	//			this.addToDeck(Peddler);
-	//			PostalPigeon PostalPigeon = new PostalPigeon();
 	//			this.addToDeck(PostalPigeon);
-	//			Shopkeeper Shopkeeper = new Shopkeeper();
 	//			this.addToDeck(Shopkeeper);
-	//			Teacher Teacher = new Teacher();
 	//			this.addToDeck(Teacher);
-				Wanderer Wanderer = new Wanderer();
-				this.addToDeck(Wanderer);
+				this.addToDeck("Wanderer");
 	//			Woodcarver Woodcarver = new Woodcarver();
-	//			this.addToDeck(Woodcarver);
+				this.addToDeck("Woodcarver");
 	//			ClockTower ClockTower = new ClockTower();
 	//			this.addToDeck(ClockTower);
 	//			Crane Crane = new Crane();
 	//			this.addToDeck(Crane);
-				Fairgrounds FairGrounds = new Fairgrounds();
-				this.addToDeck(FairGrounds);
-	//			GeneralStore GeneralStore = new GeneralStore();
-	//			this.addToDeck(GeneralStore);
+				this.addToDeck("FairGrounds");
+				this.addToDeck("General Store");
 	//			Inn Inn = new Inn();
 	//			this.addToDeck(Inn);
-				Mine Mine = new Mine();
-				this.addToDeck(Mine);
+				this.addToDeck("Mine");
 	//			PostOffice PostOffice = new PostOffice();
 	//			this.addToDeck(PostOffice);
-				ResinRefinery ResinRefinery = new ResinRefinery();
-				this.addToDeck(ResinRefinery);
+				this.addToDeck("Resin Refinery");
 	//			ResinRefinery ResinRefinery = new ResinRefinery();
 	//			this.addToDeck(Ruins);
 	//			Storehouse Storehouse = new Storehouse();
 	//			this.addToDeck(Storehouse);
-				TwigBarge TwigBarge = new TwigBarge();
-				this.addToDeck(TwigBarge);
+				this.addToDeck("Twig Barge");
 			}
 			for (int i = 0; i < 4; i++) {
-				Husband Husband = new Husband();
-				this.addToDeck(Husband);
-				Wife Wife = new Wife();
-				this.addToDeck(Wife);
+				this.addToDeck("Husband");
+				this.addToDeck("Wife");
 			}
 			for (int i = 0; i < 8; i++) {
-				Farm Farm = new Farm();
-				this.addToDeck(Farm);
+				this.addToDeck("Farm");
 			}	
 		}
 		if(deckOrDiscard.equals("discard")) {
@@ -129,7 +90,148 @@ public class Deck {
 		}
 	}
 	
-	public void addToDeck(Card card) {
+	public void addToDeck(String cardName) {
+		Card card = new Card();
+		if(cardName.equals("Architect")){
+			Architect architect = new Architect();
+			card = (Architect) architect;
+		}
+		if(cardName.equals("Bard")){
+			Bard bard = new Bard();
+			card = (Bard) bard;
+		}
+		if(cardName.equals("Doctor")){
+			Doctor doctor = new Doctor();
+			card = (Doctor) doctor;
+		}
+		if(cardName.equals("Fool")){
+			Fool fool = new Fool();
+			card = (Fool) fool;
+		}
+//		if(cardName.equals("Judge"){
+//			Judge judge = new Judge();
+//			card = (Judge) judge;
+//		}
+//		if(cardName.equals("King"){
+//			King King = new King();
+//			card = (King) king;
+//		}
+//			Monk Monk = new Monk();
+//			this.addToDeck(Monk);
+//			Queen Queen = new Queen();
+//			this.addToDeck(Queen);
+//			Ranger Ranger = new Ranger();
+//			this.addToDeck(Ranger);
+//			Undertaker Undertaker = new Undertaker();
+//			this.addToDeck(Undertaker);
+//			Shepherd Shepherd = new Shepherd();
+//			this.addToDeck(Shepherd);
+		if(cardName.equals("Castle")) {
+			Castle castle = new Castle();
+			card = (Castle) castle;
+		}
+//			Cemetery Cemetery = new Cemetery();
+//			this.addToDeck(Cemetery);
+//			Chapel Chapel = new Chapel();
+//			this.addToDeck(Chapel);
+//			Courthouse Courthouse = new Courthouse();
+//			this.addToDeck(Courthouse);
+//			Dungeon Dungeon = new Dungeon();
+//			this.addToDeck(Dungeon);
+//			EverTree EverTree = new EverTree();
+//			this.addToDeck(EverTree);
+//			Lookout Lookout = new Lookout();
+//			this.addToDeck(Lookout);
+//			Monastery Monastery = new Monastery();
+//			this.addToDeck(Monastery);
+		if(cardName.equals("Palace")) {
+			Palace palace = new Palace();
+			card = (Palace) palace;
+		}
+		if(cardName.equals("School")) {
+			School school = new School();
+			card = (School) school;
+		}
+		if(cardName.equals("Theater")) {
+			Theater theater = new Theater();
+			card = (Theater) theater;
+		}
+//			University University = new University();
+//			this.addToDeck(University);
+		if(cardName.equals("Barge Toad")) {
+			BargeToad bargeToad = new BargeToad();
+			card = (BargeToad) bargeToad;
+		}
+//			ChipSweep ChipSweep = new ChipSweep();
+//			this.addToDeck(ChipSweep);
+//			Historian Historian = new Historian();
+//			this.addToDeck(Historian);
+//			Innkeeper Innkeeper = new Innkeeper();
+//			this.addToDeck(Innkeeper);
+//			MinerMole MinerMole = new MinerMole();
+//			this.addToDeck(MinerMole);
+//			Peddler Peddler = new Peddler();
+//			this.addToDeck(Peddler);
+//			PostalPigeon PostalPigeon = new PostalPigeon();
+//			this.addToDeck(PostalPigeon);
+//			Shopkeeper Shopkeeper = new Shopkeeper();
+//			this.addToDeck(Shopkeeper);
+//			Teacher Teacher = new Teacher();
+//			this.addToDeck(Teacher);
+		if(cardName.equals("Wanderer")) {
+			Wanderer wanderer = new Wanderer();
+			card = (Wanderer) wanderer;
+		}
+		if(cardName.equals("Woodcarver")) {
+			Woodcarver woodcarver = new Woodcarver();
+			card = (Woodcarver) woodcarver;
+		}
+//			Woodcarver Woodcarver = new Woodcarver();
+//			this.addToDeck(Woodcarver);
+//			ClockTower ClockTower = new ClockTower();
+//			this.addToDeck(ClockTower);
+//			Crane Crane = new Crane();
+//			this.addToDeck(Crane);
+		if(cardName.equals("Fairgrounds")) {
+			Fairgrounds fairGrounds = new Fairgrounds();
+			card = (Fairgrounds) fairGrounds;
+		}
+		if(cardName.equals("General Store")) {
+			GeneralStore generalStore = new GeneralStore();
+			card = (GeneralStore) generalStore;
+		}
+//			Inn Inn = new Inn();
+//			this.addToDeck(Inn);
+		if(cardName.equals("Mine")) {
+			Mine mine = new Mine();
+			card = (Mine) mine;
+		}
+//			PostOffice PostOffice = new PostOffice();
+//			this.addToDeck(PostOffice);
+		if(cardName.equals("Resin Refinery")) {
+			ResinRefinery resinRefinery = new ResinRefinery();
+			card = (ResinRefinery) resinRefinery;
+		}
+//			Ruins ruins = new Ruins();
+//			this.addToDeck(Ruins);
+//			Storehouse Storehouse = new Storehouse();
+//			this.addToDeck(Storehouse);
+		if(cardName.equals("Twig Barge")) {
+			TwigBarge twigBarge = new TwigBarge();
+			card = (TwigBarge) twigBarge;
+		}
+		if(cardName.equals("Husband")) {
+			Husband husband = new Husband();
+			card = (Husband) husband;
+		}
+		if(cardName.equals("Wife")) {
+			Wife wife = new Wife();
+			card = (Wife) wife;
+		}
+		if(cardName.equals("Farm")) {
+			Farm farm = new Farm();
+			card = (Farm) farm;
+		}
 		this.cards.add(card);
 	}
 	

@@ -15,7 +15,7 @@ public class Wanderer extends TanCard{
 		for (int i = 0; i < 3; i++) {
 			town.addRandomCardFromDeckToHand(deck);
 		}
-		super.playCard(town);
+		super.playCard(town, deck);
 	}
 	
 }

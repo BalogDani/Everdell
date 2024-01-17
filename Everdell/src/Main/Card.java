@@ -2,9 +2,9 @@ package Main;
 
 public class Card {
 	public String name;
-	Boolean critter = true;
+	public Boolean critter = true;
 	Requirements requirements;
-	Boolean cityLimit;
+	public Boolean cityLimit;
 	int points;
 	String relatedCard;
 	
@@ -24,7 +24,7 @@ public class Card {
 		this.critter = false;
 	}
 	
-	public void playCard(Town town){
+	public void playCard(Town town, Deck deck){
 		System.out.println("A " + this.name + " card is played by " + town.playersName + ".");
 	}
 	

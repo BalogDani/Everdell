@@ -13,10 +13,10 @@ public class Fairgrounds extends GreenConstruction{
 		for (int i = 0; i < 2; i++) {
 			town.addRandomCardFromDeckToHand(deck);
 		}
-		super.playCard(town);
+		super.playCard(town, deck);
 	}
 	
-	public void activateGreenCard(Town town){
-		playCard(town);
+	public void activateGreenCard(Town town, Deck deck){
+		playCard(town, deck);
 	}
 }
