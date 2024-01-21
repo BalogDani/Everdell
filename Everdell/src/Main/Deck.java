@@ -49,7 +49,7 @@ public class Deck {
 	//			this.addToDeck(Historian);
 	//			this.addToDeck(Innkeeper);
 	//			this.addToDeck(MinerMole);
-	//			this.addToDeck(Peddler);
+				this.addToDeck("Peddler");
 	//			this.addToDeck(PostalPigeon);
 	//			this.addToDeck(Shopkeeper);
 	//			this.addToDeck(Teacher);
@@ -170,8 +170,10 @@ public class Deck {
 //			this.addToDeck(Innkeeper);
 //			MinerMole MinerMole = new MinerMole();
 //			this.addToDeck(MinerMole);
-//			Peddler Peddler = new Peddler();
-//			this.addToDeck(Peddler);
+		if(cardName.equals("Peddler")) {
+			Peddler peddler = new Peddler();
+			card = (Peddler) peddler;
+		}
 //			PostalPigeon PostalPigeon = new PostalPigeon();
 //			this.addToDeck(PostalPigeon);
 //			Shopkeeper Shopkeeper = new Shopkeeper();

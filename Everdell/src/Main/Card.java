@@ -1,5 +1,9 @@
 package Main;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class Card {
 	public String name;
 	public Boolean critter = true;
@@ -34,6 +38,81 @@ public class Card {
 		this.cityLimit = card.cityLimit;
 		this.points = card.points;
 		this.relatedCard = card.relatedCard;
+	}
+	
+	public String readResourceInput(String addOrTake) {
+		String resource = "";
+		System.out.println("Select a type of resource to " + addOrTake + ": ");
+		BufferedReader resourceInput = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			resource = resourceInput.readLine();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resource;
+	}
+	
+	public int readResourceAmmount() {
+		int ammount = 0;
+//		while(ammount==0) {
+			System.out.println("Select the ammount of resource to pay up to 2: ");
+			BufferedReader ammountInput = new BufferedReader(new InputStreamReader(System.in));
+			try {
+				ammount = Integer.parseInt(ammountInput.readLine());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+//		}
+		return ammount;
+	}
+	
+	public void changeResources(Town town) {
+		String resourceToAdd = "";
+		String resourceToCheckToAdd = "";
+		String resourceToTake = "";
+		String resourceToCheckForTake = "twig";
+		if(town.requirements.twig!=0 || town.requirements.resin!=0 || town.requirements.pebble!=0 || town.requirements.berry!=0) {
+			while(!resourceToTake.equals(resourceToCheckForTake)) {
+				resourceToTake = this.readResourceInput("take");
+				for(String resourceName: town.requirementsName) {
+					resourceToCheckForTake = resourceName;
+					if(resourceToTake.equals(resourceName) && town.isRequirementInTown(resourceToTake)) {
+						town.addSpecificRequirementsToTown(resourceToTake,-1);
+						while(!resourceToCheckToAdd.equals("added")) {
+							resourceToAdd = this.readResourceInput("add");
+							for(String resource: town.requirementsName) {
+								resourceToCheckToAdd = resource;
+								if(resourceToAdd.equals(resource)){
+									System.out.println(resourceToTake + " taken, " + resourceToAdd + " added.");
+									resourceToCheckToAdd = "added";
+									town.addSpecificRequirementsToTown(resourceToAdd,1);
+									town.printRequirementsInTown();
+									break;
+								}
+							}
+//							if(!resourceToAdd.equals(resource)) {
+////									resourceToCheckToAdd = "twig";
+////									break;
+//							}
+//							System.out.println("resourceToCheckToAdd " + resourceToCheckToAdd + " resourceToAdd " + resourceToAdd);
+						}
+						break;
+					}
+					if(!town.isRequirementInTown(resourceToTake)) {
+						System.out.println("No " + resourceToTake + " in town, choose a valid resource.");
+						resourceToCheckForTake = "";
+						break;
+					}
+				}
+			}
+		}
+		else {
+			System.out.println("No " + resourceToTake + " in town, choose a valid resource.");
+			this.changeResources(town);
+		}
 	}
 	
 	public void printCardDetails() {

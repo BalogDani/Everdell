@@ -5,6 +5,7 @@ import org.junit.Test;
 import GreenCritters.BargeToad;
 import GreenCritters.Doctor;
 import GreenCritters.Husband;
+import GreenCritters.Peddler;
 import Main.Card;
 import Main.Deck;
 import Main.Players;
@@ -91,6 +92,18 @@ public class TestGreenConstructions {
 		dani.playACard(farmTwo, players, deck);
 		dani.playACard(bargeToad, players, deck);
 		dani.playACard(generalStore, players, deck);
+		dani.printTownDetails();
+	}
+	
+	@Test
+	public void peddlerTest() throws Exception {
+		Deck deck = new Deck("deck");
+		Players players = new Players();
+		Town dani = new Town("Dani",players);
+		dani.addRequirementsToTown(20, 0, 0, 20);
+		dani.printTownDetails();
+		Peddler peddler = new Peddler();
+		dani.playACard(peddler, players, deck);
 		dani.printTownDetails();
 	}
 }

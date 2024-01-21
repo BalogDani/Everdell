@@ -13,6 +13,7 @@ public class Town {
 	public int workers;
 	public int spaces = 0;
 	public Requirements requirements;
+	public String[] requirementsName = {"twig", "resin", "pebble", "berry"};
 	public ArrayList<Card> cards;
 	public ArrayList<Card> hand;
 	public int points = 0;
@@ -347,6 +348,22 @@ public class Town {
 	
 	public void addPoints(int points) {
 		this.points += points;
+	}
+	
+	public boolean isRequirementInTown(String requirementName) {
+		if(requirementName.equals("twig")) {
+			return this.requirements.twig>0;
+		}
+		if(requirementName.equals("resin")) {
+			return this.requirements.resin>0;
+		}
+		if(requirementName.equals("pebble")) {
+			return this.requirements.pebble>0;
+		}
+		if(requirementName.equals("berry")) {
+			return this.requirements.berry>0;
+		}
+		return false;
 	}
 	
 	public void printTownDetails() {
