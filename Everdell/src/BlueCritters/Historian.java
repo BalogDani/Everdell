@@ -9,8 +9,8 @@ public class Historian extends BlueCard{
 		super("Historian",new Requirements(0,0,0,2),true,1,"Clock Tower");
 	}
 	
-	public void blueCardEffect(Card card, Town town, Deck deck){
-		if(!card.name.equals(this.name)) {
+	public void blueCardEffect(Card cardToPlay, Town town, Deck deck){
+		if(!cardToPlay.name.equals(this.name)) {
 			town.addRandomCardFromDeckToHand(deck);
 		}
 	}

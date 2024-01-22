@@ -2,14 +2,9 @@ package GreenConstructions;
 
 import org.junit.Test;
 
-import GreenCritters.BargeToad;
-import GreenCritters.Doctor;
-import GreenCritters.Husband;
-import GreenCritters.Peddler;
-import Main.Card;
-import Main.Deck;
-import Main.Players;
-import Main.Town;
+
+import GreenCritters.*;
+import Main.*;
 import PurpleCritters.Wife;
 import TanCritters.Fool;
 
@@ -105,5 +100,59 @@ public class TestGreenConstructions {
 		Peddler peddler = new Peddler();
 		dani.playACard(peddler, players, deck);
 		dani.printTownDetails();
+	}
+	
+	@Test
+	public void storehouseTest() throws Exception {
+		Deck deck = new Deck("deck");
+		Players players = new Players();
+		Town dani = new Town("Dani",players);
+		Town tamas = new Town("Tamas", players);
+		dani.addRequirementsToTown(20, 20, 20, 20);
+		tamas.addRequirementsToTown(20, 20, 20, 20);
+		dani.printTownDetails();
+		tamas.printTownDetails();
+		Storehouse storehouse = new Storehouse();
+		dani.playACard(storehouse, players, deck);
+		dani.printTownDetails();
+		dani.activateGreenCards();
+		storehouse.emptyingStorehouse("Dani", tamas, players);
+		storehouse.emptyingStorehouse("Dani", dani, players);
+		storehouse.emptyingStorehouse("Dani", dani, players);
+		storehouse.emptyingStorehouse("Dani", dani, players);
+		dani.printTownDetails();
+	}
+	
+	@Test
+	public void teacherTest() {
+		Players players = new Players();
+		Deck deck = new Deck("deck");
+		Town dani = new Town("Dani",players);
+		dani.addRequirementsToTown(20, 20, 20, 20);
+		Town friendless = new Town("Friendless",players);
+		friendless.addRequirementsToTown(20, 20, 20, 20);
+		Town henike = new Town("Henike",players);
+		henike.addRequirementsToTown(20, 20, 20, 20);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.addRandomCardFromDeckToHand(deck);
+		dani.printHand();
+		henike.printHand();
+		deck.printDeckDetails(deck);
+		Teacher teacherOne = new Teacher();
+		Teacher teacherTwo = new Teacher();
+		friendless.playACard(teacherOne, players, deck);	//give card to dani
+		friendless.playACard(teacherTwo, players, deck);	//give card to henike
+		friendless.printTownDetails();
+		friendless.printHand();
+		dani.printHand();
+		henike.printHand();
+		deck.printDeckDetails(deck);
 	}
 }

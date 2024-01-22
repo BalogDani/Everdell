@@ -16,6 +16,11 @@ public class Woodcarver extends GreenCard{
 	}
 	
 	public void playCard(Town town, Deck deck){
+		activateGreenCard(town);
+		super.playCard(town, deck);
+	}
+	
+	public void activateGreenCard(Town town){
 		System.out.println("Select the ammount of twigs to pay up to 3: ");
 		BufferedReader ammountInput = new BufferedReader(new InputStreamReader(System.in));
 		try {
@@ -30,10 +35,5 @@ public class Woodcarver extends GreenCard{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		super.playCard(town, deck);	
-	}
-	
-	public void activateGreenCard(Town town, Deck deck){
-		playCard(town, deck);
 	}
 }

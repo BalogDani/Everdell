@@ -11,15 +11,15 @@ public class GeneralStore extends GreenConstruction{
 	}
 	
 	public void playCard(Town town, Deck deck){
+		activateGreenCard(town);
+		super.playCard(town, deck);
+	}
+	
+	public void activateGreenCard(Town town){
 		town.addSpecificRequirementsToTown("berry", 1);
 		boolean isFarmInTown = town.isTheCardInArrayList("Farm", town.cards);
 		if (isFarmInTown) {
 			town.addSpecificRequirementsToTown("berry", 1);
 		}
-		super.playCard(town, deck);	
-	}
-	
-	public void activateGreenCard(Town town, Deck deck){
-		playCard(town, deck);
 	}
 }

@@ -34,9 +34,9 @@ public class Deck {
 				this.addToDeck("Castle");
 	//			this.addToDeck("Cemetery");
 	//			this.addToDeck("Chapel");
-	//			this.addToDeck("Courthouse");
+				this.addToDeck("Courthouse");
 	//			this.addToDeck(Dungeon);
-	//			this.addToDeck(EverTree);
+	//			this.addToDeck("EverTree");
 	//			this.addToDeck(Lookout);
 	//			this.addToDeck(Monastery);
 				this.addToDeck("Palace");
@@ -53,26 +53,19 @@ public class Deck {
 				this.addToDeck("Peddler");
 	//			this.addToDeck(PostalPigeon);
 				this.addToDeck("Shopkeeper");
-	//			this.addToDeck(Teacher);
+				this.addToDeck("Teacher");
 				this.addToDeck("Wanderer");
-	//			Woodcarver Woodcarver = new Woodcarver();
 				this.addToDeck("Woodcarver");
-	//			ClockTower ClockTower = new ClockTower();
 	//			this.addToDeck(ClockTower);
-	//			Crane Crane = new Crane();
 	//			this.addToDeck(Crane);
 				this.addToDeck("FairGrounds");
 				this.addToDeck("General Store");
-	//			Inn Inn = new Inn();
 	//			this.addToDeck(Inn);
 				this.addToDeck("Mine");
-	//			PostOffice PostOffice = new PostOffice();
 	//			this.addToDeck(PostOffice);
 				this.addToDeck("Resin Refinery");
-	//			ResinRefinery ResinRefinery = new ResinRefinery();
 				this.addToDeck("Ruins");
-	//			Storehouse Storehouse = new Storehouse();
-	//			this.addToDeck(Storehouse);
+				this.addToDeck("Storehouse");
 				this.addToDeck("Twig Barge");
 			}
 			for (int i = 0; i < 4; i++) {
@@ -184,8 +177,10 @@ public class Deck {
 			Shopkeeper shopkeeper = new Shopkeeper();
 			card = (Shopkeeper) shopkeeper;
 		}
-//			Teacher Teacher = new Teacher();
-//			this.addToDeck(Teacher);
+		if(cardName.equals("Teacher")) {
+			Teacher teacher  = new Teacher();
+			card = (Teacher) teacher;
+		}
 		if(cardName.equals("Wanderer")) {
 			Wanderer wanderer = new Wanderer();
 			card = (Wanderer) wanderer;
@@ -194,8 +189,6 @@ public class Deck {
 			Woodcarver woodcarver = new Woodcarver();
 			card = (Woodcarver) woodcarver;
 		}
-//			Woodcarver Woodcarver = new Woodcarver();
-//			this.addToDeck(Woodcarver);
 //			ClockTower ClockTower = new ClockTower();
 //			this.addToDeck(ClockTower);
 //			Crane Crane = new Crane();
@@ -224,8 +217,10 @@ public class Deck {
 			Ruins ruins = new Ruins();
 			card = (Ruins) ruins;
 		}
-//			Storehouse Storehouse = new Storehouse();
-//			this.addToDeck(Storehouse);
+		if(cardName.equals("Storehouse")) {
+			Storehouse storehouse = new Storehouse();
+			card = (Storehouse) storehouse;
+		}
 		if(cardName.equals("Twig Barge")) {
 			TwigBarge twigBarge = new TwigBarge();
 			card = (TwigBarge) twigBarge;

@@ -12,11 +12,11 @@ public class Mine extends GreenConstruction{
 	}
 	
 	public void playCard(Town town, Deck deck){
-		town.addSpecificRequirementsToTown("pebble",1);
+		activateGreenCard(town);	
 		super.playCard(town, deck);
 	}
 	
-	public void activateGreenCard(Town town, Deck deck){
-		playCard(town, deck);
+	public void activateGreenCard(Town town){
+		town.addSpecificRequirementsToTown("pebble",1);
 	}
 }

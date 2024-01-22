@@ -14,15 +14,15 @@ public class BargeToad extends GreenCard{
 	}
 	
 	public void playCard(Town town, Deck deck){
+		activateGreenCard(town);	
+		super.playCard(town, deck);
+	}
+	
+	public void activateGreenCard(Town town){
 		for(Card card: town.cards) {
 			if(card instanceof Farm) {
 				town.addSpecificRequirementsToTown("twig", 2);
 			}
 		}
-		super.playCard(town, deck);	
-	}
-	
-	public void activateGreenCard(Town town, Deck deck){
-		playCard(town, deck);
 	}
 }

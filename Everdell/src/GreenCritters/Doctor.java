@@ -16,6 +16,11 @@ public class Doctor extends GreenCard{
 	}
 	
 	public void playCard(Town town, Deck deck){
+		activateGreenCard(town, deck);	
+		super.playCard(town, deck);
+	}
+	
+	public void activateGreenCard(Town town, Deck deck){
 		System.out.println("Select the ammount of berries to pay up to 3: ");
 		BufferedReader ammountInput = new BufferedReader(new InputStreamReader(System.in));
 		try {
@@ -30,11 +35,6 @@ public class Doctor extends GreenCard{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		super.playCard(town, deck);	
-	}
-	
-	public void activateGreenCard(Town town, Deck deck){
-		playCard(town, deck);
 	}
 	
 }

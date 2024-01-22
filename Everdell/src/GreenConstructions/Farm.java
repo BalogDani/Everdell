@@ -24,12 +24,11 @@ public class Farm extends GreenConstruction{
 	}
 	
 	public void playCard(Town town, Deck deck){
-		town.addRequirementsToTown(0, 0, 0, 1);
-//		System.out.println("A " + this.name + " card is played by " + town.playersName + ".");
+		activateGreenCard(town);
 		super.playCard(town, deck);
 	}
 	
-	public void activateGreenCard(Town town, Deck deck){
-		playCard(town, deck);
+	public void activateGreenCard(Town town){
+		town.addRequirementsToTown(0, 0, 0, 1);
 	}
 }

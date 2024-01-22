@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+import BlueConstructions.*;
 import BlueCritters.*;
 import CardTypes.Construction;
 import GreenConstructions.*;
@@ -34,18 +35,22 @@ public class Town {
 		players.addPlayer(this);
 	}
 	
-	public void sendWorkerForRequirements(int twig, int resin, int pebble, int berry) {
+	public boolean sendWorkerForRequirements(int twig, int resin, int pebble, int berry) {
+		boolean workerSent = false;
 		if(workers>0) {
 			workers--;
 			requirements.twig+=twig;
 			requirements.resin+=resin;
 			requirements.pebble+=pebble;
 			requirements.berry+=berry;
+			workerSent = true;
+			System.out.println("Worker sent.");
 		}
 		else {
 			System.out.println("No available workers in town");
 		}
 		printRequirementsInTown();
+		return workerSent;
 	}
 	
 	public void addSpecificRequirementsToTown(String resourceName, int quantity) {
@@ -92,22 +97,24 @@ public class Town {
 					Fool fool = (Fool) cardToPlay;
 					fool.playFoolToOtherTown(cardToPlay, this, players, deck);
 				}
+				if(cardToPlay instanceof Teacher) {
+					Teacher teacher = (Teacher) cardToPlay;
+					teacher.playCard(this, deck, players);
+					spaces++;
+				}
 				else {
 					spaces++;
 				}
 				playable = false;
 			}
 			if(playable && this.requirements.twig>=cardToPlay.requirements.twig && this.requirements.resin>=cardToPlay.requirements.resin && this.requirements.pebble>=cardToPlay.requirements.pebble && this.requirements.berry>=cardToPlay.requirements.berry) {
+				if(cardToPlay instanceof Teacher) {
+					Teacher teacher = (Teacher) cardToPlay;
+					teacher.playCard(this, deck, players);
+				}
 				if(cardToPlay instanceof Fool) {
 					Fool fool = (Fool) cardToPlay;
 					boolean foolIsPlayed = fool.playFoolToOtherTown(cardToPlay, this, players, deck);
-//					System.out.println("Select another players town: ");
-//					try (Scanner scanner = new Scanner(System.in)) {
-//						String anotherPlayersTownName = scanner.next();
-//						Fool fool = (Fool) cardToPlay;
-//						foolIsPlayed = fool.playCard(anotherPlayersTownName, this, players, deck);
-//						playable = false;
-//					}
 					if(foolIsPlayed) {
 						takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
 					}
@@ -176,6 +183,10 @@ public class Town {
 			if(card instanceof Historian) {
 				Historian historian = (Historian) card;
 				historian.blueCardEffect(cardToPlay, this, deck);
+			}
+			if(card instanceof Courthouse) {
+				Courthouse courthouse = (Courthouse) card;
+				courthouse.blueCardEffect(cardToPlay, this, deck);
 			}
 		}
 	}
@@ -334,26 +345,27 @@ public class Town {
 		return cardFound;
 	}
 	
-	public void addSpecificCardToHand(Card card) {
+	public boolean addSpecificCardToHand(Card card) {
+		boolean addedToHand = false;
 		if(hand.size()<=8) {
 			this.hand.add(card);
+			addedToHand = true;
 		}
 		else {
 			System.out.println(this.playersName + "'s hand is full.");
 		}
+		return addedToHand;
 	}
 	
 	public void removeCardFromHand(String cardName, Deck deck) {
-//		Card thisCard = new Card();
 		for(Card handCard: hand) {
 			if(handCard.name.equals(cardName)) {
 				System.out.println("Remove " + cardName + " from hand.");
-//				thisCard = handCard;
 				this.hand.remove(handCard);
+				deck.cards.add(handCard);
 				break;
 			}
 		}
-//		return thisCard;
 	}
 	
 	public void addRandomCardFromDeckToHand(Deck deck) {
@@ -367,21 +379,13 @@ public class Town {
 		}
 	}
 	
-//	public void addRandomCardFromDeckToHand(Deck deck) {
-//	//if(hand.size()<=8) {
-//	System.out.println("hand size " + hand);
-//		Card randomCardFromDeck = deck.chooseRandomCard();
-//		Card addThisCardToHand = new Card();
-//		System.out.println("rand from deck " + randomCardFromDeck + "\nName " + randomCardFromDeck.name);
-//		addThisCardToHand.copyCard(randomCardFromDeck);
-//		System.out.println("add to hand" + addThisCardToHand + "\nName " + addThisCardToHand.name);
-//		this.hand.add(addThisCardToHand);
-//		deck.takeFromDeck(randomCardFromDeck);
-//	//}
-//	//else {
-//	//	System.out.println(this.playersName + "'s hand is full.");
-//	//}
-//	}
+	public void activateGreenCards() {
+		for(Card card: cards) {
+			if (card instanceof Storehouse) {
+				((Storehouse) card).activateGreenCard(this);;
+			}
+		}
+	}
 	
 	public void printHand() {
 		String inHand = this.hand.size() + " card is in " + this.playersName + "'s hand: ";

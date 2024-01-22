@@ -12,6 +12,11 @@ public class Peddler extends GreenCard{
 	}
 	
 	public void playCard(Town town, Deck deck){
+		activateGreenCard(town);
+		super.playCard(town, deck);
+	}
+	
+	public void activateGreenCard(Town town){
 		int ammount = this.readResourceAmmount();
 		if(ammount > 2) {
 			ammount = 2;
@@ -20,10 +25,5 @@ public class Peddler extends GreenCard{
 			this.changeResources(town);
 			System.out.println(i+1 + ". resource to take.");
 		}
-		super.playCard(town, deck);
-	}
-	
-	public void activateGreenCard(Town town, Deck deck){
-		playCard(town, deck);
 	}
 }

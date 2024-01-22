@@ -14,6 +14,11 @@ public class Husband extends GreenCard{
 	}
 	
 	public void playCard(Town town, Deck deck){
+		activateGreenCard(town);
+		super.playCard(town, deck);
+	}
+	
+	public void activateGreenCard(Town town){
 		if(town.isTheCardInArrayList("Farm", town.cards) && pairedWithWife) {
 			String resource = this.readResourceInput("add");
 			if(resource.equals("twig") || resource.equals("resin") || resource.equals("pebble") || resource.equals("berry")) {
@@ -21,12 +26,8 @@ public class Husband extends GreenCard{
 				System.out.println("A " + this.name + " card is played by " + town.playersName + ".");
 			}
 			else {
-				this.playCard(town, deck);
+				this.activateGreenCard(town);
 			}
 		}
-	}
-	
-	public void activateGreenCard(Town town, Deck deck){
-		playCard(town, deck);
 	}
 }

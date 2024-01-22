@@ -46,7 +46,6 @@ public class Fool extends TanCard{
 			String anotherPlayersTownName = readTownName.readLine();
 			Fool fool = (Fool) cardToplay;
 			foolIsPlayed = fool.playCard(anotherPlayersTownName, town, players, deck);
-//			readTownName.close();
 			return foolIsPlayed;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
