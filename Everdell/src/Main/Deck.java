@@ -2,11 +2,12 @@ package Main;
 
 import java.util.*;
 
-
+import BlueCritters.*;
 import GreenConstructions.*;
 import GreenCritters.*;
 import PurpleConstructions.*;
 import PurpleCritters.*;
+import TanConstructions.*;
 import TanCritters.*;
 
 
@@ -46,12 +47,12 @@ public class Deck {
 			for (int i = 0; i < 3; i++) {
 				this.addToDeck("Barge Toad");
 	//			this.addToDeck(ChipSweep);
-	//			this.addToDeck(Historian);
+				this.addToDeck("Historian");
 	//			this.addToDeck(Innkeeper);
 	//			this.addToDeck(MinerMole);
 				this.addToDeck("Peddler");
 	//			this.addToDeck(PostalPigeon);
-	//			this.addToDeck(Shopkeeper);
+				this.addToDeck("Shopkeeper");
 	//			this.addToDeck(Teacher);
 				this.addToDeck("Wanderer");
 	//			Woodcarver Woodcarver = new Woodcarver();
@@ -69,7 +70,7 @@ public class Deck {
 	//			this.addToDeck(PostOffice);
 				this.addToDeck("Resin Refinery");
 	//			ResinRefinery ResinRefinery = new ResinRefinery();
-	//			this.addToDeck(Ruins);
+				this.addToDeck("Ruins");
 	//			Storehouse Storehouse = new Storehouse();
 	//			this.addToDeck(Storehouse);
 				this.addToDeck("Twig Barge");
@@ -164,7 +165,10 @@ public class Deck {
 		}
 //			ChipSweep ChipSweep = new ChipSweep();
 //			this.addToDeck(ChipSweep);
-//			Historian Historian = new Historian();
+		if(cardName.equals("Historian")) {
+			Historian historian = new Historian();
+			card = (Historian) historian;
+		}
 //			this.addToDeck(Historian);
 //			Innkeeper Innkeeper = new Innkeeper();
 //			this.addToDeck(Innkeeper);
@@ -176,8 +180,10 @@ public class Deck {
 		}
 //			PostalPigeon PostalPigeon = new PostalPigeon();
 //			this.addToDeck(PostalPigeon);
-//			Shopkeeper Shopkeeper = new Shopkeeper();
-//			this.addToDeck(Shopkeeper);
+		if(cardName.equals("Shopkeeper")) {
+			Shopkeeper shopkeeper = new Shopkeeper();
+			card = (Shopkeeper) shopkeeper;
+		}
 //			Teacher Teacher = new Teacher();
 //			this.addToDeck(Teacher);
 		if(cardName.equals("Wanderer")) {
@@ -214,8 +220,10 @@ public class Deck {
 			ResinRefinery resinRefinery = new ResinRefinery();
 			card = (ResinRefinery) resinRefinery;
 		}
-//			Ruins ruins = new Ruins();
-//			this.addToDeck(Ruins);
+		if(cardName.equals("Ruins")) {
+			Ruins ruins = new Ruins();
+			card = (Ruins) ruins;
+		}
 //			Storehouse Storehouse = new Storehouse();
 //			this.addToDeck(Storehouse);
 		if(cardName.equals("Twig Barge")) {

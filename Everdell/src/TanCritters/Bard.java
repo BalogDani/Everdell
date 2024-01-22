@@ -36,7 +36,7 @@ public class Bard extends TanCard{
 						System.out.println(i + ". card " + cardName + " is in hand " + town.isTheCardInArrayList(cardName, town.hand));
 						inHand = town.isTheCardInArrayList(cardName, town.hand);
 						if(inHand) {
-							town.removeCardFromHand(cardName);
+							town.removeCardFromHand(cardName, deck);
 //							System.out.println("Choosed " + cardName + " and in hand " + thisCard.name);
 							deck.addToDeck(cardName);
 							town.printHand();

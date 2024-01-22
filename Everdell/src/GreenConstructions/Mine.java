@@ -13,7 +13,6 @@ public class Mine extends GreenConstruction{
 	
 	public void playCard(Town town, Deck deck){
 		town.addSpecificRequirementsToTown("pebble",1);
-		System.out.println("A " + this.name + " card is played by " + town.playersName + ".");
 		super.playCard(town, deck);
 	}
 	

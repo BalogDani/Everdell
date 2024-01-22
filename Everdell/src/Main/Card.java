@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 public class Card {
 	public String name;
 	public Boolean critter = true;
-	Requirements requirements;
+	public Requirements requirements;
 	public Boolean cityLimit;
 	int points;
 	String relatedCard;

@@ -53,10 +53,33 @@ public class TestTanConstructions {
 		dani.addRandomCardFromDeckToHand(deck);
 		dani.addRandomCardFromDeckToHand(deck);
 		dani.printHand();
+		deck.printDeckDetails(deck);
 		Bard bard = new Bard();
 		dani.playACard(bard, players, deck);
 		dani.printTownDetails();
 		dani.printHand();
 		deck.printDeckDetails(deck);
+	}
+	
+	@Test
+	public void ruinsTest() {
+		Players players = new Players();
+		Deck deck = new Deck("deck");
+		Town dani = new Town("Dani",players);
+		dani.addRequirementsToTown(20, 20, 20, 20);
+		dani.printTownDetails();
+		Ruins ruins = new Ruins();
+		Farm farmOne = new Farm();
+		Farm farmTwo = new Farm();
+		Wanderer wanderer = new Wanderer();
+		dani.playACard(ruins, players, deck);
+		dani.printTownDetails();
+		dani.playACard(wanderer, players, deck);
+		dani.playACard(ruins, players, deck);
+		dani.printTownDetails();
+		dani.playACard(farmOne, players, deck);
+		dani.playACard(farmTwo, players, deck);
+		dani.playACard(ruins, players, deck);
+		dani.printTownDetails();
 	}
 }

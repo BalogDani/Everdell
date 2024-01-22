@@ -1,12 +1,18 @@
 package Main;
+import java.io.BufferedReader;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
+import BlueCritters.*;
+import CardTypes.Construction;
 import GreenConstructions.*;
 import GreenCritters.*;
-import PurpleConstructions.Theater;
+import PurpleConstructions.*;
 import PurpleCritters.*;
-import TanCritters.Fool;
-import TanCritters.Wanderer;
+import TanConstructions.*;
+import TanCritters.*;
 
 public class Town {
 	public String playersName;
@@ -71,41 +77,6 @@ public class Town {
 		requirements.berry-=berry;
 	}
 	
-//	public void playACard(Card cardToPlay){
-//		boolean playable = true;
-//		
-//		if(cardToPlay.cityLimit){
-//			playable = !isTheCardInTown(cardToPlay.name);
-//		}
-//		if(!playable) {			
-//			System.out.println(cardToPlay.name+" is already in your town.");
-//		}
-//		if(spaces<16 && playable) {
-//			if(cardToPlay instanceof Fool) {
-//				System.out.println("You can't play a Fool to your own town.");
-//				playable = false;
-//			}
-//			if(playable && occupieConstructionCardInTown(cardToPlay)) {
-//				playable = false;
-//				spaces++;
-//			}
-//			if(playable && this.requirements.twig>=cardToPlay.requirements.twig && this.requirements.resin>=cardToPlay.requirements.resin && this.requirements.pebble>=cardToPlay.requirements.pebble && this.requirements.berry>=cardToPlay.requirements.berry) {
-//				cards.add(cardToPlay);
-//				cardToPlay.playCard(this);
-//				takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
-//				playable = false;
-//				spaces++;
-//			}
-//			if(playable) {
-//				System.out.println("You don't have enough requirements.");
-//			}
-//		}
-//		if(spaces==15) {
-//			System.out.println("Your town is full.");
-//		}
-//		System.out.println("");
-//	}
-	
 	public void playACard(Card cardToPlay, Players players, Deck deck){
 		boolean playable = true;
 		
@@ -158,6 +129,23 @@ public class Town {
 					spaces--;
 					playable = false;
 				}
+				if(playable && cardToPlay instanceof Ruins) {
+					boolean ruinsCanBePlayed = false;
+					for(Card card: cards) {
+						if(card instanceof Construction) {
+							ruinsCanBePlayed = true;
+							cards.add(cardToPlay);
+							cardToPlay.playCard(this, deck);
+							takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
+							break;
+						}
+					}
+					if(!ruinsCanBePlayed) {
+						System.out.println("You have no construction in your town. Ruins can't be played.");
+						spaces--;
+					}
+					playable = false;
+				}
 				if(playable) {					
 					cards.add(cardToPlay);
 					cardToPlay.playCard(this, deck);
@@ -173,7 +161,23 @@ public class Town {
 		if(spaces==15) {
 			System.out.println("Your town is full.");
 		}
+		
+		checkBlueCardsAfterPlayingACard(cardToPlay, deck);
+		
 		System.out.println("");
+	}
+	
+	public void checkBlueCardsAfterPlayingACard(Card cardToPlay, Deck deck) {
+		for(Card card: cards) {
+			if(card instanceof Shopkeeper) {
+				Shopkeeper shopkeeper = (Shopkeeper) card;
+				shopkeeper.blueCardEffect(cardToPlay, this);
+			}
+			if(card instanceof Historian) {
+				Historian historian = (Historian) card;
+				historian.blueCardEffect(cardToPlay, this, deck);
+			}
+		}
 	}
 	
 	public boolean isTheCardInArrayList(String cardName, ArrayList<Card> arrayList) {
@@ -188,17 +192,58 @@ public class Town {
 		return isTheCardInArrayList;
 	}
 	
-	public Card removeCardFromTown(String cardName) {
-		Card thisCard = new Card();
-		for(Card card: cards) {
-			if(card.name==cardName) {
-				thisCard = card;
-				this.cards.remove(card);
-				break;
+	public boolean removeCardFromTown(String critterOrContstruction, Deck deck) {
+		boolean cardIsRemoved = false;
+		System.out.println("Select a " + critterOrContstruction + " in town: ");
+		BufferedReader readCardName = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			String cardName = readCardName.readLine();
+			String cardFound = "Card " + cardName + " is not found.";
+			if(cards.size()==0) {
+				System.out.println("No card to remove. The town is empty.");
 			}
+			for(Card card: cards) {
+				if(card.name.equals(cardName) && card.critter && critterOrContstruction.equals("critter")) {
+					this.cards.remove(card);
+					spaces--;
+					deck.addToDeck(cardName);
+					cardIsRemoved = true;
+					cardFound = "Card " + cardName + " is found.";
+//					System.out.println("for 1. if, card name: " + cardName + " card is removed: " + cardIsRemoved);
+					break;
+				}
+				if(card.name.equals(cardName) && !card.critter && critterOrContstruction.equals("construction")) {
+					this.cards.remove(card);
+					spaces--;
+					deck.addToDeck(cardName);
+					cardIsRemoved = true;
+					cardFound = "Card " + cardName + " is found.";
+//					System.out.println("for 2. if, card name: " + cardName + " card is removed: " + cardIsRemoved);
+					break;				
+				}
+				if (!cardIsRemoved) {
+					cardFound = "There is no " + cardName + " " + critterOrContstruction + " in the town.";
+//					System.out.println("for 3. if, card name: " + cardName + " card is removed: " + cardIsRemoved);
+				}
+			}
+			if(cardFound.equals("There is no " + cardName + " " + critterOrContstruction + " in the town.")) {
+				System.out.println(cardFound + " Please choose another card.");
+				this.removeCardFromTown(critterOrContstruction, deck);
+				cardIsRemoved = true;
+				cardFound = "Card is finally found.";
+			}
+			System.out.println(cardFound);
+			return cardIsRemoved;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return thisCard;
+		return cardIsRemoved;
 	}
+	
+//	public void discardCardFromTown(Town town, Deck deck, String cardName, String critterOrContstruction) {
+//		
+//	}
 	
 	public boolean occupieConstructionCardInTown(Card cardToPlay) {
 		boolean isCardPlayed = false;
@@ -298,7 +343,7 @@ public class Town {
 		}
 	}
 	
-	public void removeCardFromHand(String cardName) {
+	public void removeCardFromHand(String cardName, Deck deck) {
 //		Card thisCard = new Card();
 		for(Card handCard: hand) {
 			if(handCard.name.equals(cardName)) {
