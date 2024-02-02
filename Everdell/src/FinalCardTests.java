@@ -47,7 +47,11 @@ public class FinalCardTests {
 		System.out.println("");
 		Deck deck = new Deck("deck");
 		Deck discard = new Deck("discard");
+		deck.printDeckDetails(deck);
 		discard.printDeckDetails(discard);
+		System.out.println("After creating meadow:");
+		Deck meadow = new Deck("meadow", deck);
+		meadow.printDeckDetails(meadow);
 		deck.printDeckDetails(deck);
 		System.out.println("Random card from deck: " + deck.chooseRandomCard());
 	}

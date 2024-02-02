@@ -1,8 +1,10 @@
 package Main;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class Card {
 	public String name;
@@ -69,7 +71,7 @@ public class Card {
 		return ammount;
 	}
 	
-	public void changeResources(Town town) {
+	public String[] changeResources(Town town) {
 		String resourceToAdd = "";
 		String resourceToCheckToAdd = "";
 		String resourceToTake = "";
@@ -93,11 +95,6 @@ public class Card {
 									break;
 								}
 							}
-//							if(!resourceToAdd.equals(resource)) {
-////									resourceToCheckToAdd = "twig";
-////									break;
-//							}
-//							System.out.println("resourceToCheckToAdd " + resourceToCheckToAdd + " resourceToAdd " + resourceToAdd);
 						}
 						break;
 					}
@@ -113,6 +110,104 @@ public class Card {
 			System.out.println("No " + resourceToTake + " in town, choose a valid resource.");
 			this.changeResources(town);
 		}
+		String[] toTakeAndToAdd = {resourceToTake, resourceToAdd}; 
+		return toTakeAndToAdd;
+	}
+	
+	public ArrayList<String> availableResources(Card cardToPlay) {
+		int twigOnCard = cardToPlay.requirements.twig;
+		int resinOnCard = cardToPlay.requirements.resin;
+		int pebbleOnCard = cardToPlay.requirements.pebble;
+		int berryOnCard = cardToPlay.requirements.berry;
+		ArrayList<String> requirementsName = new ArrayList<String>();
+		if(twigOnCard>0) {			
+			requirementsName.add("twig");
+		}	
+		if(resinOnCard>0) {
+			requirementsName.add("resin");
+		}
+		if(pebbleOnCard>0) {
+			requirementsName.add("pebble");
+		}
+		if(berryOnCard>0) {
+			requirementsName.add("berry");
+		}
+		return requirementsName;
+	}
+	
+	public Requirements addSpecificRequirementsToCard(Requirements requirements, String resourceName, int quantity) {
+		if(resourceName.equals("twig")) {
+			requirements.twig += quantity;
+			if(requirements.twig<0) {
+				requirements.twig=0;
+			}
+		}
+		if(resourceName.equals("resin")){			
+			requirements.resin += quantity;
+			if(requirements.resin<0) {
+				requirements.resin=0;
+			}
+		}
+		if(resourceName.equals("pebble")) {
+			requirements.pebble += quantity;
+			if(requirements.pebble<0) {
+				requirements.pebble=0;
+			}
+		}
+		if(resourceName.equals("berry")) {
+			requirements.berry += quantity;
+			if(requirements.berry<0) {
+				requirements.berry=0;
+			}
+		}
+		return requirements;
+	}
+	
+	public Requirements changeRequirements(Card cardToPlay, Town town) {
+		String resourceToAdd = "";
+		String resourceToCheckToAdd = "";
+		String resourceToTake = "";
+		String resourceToCheckForTake = "twig";
+		Requirements newRequirements = cardToPlay.requirements;
+		ArrayList<String> requirementsOnCard = availableResources(cardToPlay);
+		if(cardToPlay.requirements.twig!=0 || cardToPlay.requirements.resin!=0 || cardToPlay.requirements.pebble!=0 || cardToPlay.requirements.berry!=0) {
+			while(!resourceToTake.equals(resourceToCheckForTake)) {
+				resourceToTake = this.readResourceInput("take");
+				for(String resourceName: requirementsOnCard) {
+					resourceToCheckForTake = resourceName;
+					if(resourceToTake.equals(resourceName)) {
+						addSpecificRequirementsToCard(newRequirements,resourceToTake,-1);
+						while(!resourceToCheckToAdd.equals("added")) {
+							resourceToAdd = this.readResourceInput("add");
+							for(String resource: town.requirementsName) {
+								resourceToCheckToAdd = resource;
+								if(resourceToAdd.equals(resource)){
+//									System.out.println(resourceToTake + " taken, " + resourceToAdd + " added.");
+									resourceToCheckToAdd = "added";
+									addSpecificRequirementsToCard(newRequirements,resourceToAdd,1);
+									break;
+								}
+							}
+						}
+						break;
+					}
+					if(!town.isRequirementInTown(resourceToTake)) {
+						System.out.println("No " + resourceToTake + " on card, choose a valid resource.");
+						resourceToCheckForTake = "";
+						break;
+					}
+					if(!resourceToTake.equals(resourceName)) {
+						resourceToCheckForTake = "";
+					}
+				}
+			}
+		}
+		else {
+			System.out.println("Changing of resources was unsuccessful.");
+//			System.out.println("No " + resourceToTake + " on card, choose a valid resource.");
+//			this.changeRequirements(cardToPlay, town);
+		}
+		return newRequirements;
 	}
 	
 	public void printCardDetails() {

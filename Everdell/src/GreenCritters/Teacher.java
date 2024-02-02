@@ -29,46 +29,42 @@ public class Teacher extends GreenCard{
 		try {
 			String choosenCard = randomCardName.readLine();
 			while(!choosenCard.equals(firstRandomCardFromDeck.name) && !choosenCard.equals(secondRandomCardFromDeck.name)) {
-				System.out.println("prev res " + (!choosenCard.equals(firstRandomCardFromDeck.name) + "&&" + !choosenCard.equals(secondRandomCardFromDeck.name)));
 				System.out.println("These are the only cards to select, " + firstRandomCardFromDeck.name + " or " + secondRandomCardFromDeck.name + ":");
 				choosenCard = randomCardName.readLine();
-				System.out.println("new choose " + choosenCard);
 			}
 			String anotherPlayersTownName = chooseAnotherPlayersTown();
-//			while(!choosed) {
-				for(Town player: players.players) {
-					if(player.playersName.equals(anotherPlayersTownName) && !anotherPlayersTownName.equals(town.playersName)) {
-						if(choosenCard.equals(firstRandomCardFromDeck.name)) {
-							addedToPlayersHand = town.addSpecificCardToHand(firstRandomCardFromDeck);
-							if(addedToPlayersHand) {
-								deck.takeFromDeck(firstRandomCardFromDeck);
-							}
-							addedToAnotherPlayersHand = player.addSpecificCardToHand(secondRandomCardFromDeck);
-							if(addedToAnotherPlayersHand) {
-								deck.takeFromDeck(secondRandomCardFromDeck);
-							}
-							choosed = true;
-							break;
+			for(Town player: players.players) {
+				if(player.playersName.equals(anotherPlayersTownName) && !anotherPlayersTownName.equals(town.playersName)) {
+					if(choosenCard.equals(firstRandomCardFromDeck.name)) {
+						addedToPlayersHand = town.addSpecificCardToHand(firstRandomCardFromDeck);
+						if(addedToPlayersHand) {
+							deck.takeFromDeck(firstRandomCardFromDeck);
 						}
-						if(choosenCard.equals(secondRandomCardFromDeck.name)) {
-							addedToPlayersHand = town.addSpecificCardToHand(secondRandomCardFromDeck);
-							if(addedToPlayersHand) {								
-								deck.takeFromDeck(secondRandomCardFromDeck);
-							}
-							addedToAnotherPlayersHand = player.addSpecificCardToHand(firstRandomCardFromDeck);
-							if(addedToAnotherPlayersHand) {
-								deck.takeFromDeck(firstRandomCardFromDeck);
-							}
-							choosed = true;
-							break;
+						addedToAnotherPlayersHand = player.addSpecificCardToHand(secondRandomCardFromDeck);
+						if(addedToAnotherPlayersHand) {
+							deck.takeFromDeck(secondRandomCardFromDeck);
 						}
+						choosed = true;
+						break;
+					}
+					if(choosenCard.equals(secondRandomCardFromDeck.name)) {
+						addedToPlayersHand = town.addSpecificCardToHand(secondRandomCardFromDeck);
+						if(addedToPlayersHand) {								
+							deck.takeFromDeck(secondRandomCardFromDeck);
+						}
+						addedToAnotherPlayersHand = player.addSpecificCardToHand(firstRandomCardFromDeck);
+						if(addedToAnotherPlayersHand) {
+							deck.takeFromDeck(firstRandomCardFromDeck);
+						}
+						choosed = true;
+						break;
 					}
 				}
-				if(!choosed) {
-					System.out.println("Choose again, " + anotherPlayersTownName + " is not another player's town.");
-					anotherPlayersTownName = chooseAnotherPlayersTown();
-				}
-//			}
+			}
+			if(!choosed) {
+				System.out.println("Choose again, " + anotherPlayersTownName + " is not another player's town.");
+				anotherPlayersTownName = chooseAnotherPlayersTown();
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

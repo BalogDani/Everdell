@@ -2,11 +2,8 @@ package BlueConstructions;
 
 import org.junit.Test;
 
-import BlueCritters.Historian;
-import BlueCritters.Shopkeeper;
-import GreenConstructions.Farm;
-import GreenConstructions.GeneralStore;
-import GreenConstructions.Mine;
+import BlueCritters.*;
+import GreenConstructions.*;
 import Main.*;
 import PurpleCritters.Wife;
 import TanCritters.Wanderer;
@@ -69,4 +66,27 @@ public class TestBlueConstructions {
 		dani.playACard(wanderer, players, deck);
 		dani.printTownDetails();
 	}
+	
+	@Test
+	public void judgeInnkeeperTest() throws Exception {
+		Players players = new Players();
+		Deck deck = new Deck("deck");
+		Town dani = new Town("Dani",players);
+		dani.addRequirementsToTown(20, 20, 20, 20);
+		dani.printTownDetails();
+		System.out.println("Let's begin with 20 resource from everything!\n");
+		Judge judge = new Judge();
+		Innkeeper innkeeper = new Innkeeper();
+		dani.playACard(judge, players, deck);
+		dani.printTownDetails();
+		dani.playACard(innkeeper, players, deck);
+		dani.printTownDetails();
+		Farm farm = new Farm();
+		Wanderer wanderer = new Wanderer();
+		dani.playACard(farm, players, deck);
+		dani.printTownDetails();
+		dani.playACard(wanderer, players, deck);
+		dani.printTownDetails();
+	}
+	
 }

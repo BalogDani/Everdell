@@ -15,16 +15,16 @@ public class Deck {
 	public String typeOfPile = null;
 	public ArrayList<Card> cards = null;
 	
-	public Deck(String deckOrDiscard) {
-		this.typeOfPile = deckOrDiscard;
-		if(deckOrDiscard.equals("deck")) {
+	public Deck(String typeOfPile) {
+		this.typeOfPile = typeOfPile;
+		if(typeOfPile.equals("deck")) {
 			this.cards = new ArrayList<Card>();
 			for (int i = 0; i < 2; i++) {
 				this.addToDeck("Architect");
 				this.addToDeck("Bard");
 				this.addToDeck("Doctor");
 				this.addToDeck("Fool");
-	//			this.addToDeck("Judge");
+				this.addToDeck("Judge");
 	//			this.addToDeck("King");
 	//			this.addToDeck("Monk");
 	//			this.addToDeck("Queen");
@@ -36,7 +36,7 @@ public class Deck {
 	//			this.addToDeck("Chapel");
 				this.addToDeck("Courthouse");
 	//			this.addToDeck(Dungeon);
-	//			this.addToDeck("EverTree");
+				this.addToDeck("EverTree");
 	//			this.addToDeck(Lookout);
 	//			this.addToDeck(Monastery);
 				this.addToDeck("Palace");
@@ -48,7 +48,7 @@ public class Deck {
 				this.addToDeck("Barge Toad");
 	//			this.addToDeck(ChipSweep);
 				this.addToDeck("Historian");
-	//			this.addToDeck(Innkeeper);
+				this.addToDeck("Innkeeper");
 	//			this.addToDeck(MinerMole);
 				this.addToDeck("Peddler");
 	//			this.addToDeck(PostalPigeon);
@@ -76,10 +76,10 @@ public class Deck {
 				this.addToDeck("Farm");
 			}	
 		}
-		if(deckOrDiscard.equals("discard")) {
+		if(typeOfPile.equals("discard")) {
 			this.cards = new ArrayList<Card>();
 		}
-		if(!deckOrDiscard.equals("deck") && !deckOrDiscard.equals("discard")) {
+		if(!typeOfPile.equals("deck") && !typeOfPile.equals("discard")) {
 			System.out.println("Only deck and discard pile exists. Duh!");
 		}
 	}
@@ -102,10 +102,10 @@ public class Deck {
 			Fool fool = new Fool();
 			card = (Fool) fool;
 		}
-//		if(cardName.equals("Judge"){
-//			Judge judge = new Judge();
-//			card = (Judge) judge;
-//		}
+		if(cardName.equals("Judge")){
+			Judge judge = new Judge();
+			card = (Judge) judge;
+		}
 //		if(cardName.equals("King"){
 //			King King = new King();
 //			card = (King) king;
@@ -132,8 +132,10 @@ public class Deck {
 //			this.addToDeck(Courthouse);
 //			Dungeon Dungeon = new Dungeon();
 //			this.addToDeck(Dungeon);
-//			EverTree EverTree = new EverTree();
-//			this.addToDeck(EverTree);
+		if(cardName.equals("Castle")) {
+			EverTree everTree = new EverTree();
+			card = (EverTree) everTree;
+		}
 //			Lookout Lookout = new Lookout();
 //			this.addToDeck(Lookout);
 //			Monastery Monastery = new Monastery();
@@ -162,9 +164,10 @@ public class Deck {
 			Historian historian = new Historian();
 			card = (Historian) historian;
 		}
-//			this.addToDeck(Historian);
-//			Innkeeper Innkeeper = new Innkeeper();
-//			this.addToDeck(Innkeeper);
+		if(cardName.equals("Innkeeper")) {
+			Innkeeper innkeeper = new Innkeeper();
+			card = (Innkeeper) innkeeper;
+		}
 //			MinerMole MinerMole = new MinerMole();
 //			this.addToDeck(MinerMole);
 		if(cardName.equals("Peddler")) {
@@ -238,6 +241,21 @@ public class Deck {
 			card = (Farm) farm;
 		}
 		this.cards.add(card);
+	}
+	
+	public Deck(String meadow, Deck deck) {
+		this.typeOfPile = meadow;
+		if(typeOfPile.equals("meadow")) {
+			this.cards = new ArrayList<Card>();
+			for (int i = 0; i < 8; i++) {
+				Card randomCardFromDeck = deck.chooseRandomCard();
+				this.cards.add(randomCardFromDeck);
+				deck.takeFromDeck(randomCardFromDeck);
+			}
+		}
+		else {
+			System.out.println("You can create meadow only with a deck. Duh!");
+		}
 	}
 	
 	public void takeFromDeck(Card card) {

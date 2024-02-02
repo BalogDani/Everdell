@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import GreenCritters.*;
 import Main.*;
+import PurpleConstructions.EverTree;
 import PurpleCritters.Wife;
 import TanCritters.Fool;
 
@@ -82,10 +83,12 @@ public class TestGreenConstructions {
 		Farm farmOne = new Farm();
 		Farm farmTwo = new Farm();
 		GeneralStore generalStore = new GeneralStore();
-		dani.playACard(bargeToad, players, deck);
+		EverTree everTree = new EverTree();
+		dani.playACard(everTree, players, deck);
+		dani.playACard(bargeToad, players, deck);		// Choose 'No' for Ever Tree
 		dani.playACard(farmOne, players, deck);
 		dani.playACard(farmTwo, players, deck);
-		dani.playACard(bargeToad, players, deck);
+		dani.playACard(bargeToad, players, deck);		// Choose 'Yes' for Ever Tree
 		dani.playACard(generalStore, players, deck);
 		dani.printTownDetails();
 	}
@@ -115,7 +118,7 @@ public class TestGreenConstructions {
 		Storehouse storehouse = new Storehouse();
 		dani.playACard(storehouse, players, deck);
 		dani.printTownDetails();
-		dani.activateGreenCards();
+		dani.activateGreenCards(deck, players);
 		storehouse.emptyingStorehouse("Dani", tamas, players);
 		storehouse.emptyingStorehouse("Dani", dani, players);
 		storehouse.emptyingStorehouse("Dani", dani, players);

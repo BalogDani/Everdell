@@ -23,7 +23,7 @@ public class Peddler extends GreenCard{
 		}
 		for(int i = 0; i < ammount; i++) {
 			this.changeResources(town);
-			System.out.println(i+1 + ". resource to take.");
+			System.out.println(i+1 + ". resource exchanged.\n");
 		}
 	}
 }

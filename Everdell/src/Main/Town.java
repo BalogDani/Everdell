@@ -85,6 +85,8 @@ public class Town {
 	public void playACard(Card cardToPlay, Players players, Deck deck){
 		boolean playable = true;
 		
+		Requirements requirementsToTake = cardToPlay.requirements;
+		
 		if(cardToPlay.cityLimit){
 			playable = !isTheCardInArrayList(cardToPlay.name, this.cards);
 		}
@@ -107,16 +109,20 @@ public class Town {
 				}
 				playable = false;
 			}
-			if(playable && this.requirements.twig>=cardToPlay.requirements.twig && this.requirements.resin>=cardToPlay.requirements.resin && this.requirements.pebble>=cardToPlay.requirements.pebble && this.requirements.berry>=cardToPlay.requirements.berry) {
+			if(playable) {
+				checkBlueCardsBeforePlayingACard(cardToPlay, deck);
+			}
+			if(playable && this.requirements.twig>=requirementsToTake.twig && this.requirements.resin>=requirementsToTake.resin && this.requirements.pebble>=requirementsToTake.pebble && this.requirements.berry>=requirementsToTake.berry) {
 				if(cardToPlay instanceof Teacher) {
 					Teacher teacher = (Teacher) cardToPlay;
 					teacher.playCard(this, deck, players);
+					playable = false;
 				}
 				if(cardToPlay instanceof Fool) {
 					Fool fool = (Fool) cardToPlay;
 					boolean foolIsPlayed = fool.playFoolToOtherTown(cardToPlay, this, players, deck);
 					if(foolIsPlayed) {
-						takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
+						takeRequirementsFromTown(requirementsToTake.twig, requirementsToTake.resin, requirementsToTake.pebble, requirementsToTake.berry);
 					}
 					spaces--;
 					playable = false;
@@ -125,14 +131,14 @@ public class Town {
 					Fairgrounds fairgrounds = (Fairgrounds) cardToPlay;
 					cards.add(fairgrounds);
 					fairgrounds.playCard(this, deck);
-					takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
+					takeRequirementsFromTown(requirementsToTake.twig, requirementsToTake.resin, requirementsToTake.pebble, requirementsToTake.berry);
 					playable = false;
 				}
 				if(playable && cardToPlay instanceof Wanderer) {
 					Wanderer wanderer = (Wanderer) cardToPlay;
 					cards.add(wanderer);
 					wanderer.playCard(this, deck);
-					takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
+					takeRequirementsFromTown(requirementsToTake.twig, requirementsToTake.resin, requirementsToTake.pebble, requirementsToTake.berry);
 					spaces--;
 					playable = false;
 				}
@@ -143,7 +149,7 @@ public class Town {
 							ruinsCanBePlayed = true;
 							cards.add(cardToPlay);
 							cardToPlay.playCard(this, deck);
-							takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
+							takeRequirementsFromTown(requirementsToTake.twig, requirementsToTake.resin, requirementsToTake.pebble, requirementsToTake.berry);
 							break;
 						}
 					}
@@ -156,7 +162,7 @@ public class Town {
 				if(playable) {					
 					cards.add(cardToPlay);
 					cardToPlay.playCard(this, deck);
-					takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
+					takeRequirementsFromTown(requirementsToTake.twig, requirementsToTake.resin, requirementsToTake.pebble, requirementsToTake.berry);
 				}
 				playable = false;
 				spaces++;
@@ -172,6 +178,53 @@ public class Town {
 		checkBlueCardsAfterPlayingACard(cardToPlay, deck);
 		
 		System.out.println("");
+	}
+	
+	public boolean useBlueCardOrNot(Card cardToUse) {
+		boolean useIt = false;
+		String yesOrNo = "";
+		while(!yesOrNo.equals("Yes") && !yesOrNo.equals("yes") && !yesOrNo.equals("No") && !yesOrNo.equals("no")) {
+			yesOrNo = answerUseBlueCardOrNot(cardToUse);
+			if(yesOrNo.equals("Yes") || yesOrNo.equals("yes")) {
+				useIt = true;
+			}
+			if(yesOrNo.equals("No") || yesOrNo.equals("no")) {
+				System.out.println(cardToUse.name + "'s effect will be not used.");
+			}
+			if(!yesOrNo.equals("Yes") && !yesOrNo.equals("yes") && !yesOrNo.equals("No") && !yesOrNo.equals("no")) {
+				System.out.println("Please choose a correct answer 'Yes' or 'No'.");
+			}
+		}
+		
+		return useIt;
+	}
+	
+	public String answerUseBlueCardOrNot(Card cardToUse) {
+		System.out.println("Use " + cardToUse.name + "'s effect?");
+		String yesOrNo = "";
+		BufferedReader answer = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			yesOrNo = answer.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return yesOrNo;
+	}
+	
+	public void checkBlueCardsBeforePlayingACard(Card cardToPlay, Deck deck) {
+		boolean usedBlueCardEffect = false;
+		
+		for(Card card: cards) {
+			if(card instanceof Judge) {
+				Judge judge = (Judge) card;
+				judge.blueCardEffect(cardToPlay, this);
+			}
+			if(!usedBlueCardEffect && card instanceof Innkeeper) {
+				Innkeeper innkeeper = (Innkeeper) card;
+				innkeeper.blueCardEffect(cardToPlay, this, deck);
+			}
+		}
 	}
 	
 	public void checkBlueCardsAfterPlayingACard(Card cardToPlay, Deck deck) {
@@ -252,13 +305,44 @@ public class Town {
 		return cardIsRemoved;
 	}
 	
-//	public void discardCardFromTown(Town town, Deck deck, String cardName, String critterOrContstruction) {
-//		
-//	}
+	public void removeCardFromTown(Card cardToRemove, Deck deck) {
+		if(cards.size()==0) {
+			System.out.println("No card to remove. The town is empty.");
+		}
+		for(Card card: cards) {
+			if(card.name.equals(cardToRemove.name)) {
+				this.cards.remove(card);
+				spaces--;
+				deck.addToDeck(cardToRemove.name);
+				break;
+			}
+		}
+	}
 	
 	public boolean occupieConstructionCardInTown(Card cardToPlay) {
 		boolean isCardPlayed = false;
 		for(Card card: cards) {
+			if (card instanceof EverTree && cardToPlay.critter) {
+				EverTree everTree = (EverTree) card;
+				if(!everTree.occupied) {
+					String yesOrNo = "";
+					while(!yesOrNo.equals("Yes") && !yesOrNo.equals("No")) {
+						yesOrNo = everTree.decideToOccupiesTheCritterToTown(cardToPlay);
+						if(yesOrNo.equals("Yes")) {
+							everTree.occupie(cardToPlay.name);
+							cards.add(cardToPlay);
+							isCardPlayed = true;
+						}
+						if(yesOrNo.equals("No")) {
+							System.out.println(cardToPlay.name + " is not occupied in Ever Tree.");
+						}
+						else {
+							System.out.println("Please choose a correct answer 'Yes' or 'No'.");
+						}
+					}
+					break;
+				}
+			}
 			if (card instanceof Farm && card.name==cardToPlay.relatedCard) {
 				Farm farm = (Farm) card;
 				if(!farm.occupied && cardToPlay.name=="Husband") {
@@ -289,26 +373,45 @@ public class Town {
 				}
 			}
 			if (card instanceof GreenConstruction && card.name==cardToPlay.relatedCard) {
-				GreenConstruction constructionCard = (GreenConstruction) card;
-				if((cardToPlay instanceof Fool) && !constructionCard.occupied) {
-					constructionCard.occupie(cardToPlay.name);
+				GreenConstruction greenConstructionCard = (GreenConstruction) card;
+				if((cardToPlay instanceof Fool) && !greenConstructionCard.occupied) {
+					greenConstructionCard.occupie(cardToPlay.name);
 					isCardPlayed = true;
 					break;
 				}
-				if(!constructionCard.occupied) {					
-					constructionCard.occupie(cardToPlay.name);
+				if(!greenConstructionCard.occupied) {					
+					greenConstructionCard.occupie(cardToPlay.name);
 					cards.add(cardToPlay);
 					isCardPlayed = true;
 					break;
 				}
-//				if(playable && cardToPlay instanceof Wanderer) {
-//					Wanderer wanderer = (Wanderer) cardToPlay;
-//					cards.add(wanderer);
-//					wanderer.playCard(this, deck);
-//					takeRequirementsFromTown(cardToPlay.requirements.twig, cardToPlay.requirements.resin, cardToPlay.requirements.pebble, cardToPlay.requirements.berry);
-//					spaces--;
-//					playable = false;
-//				}
+			}
+			if (card instanceof BlueConstruction && card.name==cardToPlay.relatedCard) {
+				BlueConstruction blueConstructionCard = (BlueConstruction) card;
+				if(!blueConstructionCard.occupied) {					
+					blueConstructionCard.occupie(cardToPlay.name);
+					cards.add(cardToPlay);
+					isCardPlayed = true;
+					break;
+				}
+			}
+			if (card instanceof TanConstruction && card.name==cardToPlay.relatedCard) {
+				TanConstruction tanConstructionCard = (TanConstruction) card;
+				if(!tanConstructionCard.occupied) {					
+					tanConstructionCard.occupie(cardToPlay.name);
+					cards.add(cardToPlay);
+					isCardPlayed = true;
+					break;
+				}
+			}
+			if (card instanceof PurpleConstruction && card.name==cardToPlay.relatedCard) {
+				PurpleConstruction purpleConstructionCard = (PurpleConstruction) card;
+				if(!purpleConstructionCard.occupied) {					
+					purpleConstructionCard.occupie(cardToPlay.name);
+					cards.add(cardToPlay);
+					isCardPlayed = true;
+					break;
+				}
 			}
 		}
 		return isCardPlayed;
@@ -347,12 +450,12 @@ public class Town {
 	
 	public boolean addSpecificCardToHand(Card card) {
 		boolean addedToHand = false;
-		if(hand.size()<=8) {
+		if(hand.size()<8) {
 			this.hand.add(card);
 			addedToHand = true;
 		}
-		else {
-			System.out.println(this.playersName + "'s hand is full.");
+		if(!addedToHand) {
+			System.out.println(this.playersName + "'s hand is full. " + card.name + " is discarded.");
 		}
 		return addedToHand;
 	}
@@ -379,10 +482,46 @@ public class Town {
 		}
 	}
 	
-	public void activateGreenCards() {
+	public void activateGreenCards(Deck deck, Players players) {
 		for(Card card: cards) {
+			if (card instanceof Fairgrounds) {
+				((Fairgrounds) card).activateGreenCard(this, deck);;
+			}
+			if (card instanceof Farm) {
+				((Farm) card).activateGreenCard(this);;
+			}
+			if (card instanceof GeneralStore) {
+				((GeneralStore) card).activateGreenCard(this);;
+			}
+			if (card instanceof Mine) {
+				((Mine) card).activateGreenCard(this);;
+			}
+			if (card instanceof ResinRefinery) {
+				((ResinRefinery) card).activateGreenCard(this);;
+			}
 			if (card instanceof Storehouse) {
-				((Storehouse) card).activateGreenCard(this);;
+				((Storehouse) card).activateGreenCard(this);
+			}
+			if (card instanceof TwigBarge) {
+				((TwigBarge) card).activateGreenCard(this);;
+			}
+			if (card instanceof BargeToad) {
+				((BargeToad) card).activateGreenCard(this);;
+			}
+			if (card instanceof Doctor) {
+				((Doctor) card).activateGreenCard(this, deck);;
+			}
+			if (card instanceof Husband) {
+				((Husband) card).activateGreenCard(this);;
+			}
+			if (card instanceof Peddler) {
+				((Peddler) card).activateGreenCard(this);;
+			}
+			if (card instanceof Teacher) {
+				((Teacher) card).activateGreenCard(this, deck, players);;
+			}
+			if (card instanceof Woodcarver) {
+				((Woodcarver) card).activateGreenCard(this);;
 			}
 		}
 	}
@@ -437,11 +576,23 @@ public class Town {
 	public void printPointsInTown(Town town) {
 		this.points = 0;
 		for(Card card: cards) {
+			if (card instanceof Architect) {
+				((Architect) card).activatePurpleCard(town);	
+			}
 			if (card instanceof Wife) {
 				((Wife) card).activatePurpleCard(town);
 			}
-			if (card instanceof Architect) {
-				((Architect) card).activatePurpleCard(town);	
+			if (card instanceof Castle) {
+				((Castle) card).activatePurpleCard(town);	
+			}
+			if (card instanceof EverTree) {
+				((EverTree) card).activatePurpleCard(town);	
+			}
+			if (card instanceof Palace) {
+				((Palace) card).activatePurpleCard(town);	
+			}
+			if (card instanceof School) {
+				((School) card).activatePurpleCard(town);	
 			}
 			if (card instanceof Theater) {
 				((Theater) card).activatePurpleCard(town);	
