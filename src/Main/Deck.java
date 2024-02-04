@@ -2,7 +2,7 @@ package Main;
 
 import java.util.*;
 
-import BlueConstructions.Crane;
+import BlueConstructions.*;
 import BlueCritters.*;
 import GreenConstructions.*;
 import GreenCritters.*;
@@ -36,34 +36,34 @@ public class Deck {
 	//			this.addToDeck("Cemetery");
 	//			this.addToDeck("Chapel");
 				this.addToDeck("Courthouse");
-	//			this.addToDeck(Dungeon);
-				this.addToDeck("EverTree");
-	//			this.addToDeck(Lookout);
-	//			this.addToDeck(Monastery);
+	//			this.addToDeck("Dungeon");
+				this.addToDeck("Ever Tree");
+	//			this.addToDeck("Lookout");
+	//			this.addToDeck("Monastery");
 				this.addToDeck("Palace");
 				this.addToDeck("School");
 				this.addToDeck("Theater");
-	//			this.addToDeck(University);
+	//			this.addToDeck("University");
 			}
 			for (int i = 0; i < 3; i++) {
 				this.addToDeck("Barge Toad");
-	//			this.addToDeck(ChipSweep);
+	//			this.addToDeck("Chip Sweep");
 				this.addToDeck("Historian");
 				this.addToDeck("Innkeeper");
-	//			this.addToDeck(MinerMole);
+	//			this.addToDeck("Miner Mole");
 				this.addToDeck("Peddler");
-	//			this.addToDeck(PostalPigeon);
+				this.addToDeck("Postal Pigeon");
 				this.addToDeck("Shopkeeper");
 				this.addToDeck("Teacher");
 				this.addToDeck("Wanderer");
 				this.addToDeck("Woodcarver");
-	//			this.addToDeck(ClockTower);
+	//			this.addToDeck("Clock Tower");
 				this.addToDeck("Crane");
 				this.addToDeck("FairGrounds");
 				this.addToDeck("General Store");
-	//			this.addToDeck(Inn);
+	//			this.addToDeck("Inn");
 				this.addToDeck("Mine");
-	//			this.addToDeck(PostOffice);
+	//			this.addToDeck("Post Office");
 				this.addToDeck("Resin Refinery");
 				this.addToDeck("Ruins");
 				this.addToDeck("Storehouse");
@@ -133,7 +133,7 @@ public class Deck {
 //			this.addToDeck(Courthouse);
 //			Dungeon Dungeon = new Dungeon();
 //			this.addToDeck(Dungeon);
-		if(cardName.equals("Castle")) {
+		if(cardName.equals("Ever Tree")) {
 			EverTree everTree = new EverTree();
 			card = (EverTree) everTree;
 		}
@@ -175,8 +175,10 @@ public class Deck {
 			Peddler peddler = new Peddler();
 			card = (Peddler) peddler;
 		}
-//			PostalPigeon PostalPigeon = new PostalPigeon();
-//			this.addToDeck(PostalPigeon);
+		if(cardName.equals("Postal Pigeon")) {
+			PostalPigeon postalPigeon = new PostalPigeon();
+			card = (PostalPigeon) postalPigeon;
+		}
 		if(cardName.equals("Shopkeeper")) {
 			Shopkeeper shopkeeper = new Shopkeeper();
 			card = (Shopkeeper) shopkeeper;
@@ -287,6 +289,6 @@ public class Deck {
 	}
 	
 	public void printDeckDetails(Deck deck) {
-		System.out.println(deck.cards.size() + " card in the " + deck.typeOfPile + ".\nThe pile:\n" + deck.printDeckCardsName(deck) + "\n");
+		System.out.println(deck.cards.size() + " card in the " + deck.typeOfPile + ".\nThe pile:\n" + deck.printDeckCardsName(deck));
 	}
 }

@@ -11,7 +11,7 @@ public class Card {
 	public Boolean critter = true;
 	public Requirements requirements;
 	public Boolean cityLimit;
-	int points;
+	public int points;
 	String relatedCard;
 	
 	public Card(){
@@ -31,7 +31,7 @@ public class Card {
 	}
 	
 	public void playCard(Town town, Deck deck){
-		System.out.println("A " + this.name + " card is played by " + town.playersName + ".");
+		System.out.println(this.name + " is played by " + town.playersName + ".");
 	}
 	
 	public void copyCard(Card card) {
@@ -40,6 +40,19 @@ public class Card {
 		this.cityLimit = card.cityLimit;
 		this.points = card.points;
 		this.relatedCard = card.relatedCard;
+	}
+	
+	public String readCardName() {
+		String cardName = "";
+		BufferedReader cardNameInput = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			cardName = cardNameInput.readLine();
+		}
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cardName;
 	}
 	
 	public String readResourceInput(String addOrTake) {
@@ -58,16 +71,14 @@ public class Card {
 	
 	public int readResourceAmmount() {
 		int ammount = 0;
-//		while(ammount==0) {
-			System.out.println("Select the ammount of resource to pay up to 2: ");
-			BufferedReader ammountInput = new BufferedReader(new InputStreamReader(System.in));
-			try {
-				ammount = Integer.parseInt(ammountInput.readLine());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-//		}
+		System.out.println("Select the ammount of resource to pay up to 2: ");
+		BufferedReader ammountInput = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			ammount = Integer.parseInt(ammountInput.readLine());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return ammount;
 	}
 	

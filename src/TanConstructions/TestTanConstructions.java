@@ -82,4 +82,21 @@ public class TestTanConstructions {
 		dani.playACard(ruins, players, deck);
 		dani.printTownDetails();
 	}
+	
+	@Test
+	public void postalPigeonTest() {
+		Players players = new Players();
+		Deck deck = new Deck("deck");
+		deck.printDeckDetails(deck);
+		Town dani = new Town("Dani",players);
+		dani.addRequirementsToTown(20, 20, 20, 20);
+		Town friendless = new Town("Friendless",players);
+		friendless.addRequirementsToTown(20, 20, 20, 20);
+		dani.printTownDetails();
+		PostalPigeon postalPigeon = new PostalPigeon();
+		dani.playACard(postalPigeon, players, deck);
+		dani.printTownDetails();
+		friendless.printTownDetails();
+		deck.printDeckDetails(deck);
+	}
 }
