@@ -55,6 +55,39 @@ public class Card {
 		return cardName;
 	}
 	
+	public Card chooseACardFromMeadow(Deck meadow) {
+		String nameOfCards = "Choose a card from the meadow: ";
+		for (Card card : meadow.cards) {
+			nameOfCards += card.name + " ";
+		}
+		System.out.println(nameOfCards);
+		
+		Card choosenCard = new Card();
+		String cardToTake = "";
+		String cardToCheckForTake = "card";
+		boolean cardIsInTheMeadow = false;
+		
+		while(!cardToTake.equals(cardToCheckForTake)) {
+			cardToTake = readCardName();
+			while(!cardIsInTheMeadow) {				
+				for(Card card : meadow.cards) {
+					cardToCheckForTake = card.name;
+					if(cardToTake.equals(cardToCheckForTake)) {
+						choosenCard = card;
+						cardIsInTheMeadow = true;
+						break;
+					}
+				}
+				if(!cardIsInTheMeadow) {
+					System.out.println("No " + cardToTake + " in the meadow, choose a another card.");
+//					cardToCheckForTake = "";
+					break;
+				}
+			}
+		}
+		return choosenCard;
+	}
+	
 	public String readResourceInput(String addOrTake) {
 		String resource = "";
 		System.out.println("Select a type of resource to " + addOrTake + ": ");
@@ -80,6 +113,34 @@ public class Card {
 			e.printStackTrace();
 		}
 		return ammount;
+	}
+	
+	public void decreaseRequirementsOnCard(int ammountOfSourceToTake, Card cardToPlay, Town town) {
+		town.requirementsToPayForCard = cardToPlay.requirements;
+		
+		String resourceToTake = "";
+		String resourceToCheckForTake = "twig";
+		
+		for(int i = 0; i < ammountOfSourceToTake; i++) {
+//			System.out.println("i " + i);
+			while(!resourceToTake.equals(resourceToCheckForTake)) {
+				resourceToTake = readResourceInput("take");
+				for(String resourceName: town.requirementsName) {
+					resourceToCheckForTake = resourceName;
+					if(resourceToTake.equals(resourceName) && town.isRequirementInRequirementsToPayForCard(resourceToTake)) {
+						town.modifyRequirementsToPayForCard(resourceToTake, -1);
+						System.out.println("Changed requirements to pay: Twig = " + town.requirementsToPayForCard.twig + ", Resin = " + town.requirementsToPayForCard.resin + ", Pebble = " + town.requirementsToPayForCard.pebble + ", Berry = " + town.requirementsToPayForCard.berry);
+						break;
+					}
+					if(!town.isRequirementInTown(resourceToTake) || !town.isRequirementInRequirementsToPayForCard(resourceToTake)) {
+						System.out.println("No " + resourceToTake + " in card requirements, choose a another resource.");
+						resourceToCheckForTake = "";
+						break;
+					}
+				}
+			}
+			resourceToCheckForTake = "";
+		}
 	}
 	
 	public String[] changeResources(Town town) {

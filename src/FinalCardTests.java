@@ -44,7 +44,6 @@ public class FinalCardTests {
 	@Test
 	public void deckTest() {
 		Deck makeIt = new Deck("makeIt");
-		System.out.println("");
 		Deck deck = new Deck("deck");
 		Deck discard = new Deck("discard");
 		deck.printDeckDetails(deck);

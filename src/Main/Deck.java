@@ -8,6 +8,7 @@ import GreenConstructions.*;
 import GreenCritters.*;
 import PurpleConstructions.*;
 import PurpleCritters.*;
+import RedConstructions.*;
 import TanConstructions.*;
 import TanCritters.*;
 
@@ -61,7 +62,7 @@ public class Deck {
 				this.addToDeck("Crane");
 				this.addToDeck("FairGrounds");
 				this.addToDeck("General Store");
-	//			this.addToDeck("Inn");
+				this.addToDeck("Inn");
 				this.addToDeck("Mine");
 	//			this.addToDeck("Post Office");
 				this.addToDeck("Resin Refinery");
@@ -209,8 +210,10 @@ public class Deck {
 			GeneralStore generalStore = new GeneralStore();
 			card = (GeneralStore) generalStore;
 		}
-//			Inn Inn = new Inn();
-//			this.addToDeck(Inn);
+		if(cardName.equals("Inn")) {
+			Inn inn = new Inn();
+			card = (Inn) inn;
+		}
 		if(cardName.equals("Mine")) {
 			Mine mine = new Mine();
 			card = (Mine) mine;
@@ -267,6 +270,15 @@ public class Deck {
 		this.cards.remove(card);
 	}
 	
+	public void takeCardAndRefillMeadow(Card card, Deck deck) {		
+		System.out.println("Cards in deck: " + deck.cards.size() + ", cards in meadow: " + this.cards.size());
+		this.cards.remove(card);
+		Card randomCardFromDeck = deck.chooseRandomCard();
+		this.cards.add(randomCardFromDeck);
+		deck.cards.remove(randomCardFromDeck);
+		System.out.println("Cards in deck: " + deck.cards.size() + ", cards in meadow: " + this.cards.size());
+	}
+	
 	public String printDeckCardsName(Deck deck) {
 		String inTheDeck = "";
 		int counter = 0;
@@ -277,6 +289,7 @@ public class Deck {
 				inTheDeck += "\n";
 			}
 		}
+		System.out.println("");
 		return inTheDeck;
 	}
 	

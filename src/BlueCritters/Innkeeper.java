@@ -6,7 +6,7 @@ import Main.*;
 public class Innkeeper extends BlueCard{
 	
 	public Innkeeper() {
-		super("Inkeeper",new Requirements(0,0,0,1),true,1,"Inn");
+		super("Innkeeper",new Requirements(0,0,0,1),true,1,"Inn");
 	}
 	
 	public boolean blueCardEffect(Card cardToPlay, Town town, Deck deck){

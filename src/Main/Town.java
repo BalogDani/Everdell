@@ -175,6 +175,7 @@ public class Town {
 			System.out.println(cardToPlay.name+" is already in your town.");
 		}
 		if(spaces<16 && playable) {
+			System.out.println(cardToPlay.name + " will be played for free.");
 			if(cardToPlay instanceof Teacher) {
 				Teacher teacher = (Teacher) cardToPlay;
 				cards.add(teacher);
