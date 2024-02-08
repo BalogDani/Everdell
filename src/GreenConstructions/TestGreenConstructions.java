@@ -22,6 +22,7 @@ public class TestGreenConstructions {
 		Farm farm = new Farm();
 		Husband husbandOne = new Husband();
 		Husband husbandTwo = new Husband();
+		System.out.println("husband1 equals husbandtwo: " + husbandOne.equals(husbandTwo));
 		Wife wife = new Wife();
 		dani.playACard(farm, players, deck);
 		dani.printTownDetails();

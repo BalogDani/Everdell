@@ -1,9 +1,9 @@
 package RedConstructions;
 
-import CardTypes.Construction;
+import CardTypes.*;
 import Main.*;
 
-public class RedConstruction extends Card implements Construction{
+public class RedConstruction extends RedCard implements Construction{
 	
 	public boolean occupied = false;
 	public boolean open = false;
@@ -17,16 +17,6 @@ public class RedConstruction extends Card implements Construction{
 	public void occupie(String name) {
 		this.occupied = true;
 		System.out.println(super.name + " is occupied by " + name + ".");
-	}
-	
-	public void ownerOrAnotherPlayer(Card redConstructionCard, Town town) {
-		for (Card card : town.cards) {
-			System.out.println("printing");
-			if(redConstructionCard==card) {
-				System.out.println("redConstructionCard" + redConstructionCard);
-				System.out.println("card" + card);
-			}
-		}
 	}
 	
 	public void activateRedDestination() {

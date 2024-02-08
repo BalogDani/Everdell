@@ -42,20 +42,26 @@ public class Storehouse extends GreenConstruction{
 	}
 	
 	public void emptyingStorehouse(String playersTownName, Town playersTown, Players players) {
-		for(Town player: players.players) {
-			if(player.playersName.equals(playersTownName) && player==playersTown) {
-				boolean workerSent = player.sendWorkerForRequirements(store.twig, store.resin, store.pebble, store.berry);
-				if(workerSent) {
-					store = new Requirements(0,0,0,0);					
+		if(!workerIsPlaced) {			
+			for(Town player: players.players) {
+				if(player.playersName.equals(playersTownName) && player==playersTown) {
+					boolean workerSent = player.sendWorkerForRequirements(store.twig, store.resin, store.pebble, store.berry);
+					if(workerSent) {
+						store = new Requirements(0,0,0,0);
+						workerIsPlaced = true;
+					}
+					break;
 				}
-				break;
-			}
-			else {
-				System.out.println(playersTown.playersName + " can't activate " + playersTownName + "'s storehouse. Duh!\n");
-				break;
+				else {
+					System.out.println(playersTown.playersName + " can't activate " + playersTownName + "'s storehouse. Duh!\n");
+					break;
+				}
 			}
 		}
-		printStoredResources(playersTownName);
+		else {
+			System.out.println("A worker already emptied Storehouse before.");
+			printStoredResources(playersTownName);
+		}
 	}
 	
 	public void addSpecificRequirementsToStore(String resourceName) {

@@ -445,6 +445,17 @@ public class Town {
 		return isTheCardInArrayList;
 	}
 	
+	public boolean isTheCardInTown(Card cardToCheck, Town town) {
+		boolean theCardIsInTown = false;
+		for (Card card : town.cards) {
+			if(card.equals(cardToCheck)) {
+				theCardIsInTown = true;
+				break;
+			}
+		}
+		return theCardIsInTown;
+	}
+	
 	public boolean removeCardFromTown(String critterOrContstruction, Deck deck) {
 		boolean cardIsRemoved = false;
 		System.out.println("Select a " + critterOrContstruction + " in town: ");
@@ -805,8 +816,8 @@ public class Town {
 				((Theater) card).activatePurpleCard(town);	
 			}
 			this.points += card.points;
-			this.points += specialPoints;
 		}
-		System.out.println("Points: " + points);
+		int allPointsInTown = points + specialPoints;
+		System.out.println("Points: " + allPointsInTown);
 	}
 }

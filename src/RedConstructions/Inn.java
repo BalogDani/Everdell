@@ -19,9 +19,7 @@ public class Inn extends RedConstruction{
 	}
 	
 	public void activateRedDestination(Town town, Deck deck, Deck meadow, Players players) {
-		if(!workerSent) {
-			ownerOrAnotherPlayer(this, town);
-			
+		if(!workerSent) {			
 			if(town.workers>0) {
 				Card cardToPlay = chooseACardFromMeadow(meadow);
 				town.workers--;
@@ -33,6 +31,7 @@ public class Inn extends RedConstruction{
 				}
 				
 				if(ammountOfSourceToTake!=0) {
+					ownerOrAnotherPlayer(this, town, players);
 					cardToPlay.printCardDetails();
 					if(sumOfRequirementsOnCard<=3) {
 						town.playACardFree(cardToPlay, players, deck);
