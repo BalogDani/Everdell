@@ -2,7 +2,11 @@ package RedConstructions;
 
 import org.junit.Test;
 
+import GreenConstructions.Farm;
 import Main.*;
+import PurpleConstructions.Castle;
+import RedCritters.Queen;
+import TanConstructions.Ruins;
 
 public class TestRedConstructions {
 
@@ -36,5 +40,58 @@ public class TestRedConstructions {
 		friendless.printTownDetails();
 		deck.printDeckDetails(deck);
 		meadow.printDeckDetails(meadow);
+		System.out.println("\nWorkers left at Dani " + dani.workers + " and at Tamas " + friendless.workers + ".");
+	}
+	
+	@Test
+	public void queenTest() throws Exception {
+		Players players = new Players();
+		Deck deck = new Deck("deck");
+		Deck meadow = new Deck("meadow", deck);
+		Town dani = new Town("Dani",players);
+		dani.addRequirementsToTown(20, 20, 20, 20);
+		dani.printTownDetails();
+		System.out.println("Let's begin with 20 resource from everything!\n");
+		Inn inn = new Inn();
+		Farm farm = new Farm();
+		Castle castle = new Castle();
+		Queen queen = new Queen();	
+		dani.playACard(queen, players, deck);
+		dani.printTownDetails();
+		queen.activateRedDestinaton(castle, dani, deck, meadow, players);
+		dani.printTownDetails();
+		queen.activateRedDestinaton(inn, dani, deck, meadow, players);
+		dani.printTownDetails();
+		queen.activateRedDestinaton(farm, dani, deck, meadow, players);
+		dani.printTownDetails();
+		meadow.printDeckDetails(meadow);
+	}
+	
+	@Test
+	public void queenCardFromMeadowTest() throws Exception {
+		Players players = new Players();
+		Deck deck = new Deck("deck");
+		Deck meadow = new Deck("meadow", deck);
+		Town dani = new Town("Dani",players);
+		Town friendless = new Town("Friendless",players);
+		dani.addRequirementsToTown(20, 20, 20, 20);
+		dani.printTownDetails();
+		System.out.println("Let's begin with 20 resource from everything!\n");
+		Farm farm = new Farm();
+		Castle castle = new Castle();
+		Queen queen = new Queen();
+		Ruins ruins = new Ruins();
+		dani.playACard(queen, players, deck);
+		dani.printTownDetails();
+		queen.activateRedDestinaton(ruins, dani, deck, meadow, players);
+		dani.printTownDetails();
+		Card card = meadow.chooseACardFromMeadow(meadow);
+		queen.activateRedDestinaton(card, dani, deck, meadow, players);
+		dani.printTownDetails();
+		meadow.printDeckDetails(meadow);
+		queen.activateRedDestinaton(castle, dani, deck, meadow, players);
+		dani.printTownDetails();
+		queen.activateRedDestinaton(farm, dani, deck, meadow, players);
+		dani.printTownDetails();
 	}
 }

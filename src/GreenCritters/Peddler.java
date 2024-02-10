@@ -12,8 +12,8 @@ public class Peddler extends GreenCard{
 	}
 	
 	public void playCard(Town town, Deck deck){
-		activateGreenCard(town);
 		super.playCard(town, deck);
+		activateGreenCard(town);
 	}
 	
 	public void activateGreenCard(Town town){
@@ -21,9 +21,16 @@ public class Peddler extends GreenCard{
 		if(ammount > 2) {
 			ammount = 2;
 		}
-		for(int i = 0; i < ammount; i++) {
-			this.changeResources(town);
-			System.out.println(i+1 + ". resource exchanged.\n");
+		
+		int sumOfRequirementsInTown = town.requirements.twig + town.requirements.resin + town.requirements.pebble + town.requirements.berry;
+		if(sumOfRequirementsInTown!=0) {
+			for(int i = 0; i < ammount; i++) {
+				this.changeResources(town);
+				System.out.println(i+1 + ". resource exchanged.\n");
+			}			
+		}
+		else {
+			System.out.println("Not enough resources in town to change them.");
 		}
 	}
 }

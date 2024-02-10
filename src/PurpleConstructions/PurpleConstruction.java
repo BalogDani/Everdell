@@ -15,7 +15,7 @@ public class PurpleConstruction extends PurpleCard implements Construction{
 	
 	public void occupie(String name) {
 		this.occupied = true;
-		System.out.println(super.name + " is occupied by " + name + ".");
+		System.out.println(super.name + " is occupied by " + name + ".\n");
 	}
 	
 }

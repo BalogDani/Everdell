@@ -9,6 +9,7 @@ import GreenCritters.*;
 import PurpleConstructions.*;
 import PurpleCritters.*;
 import RedConstructions.*;
+import RedCritters.Queen;
 import TanConstructions.*;
 import TanCritters.*;
 
@@ -29,7 +30,7 @@ public class Deck {
 				this.addToDeck("Judge");
 	//			this.addToDeck("King");
 	//			this.addToDeck("Monk");
-	//			this.addToDeck("Queen");
+				this.addToDeck("Queen");
 	//			this.addToDeck("Ranger");
 	//			this.addToDeck("Undertaker");
 	//			this.addToDeck("Shepherd");
@@ -48,10 +49,10 @@ public class Deck {
 			}
 			for (int i = 0; i < 3; i++) {
 				this.addToDeck("Barge Toad");
-	//			this.addToDeck("Chip Sweep");
+				this.addToDeck("Chip Sweep");
 				this.addToDeck("Historian");
 				this.addToDeck("Innkeeper");
-	//			this.addToDeck("Miner Mole");
+				this.addToDeck("Miner Mole");
 				this.addToDeck("Peddler");
 				this.addToDeck("Postal Pigeon");
 				this.addToDeck("Shopkeeper");
@@ -114,8 +115,10 @@ public class Deck {
 //		}
 //			Monk Monk = new Monk();
 //			this.addToDeck(Monk);
-//			Queen Queen = new Queen();
-//			this.addToDeck(Queen);
+		if(cardName.equals("Queen")){
+			Queen queen = new Queen();
+			card = (Queen) queen;
+		}
 //			Ranger Ranger = new Ranger();
 //			this.addToDeck(Ranger);
 //			Undertaker Undertaker = new Undertaker();
@@ -160,18 +163,22 @@ public class Deck {
 			BargeToad bargeToad = new BargeToad();
 			card = (BargeToad) bargeToad;
 		}
-//			ChipSweep ChipSweep = new ChipSweep();
-//			this.addToDeck(ChipSweep);
+		if(cardName.equals("Chip Sweep")) {
+			ChipSweep chipSweep = new ChipSweep();
+			card = (ChipSweep) chipSweep;
+		}
 		if(cardName.equals("Historian")) {
 			Historian historian = new Historian();
 			card = (Historian) historian;
 		}
-		if(cardName.equals("Innkeeper")) {
+		if(cardName.equals("Miner Mole")) {
 			Innkeeper innkeeper = new Innkeeper();
 			card = (Innkeeper) innkeeper;
 		}
-//			MinerMole MinerMole = new MinerMole();
-//			this.addToDeck(MinerMole);
+		if(cardName.equals("Innkeeper")) {
+			MinerMole minerMole = new MinerMole();
+			card = (MinerMole) minerMole;
+		}
 		if(cardName.equals("Peddler")) {
 			Peddler peddler = new Peddler();
 			card = (Peddler) peddler;
@@ -277,6 +284,49 @@ public class Deck {
 		this.cards.add(randomCardFromDeck);
 		deck.cards.remove(randomCardFromDeck);
 		System.out.println("Cards in deck: " + deck.cards.size() + ", cards in meadow: " + this.cards.size());
+	}
+	
+	public Card chooseACardFromMeadow(Deck meadow) {
+		String nameOfCards = "Choose a card from the meadow: ";
+		for (Card card : meadow.cards) {
+			nameOfCards += card.name + " ";
+		}
+		System.out.println(nameOfCards);
+		
+		Card choosenCard = new Card();
+		String cardToTake = "";
+		String cardToCheckForTake = "card";
+		boolean cardIsInTheMeadow = false;
+		
+		while(!cardToTake.equals(cardToCheckForTake)) {
+			cardToTake = choosenCard.readCardName();
+			while(!cardIsInTheMeadow) {				
+				for(Card card : meadow.cards) {
+					cardToCheckForTake = card.name;
+					if(cardToTake.equals(cardToCheckForTake)) {
+						choosenCard = card;
+						cardIsInTheMeadow = true;
+						break;
+					}
+				}
+				if(!cardIsInTheMeadow) {
+					System.out.println("No " + cardToTake + " in the meadow, choose a another card.");
+					break;
+				}
+			}
+		}
+		return choosenCard;
+	}
+	
+	public boolean isTheCardInDeck(Card cardToCheck, Deck deck) {
+		boolean theCardIsInDeck = false;
+		for (Card card : deck.cards) {
+			if(card.equals(cardToCheck)) {
+				theCardIsInDeck = true;
+				break;
+			}
+		}
+		return theCardIsInDeck;
 	}
 	
 	public String printDeckCardsName(Deck deck) {

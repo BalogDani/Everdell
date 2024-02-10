@@ -54,7 +54,7 @@ public class Bard extends TanCard{
 				}
 			}
 			else {
-				System.out.println(town.playersName + "'s hand has not enough card to discard " + ammount + "card.");
+				System.out.println(town.playersName + "'s hand has not enough card to discard " + ammount + " card.");
 			}
 		}
 		catch (IOException e) {

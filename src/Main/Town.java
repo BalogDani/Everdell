@@ -165,8 +165,9 @@ public class Town {
 //		return newRequirements;
 	}
 	
-	public void playACardFree(Card cardToPlay, Players players, Deck deck){
+	public boolean playACardFree(Card cardToPlay, Players players, Deck deck){
 		boolean playable = true;
+		boolean cardIsPlayed = false;
 		
 		if(cardToPlay.cityLimit){
 			playable = !isTheCardInArrayList(cardToPlay.name, this.cards);
@@ -179,30 +180,48 @@ public class Town {
 			if(cardToPlay instanceof Teacher) {
 				Teacher teacher = (Teacher) cardToPlay;
 				cards.add(teacher);
+				cardIsPlayed = true;
 				teacher.playCard(this, deck, players);
 				playable = false;
 			}
 			if(cardToPlay instanceof Fool) {
 				Fool fool = (Fool) cardToPlay;
-				fool.playFoolToOtherTown(cardToPlay, this, players, deck);
+				fool.playFoolToAnotherTown(cardToPlay, this, players, deck);
 				spaces--;
 				playable = false;
 			}
 			if(cardToPlay instanceof PostalPigeon) {
 				PostalPigeon postalPigeon = (PostalPigeon) cardToPlay;
 				cards.add(postalPigeon);
+				cardIsPlayed = true;
 				postalPigeon.playCard(this, deck, players);
 				playable = false;
 			}
 			if(playable && cardToPlay instanceof Fairgrounds) {
 				Fairgrounds fairgrounds = (Fairgrounds) cardToPlay;
 				cards.add(fairgrounds);
+				cardIsPlayed = true;
 				fairgrounds.playCard(this, deck);
+				playable = false;
+			}
+			if(playable && cardToPlay instanceof ChipSweep) {
+				ChipSweep chipSweep = (ChipSweep) cardToPlay;
+				cards.add(chipSweep);
+				cardIsPlayed = true;
+				chipSweep.playCard(this, deck, players);
+				playable = false;
+			}
+			if(playable && cardToPlay instanceof MinerMole) {
+				MinerMole minerMole = (MinerMole) cardToPlay;
+				cards.add(minerMole);
+				cardIsPlayed = true;
+				minerMole.playCard(this, deck, players);
 				playable = false;
 			}
 			if(playable && cardToPlay instanceof Wanderer) {
 				Wanderer wanderer = (Wanderer) cardToPlay;
 				cards.add(wanderer);
+				cardIsPlayed = true;
 				wanderer.playCard(this, deck);
 				spaces--;
 				playable = false;
@@ -216,6 +235,7 @@ public class Town {
 						ruinsCanBePlayed = ruins.isRuinsUsed;
 						if(ruinsCanBePlayed) {								
 							cards.add(ruins);
+							cardIsPlayed = true;
 						}
 						break;
 					}
@@ -228,6 +248,7 @@ public class Town {
 			}
 			if(playable) {					
 				cards.add(cardToPlay);
+				cardIsPlayed = true;
 				cardToPlay.playCard(this, deck);
 			}
 			playable = false;
@@ -242,10 +263,12 @@ public class Town {
 		}
 		
 		System.out.println("");
+		return cardIsPlayed;
 	}
 	
-	public void playACard(Card cardToPlay, Players players, Deck deck){
+	public boolean playACard(Card cardToPlay, Players players, Deck deck){
 		boolean playable = true;
+		boolean cardIsPlayed = false;
 		copyRequirementsToPayForCard(cardToPlay.requirements);
 		
 		if(cardToPlay.cityLimit){
@@ -255,15 +278,35 @@ public class Town {
 			System.out.println(cardToPlay.name+" is already in your town.");
 		}
 		if(spaces<16 && playable) {
-			if(occupieConstructionCardInTown(cardToPlay)) {
+			cardIsPlayed = occupieConstructionCardInTown(cardToPlay);
+			if(cardIsPlayed) {
 				if(cardToPlay instanceof Fool) {
 					Fool fool = (Fool) cardToPlay;
-					fool.playFoolToOtherTown(cardToPlay, this, players, deck);
+					fool.playFoolToAnotherTown(cardToPlay, this, players, deck);
 				}
 				if(cardToPlay instanceof Teacher) {
 					Teacher teacher = (Teacher) cardToPlay;
 					teacher.playCard(this, deck, players);
 					spaces++;
+				}
+				if(cardToPlay instanceof PostalPigeon) {
+					PostalPigeon postalPigeon = (PostalPigeon) cardToPlay;
+					postalPigeon.playCard(this, deck, players);
+					spaces++;
+				}
+				if(playable && cardToPlay instanceof ChipSweep) {
+					ChipSweep chipSweep = (ChipSweep) cardToPlay;
+					chipSweep.playCard(this, deck, players);
+					spaces++;
+				}
+				if(playable && cardToPlay instanceof MinerMole) {
+					MinerMole minerMole = (MinerMole) cardToPlay;
+					minerMole.playCard(this, deck, players);
+					spaces++;
+				}
+				if(playable && cardToPlay instanceof Wanderer) {
+					Wanderer wanderer = (Wanderer) cardToPlay;
+					wanderer.playCard(this, deck);
 				}
 				else {
 					spaces++;
@@ -277,13 +320,14 @@ public class Town {
 				if(cardToPlay instanceof Teacher) {
 					Teacher teacher = (Teacher) cardToPlay;
 					cards.add(teacher);
+					cardIsPlayed = true;
 					teacher.playCard(this, deck, players);
 					takeRequirementsFromTown(requirementsToPayForCard.twig, requirementsToPayForCard.resin, requirementsToPayForCard.pebble, requirementsToPayForCard.berry);
 					playable = false;
 				}
 				if(cardToPlay instanceof Fool) {
 					Fool fool = (Fool) cardToPlay;
-					boolean foolIsPlayed = fool.playFoolToOtherTown(cardToPlay, this, players, deck);
+					boolean foolIsPlayed = fool.playFoolToAnotherTown(cardToPlay, this, players, deck);
 					if(foolIsPlayed) {
 						takeRequirementsFromTown(requirementsToPayForCard.twig, requirementsToPayForCard.resin, requirementsToPayForCard.pebble, requirementsToPayForCard.berry);
 					}
@@ -293,6 +337,7 @@ public class Town {
 				if(cardToPlay instanceof PostalPigeon) {
 					PostalPigeon postalPigeon = (PostalPigeon) cardToPlay;
 					cards.add(postalPigeon);
+					cardIsPlayed = true;
 					postalPigeon.playCard(this, deck, players);
 					takeRequirementsFromTown(requirementsToPayForCard.twig, requirementsToPayForCard.resin, requirementsToPayForCard.pebble, requirementsToPayForCard.berry);
 					playable = false;
@@ -300,13 +345,31 @@ public class Town {
 				if(playable && cardToPlay instanceof Fairgrounds) {
 					Fairgrounds fairgrounds = (Fairgrounds) cardToPlay;
 					cards.add(fairgrounds);
+					cardIsPlayed = true;
 					fairgrounds.playCard(this, deck);
+					takeRequirementsFromTown(requirementsToPayForCard.twig, requirementsToPayForCard.resin, requirementsToPayForCard.pebble, requirementsToPayForCard.berry);
+					playable = false;
+				}
+				if(playable && cardToPlay instanceof ChipSweep) {
+					ChipSweep chipSweep = (ChipSweep) cardToPlay;
+					cardIsPlayed = true;
+					chipSweep.playCard(this, deck, players);
+					cards.add(chipSweep);
+					takeRequirementsFromTown(requirementsToPayForCard.twig, requirementsToPayForCard.resin, requirementsToPayForCard.pebble, requirementsToPayForCard.berry);
+					playable = false;
+				}
+				if(playable && cardToPlay instanceof MinerMole) {
+					MinerMole minerMole = (MinerMole) cardToPlay;
+					cardIsPlayed = true;
+					minerMole.playCard(this, deck, players);
+					cards.add(minerMole);
 					takeRequirementsFromTown(requirementsToPayForCard.twig, requirementsToPayForCard.resin, requirementsToPayForCard.pebble, requirementsToPayForCard.berry);
 					playable = false;
 				}
 				if(playable && cardToPlay instanceof Wanderer) {
 					Wanderer wanderer = (Wanderer) cardToPlay;
 					cards.add(wanderer);
+					cardIsPlayed = true;
 					wanderer.playCard(this, deck);
 					takeRequirementsFromTown(requirementsToPayForCard.twig, requirementsToPayForCard.resin, requirementsToPayForCard.pebble, requirementsToPayForCard.berry);
 					spaces--;
@@ -321,6 +384,7 @@ public class Town {
 							ruinsCanBePlayed = ruins.isRuinsUsed;
 							if(ruinsCanBePlayed) {								
 								cards.add(ruins);
+								cardIsPlayed = true;
 //								takeRequirementsFromTown(requirementsToTake.twig, requirementsToTake.resin, requirementsToTake.pebble, requirementsToTake.berry);
 							}
 							break;
@@ -334,8 +398,9 @@ public class Town {
 				}
 				if(playable) {					
 					cards.add(cardToPlay);
-					cardToPlay.playCard(this, deck);
+					cardIsPlayed = true;
 					takeRequirementsFromTown(requirementsToPayForCard.twig, requirementsToPayForCard.resin, requirementsToPayForCard.pebble, requirementsToPayForCard.berry);
+					cardToPlay.playCard(this, deck);
 				}
 				playable = false;
 				spaces++;
@@ -353,6 +418,7 @@ public class Town {
 		}
 		
 		System.out.println("");
+		return cardIsPlayed;
 	}
 	
 	public boolean useBlueCardOrNot(Card cardToUse, Card cardToPlay) {
@@ -436,7 +502,6 @@ public class Town {
 	public boolean isTheCardInArrayList(String cardName, ArrayList<Card> arrayList) {
 		boolean isTheCardInArrayList = false;
 		for(Card card: arrayList) {
-//			System.out.println(cardName + " is in the list " + card.name==cardName);
 			if(card.name.equals(cardName)) {
 				isTheCardInArrayList = true;
 				break;
@@ -538,7 +603,7 @@ public class Town {
 						if(yesOrNo.equals("No")) {
 							System.out.println(cardToPlay.name + " is not occupied in Ever Tree.");
 						}
-						else {
+						if(!yesOrNo.equals("Yes") && !yesOrNo.equals("No")) {
 							System.out.println("Please choose a correct answer 'Yes' or 'No'.");
 						}
 					}

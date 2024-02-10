@@ -1,10 +1,5 @@
 package TanCritters;
 
-import java.io.BufferedReader;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import CardTypes.TanCard;
 import Main.*;
 
@@ -27,7 +22,7 @@ public class Fool extends TanCard{
 					break;					
 				}
 				else {
-					System.out.println("Fool can't play to " + anotherPlayersTownName + "'s town.");
+					System.out.println("Fool can't be played to " + anotherPlayersTownName + "'s town.");
 				}
 			}
 		}
@@ -38,19 +33,11 @@ public class Fool extends TanCard{
 		return anotherTownIsChoosed;
 	}
 	
-	public boolean playFoolToOtherTown(Card cardToplay, Town town, Players players, Deck deck) {
+	public boolean playFoolToAnotherTown(Card cardToplay, Town town, Players players, Deck deck) {
 		boolean foolIsPlayed = false;
-		System.out.println("Select another players town: ");
-		BufferedReader readTownName = new BufferedReader(new InputStreamReader(System.in));
-		try {
-			String anotherPlayersTownName = readTownName.readLine();
-			Fool fool = (Fool) cardToplay;
-			foolIsPlayed = fool.playCard(anotherPlayersTownName, town, players, deck);
-			return foolIsPlayed;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		String anotherPlayersTownName = chooseAnotherTownName();
+		Fool fool = (Fool) cardToplay;
+		foolIsPlayed = fool.playCard(anotherPlayersTownName, town, players, deck);
 		return foolIsPlayed;
 	}
 }

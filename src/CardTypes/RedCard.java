@@ -3,6 +3,8 @@ import Main.*;
 
 public class RedCard extends Card {
 	
+	public boolean open = false;
+	
 	public RedCard() {
 		super("Inn", new Requirements(2,1,0,0),false,2,"Inkeeper");
 	}
@@ -11,59 +13,29 @@ public class RedCard extends Card {
 		super(name,requirements,cityLimit,points,relatedCard);
 	}
 	
-	public void ownerOrAnotherPlayer(Card redCard, Town town, Players players) {
+	public boolean ownerOrAnotherPlayer(RedCard redCard, boolean open, Town town, Players players) {
 		boolean isTheCardInTown = town.isTheCardInTown(redCard, town);
-		if(!isTheCardInTown) {
+		boolean ownerCheck = false;
+		
+		if(!isTheCardInTown && !open) {
+			System.out.println(redCard.name + " is not open, only the owner can use it.");
+		}
+		if(!isTheCardInTown && open) {
 			for (Town player : players.players) {
 				if(player.isTheCardInTown(redCard, player)) {
+					ownerCheck = true;
 					player.specialPoints++;
 					System.out.println(player.playersName + "'s special points: " + player.specialPoints + "\n");
 				}
 			}
 		}
+		if(isTheCardInTown && open) {
+			ownerCheck = true;
+		}
+		return ownerCheck;
 	}
 	
-//	public void usingRedDestination(boolean workerSent, Card redCard, Town palyerUsingRedDestination, Deck deck, Deck meadow, Players players) {
-//		if(!workerSent) {
-//			ownerOrAnotherPlayer(redCard, palyerUsingRedDestination, players);
-//			
-//			if(palyerUsingRedDestination.workers>0) {
-//				Card cardToPlay = chooseACardFromMeadow(meadow);
-//				palyerUsingRedDestination.workers--;
-//				
-//				int sumOfRequirementsOnCard = cardToPlay.requirements.twig + cardToPlay.requirements.resin + cardToPlay.requirements.pebble + cardToPlay.requirements.berry;
-//				int ammountOfSourceToTake = 3;
-//				if(sumOfRequirementsOnCard<3) {
-//					ammountOfSourceToTake=sumOfRequirementsOnCard;
-//				}
-//				
-//				if(ammountOfSourceToTake!=0) {
-//					cardToPlay.printCardDetails();
-//					if(sumOfRequirementsOnCard<=3) {
-//						town.playACardFree(cardToPlay, players, deck);
-//					}
-//					else {
-//						System.out.println("You choosed " + cardToPlay.name);
-//						decreaseRequirementsOnCard(ammountOfSourceToTake, cardToPlay, town);
-//						town.playACard(cardToPlay, players, deck);
-//					}
-//					meadow.takeCardAndRefillMeadow(cardToPlay,deck);
-//					workerSent = true;
-//				}
-//				else {
-//					System.out.println("Not enough resource to use Inn. You can play this card without using a worker.\n");
-//				}
-//			}
-//			else {
-//				System.out.println("No more workers left in town. " + name + "'s destination can't be activated.");
-//			}
-//		}
-//		else {
-//			System.out.println("Inn was used earlier.");
-//		}
-//	}
-	
-	public void activateRedCard() {
+	public void activateRedDestinaton() {
 		System.out.println("It's activated.");
 	}
 

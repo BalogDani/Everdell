@@ -7,7 +7,7 @@ import GreenCritters.*;
 import Main.*;
 import PurpleConstructions.EverTree;
 import PurpleCritters.Wife;
-import TanCritters.Fool;
+import TanCritters.*;
 
 public class TestGreenConstructions {
 	
@@ -158,5 +158,35 @@ public class TestGreenConstructions {
 		dani.printHand();
 		henike.printHand();
 		deck.printDeckDetails(deck);
+	}
+	
+	@Test
+	public void chipeSweepMinerMoleTest() {
+		Players players = new Players();
+		Deck deck = new Deck("deck");
+		Town dani = new Town("Dani",players);
+		dani.addRequirementsToTown(20, 20, 20, 20);
+		Town friendless = new Town("Friendless",players);
+		friendless.addRequirementsToTown(20, 20, 20, 20);
+		Wanderer wanderer = new Wanderer();
+		Farm farm = new Farm();
+		Doctor doctor = new Doctor();
+		GeneralStore generalStore = new GeneralStore();
+		Storehouse storehouse = new Storehouse();
+		EverTree everTree = new EverTree();
+		ChipSweep chipSweep = new ChipSweep();
+		dani.playACard(wanderer, players, deck);
+		dani.playACard(farm, players, deck);
+		dani.playACard(generalStore, players, deck);
+		dani.playACard(doctor, players, deck);
+		dani.playACard(storehouse, players, deck);
+		dani.playACard(everTree, players, deck);
+		dani.printTownDetails();
+		dani.playACard(chipSweep, players, deck);
+		dani.printTownDetails();
+		MinerMole minerMole = new MinerMole();
+		friendless.playACard(minerMole, players, deck);
+		dani.printTownDetails();
+		friendless.printTownDetails();
 	}
 }

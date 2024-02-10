@@ -5,12 +5,11 @@ import Main.*;
 public class Inn extends RedConstruction{
 
 	public boolean occupied = false;
-	public boolean open = false;
 	public boolean workerSent = false;
 	
 	public Inn() {
 		super("Inn", new Requirements(2,1,0,0),false,2,"Inkeeper");
-		open = true;
+		super.open = true;
 	}
 	
 	public void occupie(String name) {
@@ -21,7 +20,7 @@ public class Inn extends RedConstruction{
 	public void activateRedDestination(Town town, Deck deck, Deck meadow, Players players) {
 		if(!workerSent) {			
 			if(town.workers>0) {
-				Card cardToPlay = chooseACardFromMeadow(meadow);
+				Card cardToPlay = meadow.chooseACardFromMeadow(meadow);
 				town.workers--;
 				
 				int sumOfRequirementsOnCard = cardToPlay.requirements.twig + cardToPlay.requirements.resin + cardToPlay.requirements.pebble + cardToPlay.requirements.berry;
@@ -31,18 +30,20 @@ public class Inn extends RedConstruction{
 				}
 				
 				if(ammountOfSourceToTake!=0) {
-					ownerOrAnotherPlayer(this, town, players);
-					cardToPlay.printCardDetails();
-					if(sumOfRequirementsOnCard<=3) {
-						town.playACardFree(cardToPlay, players, deck);
+					boolean ownerCheck = ownerOrAnotherPlayer(this, open, town, players);
+					if(ownerCheck) {						
+						cardToPlay.printCardDetails();
+						if(sumOfRequirementsOnCard<=3) {
+							town.playACardFree(cardToPlay, players, deck);
+						}
+						else {
+							System.out.println("You choosed " + cardToPlay.name);
+							decreaseRequirementsOnCard(ammountOfSourceToTake, cardToPlay, town);
+							town.playACard(cardToPlay, players, deck);
+						}
+						meadow.takeCardAndRefillMeadow(cardToPlay,deck);
+						workerSent = true;
 					}
-					else {
-						System.out.println("You choosed " + cardToPlay.name);
-						decreaseRequirementsOnCard(ammountOfSourceToTake, cardToPlay, town);
-						town.playACard(cardToPlay, players, deck);
-					}
-					meadow.takeCardAndRefillMeadow(cardToPlay,deck);
-					workerSent = true;
 				}
 				else {
 					System.out.println("Not enough resource to use Inn. You can play this card without using a worker.\n");

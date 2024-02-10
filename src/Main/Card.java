@@ -55,39 +55,6 @@ public class Card {
 		return cardName;
 	}
 	
-	public Card chooseACardFromMeadow(Deck meadow) {
-		String nameOfCards = "Choose a card from the meadow: ";
-		for (Card card : meadow.cards) {
-			nameOfCards += card.name + " ";
-		}
-		System.out.println(nameOfCards);
-		
-		Card choosenCard = new Card();
-		String cardToTake = "";
-		String cardToCheckForTake = "card";
-		boolean cardIsInTheMeadow = false;
-		
-		while(!cardToTake.equals(cardToCheckForTake)) {
-			cardToTake = readCardName();
-			while(!cardIsInTheMeadow) {				
-				for(Card card : meadow.cards) {
-					cardToCheckForTake = card.name;
-					if(cardToTake.equals(cardToCheckForTake)) {
-						choosenCard = card;
-						cardIsInTheMeadow = true;
-						break;
-					}
-				}
-				if(!cardIsInTheMeadow) {
-					System.out.println("No " + cardToTake + " in the meadow, choose a another card.");
-//					cardToCheckForTake = "";
-					break;
-				}
-			}
-		}
-		return choosenCard;
-	}
-	
 	public String readResourceInput(String addOrTake) {
 		String resource = "";
 		System.out.println("Select a type of resource to " + addOrTake + ": ");
@@ -184,6 +151,19 @@ public class Card {
 		}
 		String[] toTakeAndToAdd = {resourceToTake, resourceToAdd}; 
 		return toTakeAndToAdd;
+	}
+	
+	public String chooseAnotherTownName() {
+		System.out.println("Select another players town: ");
+		String anotherPlayersTownName = "";
+		BufferedReader readTownName = new BufferedReader(new InputStreamReader(System.in));
+		try {
+			anotherPlayersTownName = readTownName.readLine();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return anotherPlayersTownName;
 	}
 	
 	public ArrayList<String> availableResources(Card cardToPlay) {
