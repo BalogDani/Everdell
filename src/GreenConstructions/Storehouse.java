@@ -11,12 +11,12 @@ public class Storehouse extends GreenConstruction{
 		super("Storehouse", new Requirements(1,1,1,0),false,2,"Woodcarver");
 	}
 	
-	public void playCard(Town town, Deck deck){
-		activateGreenCard(town);	
-		super.playCard(town, deck);
+	public void playCard(Player player, Deck deck, Players players){
+		activateGreenCard(player);	
+		super.playCard(player, deck, players);
 	}
 	
-	public void activateGreenCard(Town town){
+	public void activateGreenCard(Player player){
 		String resource = this.readResourceInput("add");
 		if(resource.equals("twig")) {
 			addSpecificRequirementsToStore(resource);
@@ -35,17 +35,17 @@ public class Storehouse extends GreenConstruction{
 			System.out.println("Stored " + resource + ".");
 		}
 		if(!resource.equals("twig") && !resource.equals("resin") && !resource.equals("pebble") && !resource.equals("berry")) {
-			System.out.println("Resource " + resource + " can't be added to town.");
-			this.activateGreenCard(town);
+			System.out.println("Resource " + resource + " can't be added to player.");
+			this.activateGreenCard(player);
 		}
-		printStoredResources(town.playersName);
+		printStoredResources(player.playersName);
 	}
 	
-	public void emptyingStorehouse(String playersTownName, Town playersTown, Players players) {
+	public void emptyingStorehouse(String playersTownName, Player player, Players players) {
 		if(!workerIsPlaced) {			
-			for(Town player: players.players) {
-				if(player.playersName.equals(playersTownName) && player==playersTown) {
-					boolean workerSent = player.sendWorkerForRequirements(store.twig, store.resin, store.pebble, store.berry);
+			for(Player playerFromPlayers: players.players) {
+				if(playerFromPlayers.playersName.equals(playersTownName) && playerFromPlayers==player) {
+					boolean workerSent = playerFromPlayers.requirements.sendWorkerForRequirements(player, store.twig, store.resin, store.pebble, store.berry);
 					if(workerSent) {
 						store = new Requirements(0,0,0,0);
 						workerIsPlaced = true;
@@ -53,7 +53,7 @@ public class Storehouse extends GreenConstruction{
 					break;
 				}
 				else {
-					System.out.println(playersTown.playersName + " can't activate " + playersTownName + "'s storehouse. Duh!\n");
+					System.out.println(player.playersName + " can't activate " + playersTownName + "'s storehouse. Duh!\n");
 					break;
 				}
 			}

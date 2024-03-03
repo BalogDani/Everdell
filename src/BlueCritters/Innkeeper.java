@@ -9,18 +9,18 @@ public class Innkeeper extends BlueCard{
 		super("Innkeeper",new Requirements(0,0,0,1),true,1,"Inn");
 	}
 	
-	public boolean blueCardEffect(Card cardToPlay, Town town, Deck deck){
+	public boolean blueCardEffect(Requirements requirementsToPayForCard, Card cardToPlay, Player player, Deck deck){
 		boolean usedBlueCardEffect = false;
 		boolean inkeeperIsUsed = false;
 		
 		if(cardToPlay.critter) {
-			usedBlueCardEffect = town.useBlueCardOrNot(this, cardToPlay);
+			usedBlueCardEffect = useBlueCardOrNot(this, cardToPlay);
 			if(usedBlueCardEffect) {
 				inkeeperIsUsed = true;
 				cardToPlay.printCardDetails();
-				town.modifyRequirementsToPayForCard("berry", -3);
-				town.removeCardFromTown(this, deck);
-				System.out.println("Changed requirements to pay: Twig = " + town.requirementsToPayForCard.twig + ", Resin = " + town.requirementsToPayForCard.resin + ", Pebble = " + town.requirementsToPayForCard.pebble + ", Berry = " + town.requirementsToPayForCard.berry);
+				requirementsToPayForCard.modifyRequirementsToPayForCard("berry", requirementsToPayForCard, -3);
+				player.removeCardFromTown(this, deck);
+				System.out.println("Changed requirements to pay: Twig = " + requirementsToPayForCard.twig + ", Resin = " + requirementsToPayForCard.resin + ", Pebble = " + requirementsToPayForCard.pebble + ", Berry = " + requirementsToPayForCard.berry);
 			}
 		}
 		

@@ -2,7 +2,7 @@ package PurpleConstructions;
 
 import Main.Card;
 import Main.Requirements;
-import Main.Town;
+import Main.Player;
 
 public class Theater extends PurpleConstruction{
 	
@@ -10,10 +10,10 @@ public class Theater extends PurpleConstruction{
 		super("Theater", new Requirements(3, 1, 1, 0), true, 3, "Bard");
 	}
 	
-	public void activatePurpleCard(Town town){
-		for(Card card: town.cards) {
+	public void activatePurpleCard(Player player){
+		for(Card card: player.cards) {
 			if(card.cityLimit && card.critter) {
-				town.addPoints(1);
+				player.addPoints(1);
 			}
 		}
 	}

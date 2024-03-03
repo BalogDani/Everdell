@@ -19,7 +19,7 @@ public class PostalPigeon extends TanCard{
 		twoRandomCard.remove(card);
 	}
 	
-	public void playCard(Town town, Deck deck, Players players){
+	public void playCard(Player player, Deck deck, Players players){
 		for (int i = 0; i < 2; i++) {
 			Card randomCardFromDeck = deck.chooseRandomCard();
 			twoCard += randomCardFromDeck.name + " ";
@@ -51,14 +51,14 @@ public class PostalPigeon extends TanCard{
 					cardName=card.name;
 //					started += card.name;
 					if(choosedCard.equals(card.name)){
-						System.out.println("Great, " + choosedCard + " is added to " + town.playersName + "'s town.");
+						System.out.println("Great, " + choosedCard + " is added to " + player.playersName + "'s town.");
 //						if(card instanceof Fool) {
 //							Fool fool = (Fool) card;
-//							fool.playFoolToOtherTown(card, town, players, deck);
+//							fool.playFoolToOtherPlayer(card, player, players, deck);
 //						}
 //						else {		
 							removeCard(card);				
-							town.playACardFree(card, players, deck);
+							player.playACardFree(card, players, player, deck);
 //						}
 						break;
 					}
@@ -69,8 +69,6 @@ public class PostalPigeon extends TanCard{
 				removeCard(twoRandomCard.get(0));
 			}
 		}
-		
-		super.playCard(town, deck);
 	}
 	
 }

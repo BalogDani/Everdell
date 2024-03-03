@@ -5,18 +5,18 @@ import java.util.List;
 
 public class Players {
 	
-	public List<Town> players;
+	public List<Player> players;
 	
 	public Players() {
-		this.players = new ArrayList<Town>();
+		this.players = new ArrayList<Player>();
 	}
 	
-	public void addPlayer(Town town) {
-		this.players.add(town);
+	public void addPlayer(Player player) {
+		this.players.add(player);
 	}
 	
 	public void pointsOfPlayers() {
-		for(Town player: players) {
+		for(Player player: players) {
 //			String name = player.playersName;
 			System.out.println("Player " + player.playersName);
 			player.printPointsInTown(player);

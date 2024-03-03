@@ -17,11 +17,11 @@ public class Inn extends RedConstruction{
 		System.out.println(super.name + " is occupied by " + name + ".");
 	}
 	
-	public void activateRedDestination(Town town, Deck deck, Deck meadow, Players players) {
+	public void activateRedDestination(Player player, Deck deck, Deck meadow, Players players) {
 		if(!workerSent) {			
-			if(town.workers>0) {
+			if(player.workers>0) {
 				Card cardToPlay = meadow.chooseACardFromMeadow(meadow);
-				town.workers--;
+				player.workers--;
 				
 				int sumOfRequirementsOnCard = cardToPlay.requirements.twig + cardToPlay.requirements.resin + cardToPlay.requirements.pebble + cardToPlay.requirements.berry;
 				int ammountOfSourceToTake = 3;
@@ -30,16 +30,17 @@ public class Inn extends RedConstruction{
 				}
 				
 				if(ammountOfSourceToTake!=0) {
-					boolean ownerCheck = ownerOrAnotherPlayer(this, open, town, players);
+					boolean ownerCheck = ownerOrAnotherPlayer(this, open, player, players);
 					if(ownerCheck) {						
 						cardToPlay.printCardDetails();
+						Requirements requirementsToPayForCard = cardToPlay.requirements;
 						if(sumOfRequirementsOnCard<=3) {
-							town.playACardFree(cardToPlay, players, deck);
+							player.playACardFree(cardToPlay, players, player, deck);
 						}
 						else {
 							System.out.println("You choosed " + cardToPlay.name);
-							decreaseRequirementsOnCard(ammountOfSourceToTake, cardToPlay, town);
-							town.playACard(cardToPlay, players, deck);
+							requirementsToPayForCard = requirementsToPayForCard.decreaseRequirementsOnCard(requirementsToPayForCard, ammountOfSourceToTake, cardToPlay, player);
+							player.playACard(cardToPlay, players, player, deck);
 						}
 						meadow.takeCardAndRefillMeadow(cardToPlay,deck);
 						workerSent = true;

@@ -8,7 +8,7 @@ public class Crane extends BlueConstruction{
 		super("Crane",new Requirements(0,0,1,0),true,1,"Architect");
 	}
 	
-	public boolean blueCardEffect(Card cardToPlay, Town town, Deck deck){
+	public boolean blueCardEffect(Requirements requirementsToPayForCard, Card cardToPlay, Player player, Deck deck){
 		boolean usedBlueCardEffect = false;
 		boolean craneIsUsed = false;
 		
@@ -19,22 +19,22 @@ public class Crane extends BlueConstruction{
 		}
 		
 		if(!cardToPlay.critter) {
-			usedBlueCardEffect = town.useBlueCardOrNot(this, cardToPlay);
+			usedBlueCardEffect = useBlueCardOrNot(this, cardToPlay);
 			if(usedBlueCardEffect) {
 				if(ammountOfSourceToTake!=0) {
 					craneIsUsed = true;
 					cardToPlay.printCardDetails();					
 					if(sumOfRequirementsOnCard<=3) {
-						town.requirementsToPayForCard.twig -= cardToPlay.requirements.twig;
-						town.requirementsToPayForCard.resin -= cardToPlay.requirements.resin;
-						town.requirementsToPayForCard.pebble -= cardToPlay.requirements.pebble;
-						town.requirementsToPayForCard.berry -= cardToPlay.requirements.berry;
+						requirementsToPayForCard.twig -= cardToPlay.requirements.twig;
+						requirementsToPayForCard.resin -= cardToPlay.requirements.resin;
+						requirementsToPayForCard.pebble -= cardToPlay.requirements.pebble;
+						requirementsToPayForCard.berry -= cardToPlay.requirements.berry;
 					}
 					else {						
-						decreaseRequirementsOnCard(ammountOfSourceToTake, cardToPlay, town);
+						requirementsToPayForCard.decreaseRequirementsOnCard(requirementsToPayForCard, ammountOfSourceToTake, cardToPlay, player);
 					}
-					System.out.println("Changed requirements to pay: Twig = " + town.requirementsToPayForCard.twig + ", Resin = " + town.requirementsToPayForCard.resin + ", Pebble = " + town.requirementsToPayForCard.pebble + ", Berry = " + town.requirementsToPayForCard.berry);
-					town.removeCardFromTown(this, deck);
+					System.out.println("Changed requirements to pay: Twig = " + requirementsToPayForCard.twig + ", Resin = " + requirementsToPayForCard.resin + ", Pebble = " + requirementsToPayForCard.pebble + ", Berry = " + requirementsToPayForCard.berry);
+					player.removeCardFromTown(this, deck);
 				}
 				else {
 					System.out.println("Not enough resource to use Crane.\n");

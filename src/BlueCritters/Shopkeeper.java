@@ -9,9 +9,9 @@ public class Shopkeeper extends BlueCard{
 		super("Shopkeeper",new Requirements(0,0,0,2),true,1,"General Store");
 	}
 	
-	public void blueCardEffect(Card card, Town town){
+	public void blueCardEffect(Card card, Player player){
 		if(card.critter && !card.name.equals(this.name)) {
-			town.addSpecificRequirementsToTown("berry", 1);
+			player.requirements.addSpecificRequirementsToTown(player, "berry", 1);
 		}
 	}
 }

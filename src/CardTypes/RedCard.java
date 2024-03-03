@@ -13,19 +13,19 @@ public class RedCard extends Card {
 		super(name,requirements,cityLimit,points,relatedCard);
 	}
 	
-	public boolean ownerOrAnotherPlayer(RedCard redCard, boolean open, Town town, Players players) {
-		boolean isTheCardInTown = town.isTheCardInTown(redCard, town);
+	public boolean ownerOrAnotherPlayer(RedCard redCard, boolean open, Player player, Players players) {
+		boolean isTheCardInTown = player.isTheCardInTown(redCard, player);
 		boolean ownerCheck = false;
 		
 		if(!isTheCardInTown && !open) {
 			System.out.println(redCard.name + " is not open, only the owner can use it.");
 		}
 		if(!isTheCardInTown && open) {
-			for (Town player : players.players) {
-				if(player.isTheCardInTown(redCard, player)) {
+			for (Player playerFromPlayers : players.players) {
+				if(playerFromPlayers.isTheCardInTown(redCard, playerFromPlayers)) {
 					ownerCheck = true;
-					player.specialPoints++;
-					System.out.println(player.playersName + "'s special points: " + player.specialPoints + "\n");
+					playerFromPlayers.specialPoints++;
+					System.out.println(playerFromPlayers.playersName + "'s special points: " + playerFromPlayers.specialPoints + "\n");
 				}
 			}
 		}

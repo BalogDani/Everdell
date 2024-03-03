@@ -7,7 +7,8 @@ import java.io.InputStreamReader;
 import CardTypes.GreenCard;
 import Main.Deck;
 import Main.Requirements;
-import Main.Town;
+import Main.Player;
+import Main.Players;
 
 public class Doctor extends GreenCard{
 	
@@ -15,12 +16,12 @@ public class Doctor extends GreenCard{
 		super("Doctor", new Requirements(0, 0, 0, 4), true, 4, "University");
 	}
 	
-	public void playCard(Town town, Deck deck){
-		activateGreenCard(town, deck);	
-		super.playCard(town, deck);
+	public void playCard(Player player, Deck deck, Players players){
+		activateGreenCard(player, deck);	
+//		super.playCard(player, deck, players);
 	}
 	
-	public void activateGreenCard(Town town, Deck deck){
+	public void activateGreenCard(Player player, Deck deck){
 		System.out.println("Select the ammount of berries to pay up to 3: ");
 		BufferedReader ammountInput = new BufferedReader(new InputStreamReader(System.in));
 		try {
@@ -28,9 +29,9 @@ public class Doctor extends GreenCard{
 			if(ammount > 3) {
 				ammount = 3;
 			}
-			town.addSpecificRequirementsToTown("berry", -ammount);
-			town.specialPoints += ammount; 
-			System.out.println("A " + this.name + " card is played by " + town.playersName + ", " + ammount + " berry is paid.");
+			player.requirements.addSpecificRequirementsToTown(player, "berry", -ammount);
+			player.specialPoints += ammount; 
+			System.out.println("A " + this.name + " card is played by " + player.playersName + ", " + ammount + " berry is paid.");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

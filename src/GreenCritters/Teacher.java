@@ -13,12 +13,12 @@ public class Teacher extends GreenCard{
 		super("Teacher", new Requirements(0, 0, 0, 2), false, 2, "School");
 	}
 	
-	public void playCard(Town town, Deck deck, Players players){
-		activateGreenCard(town, deck, players);
-		super.playCard(town, deck);
+	public void playCard(Player player, Deck deck, Players players){
+		activateGreenCard(player, deck, players);
+//		super.playCard(player, deck, players);
 	}
 	
-	public void activateGreenCard(Town town, Deck deck, Players players) {
+	public void activateGreenCard(Player player, Deck deck, Players players) {
 		boolean choosed = false;
 		boolean addedToPlayersHand = false;
 		boolean addedToAnotherPlayersHand = false;
@@ -33,14 +33,14 @@ public class Teacher extends GreenCard{
 				choosenCard = randomCardName.readLine();
 			}
 			String anotherPlayersTownName = chooseAnotherPlayersTown();
-			for(Town player: players.players) {
-				if(player.playersName.equals(anotherPlayersTownName) && !anotherPlayersTownName.equals(town.playersName)) {
+			for(Player playerFromPlayers: players.players) {
+				if(playerFromPlayers.playersName.equals(anotherPlayersTownName) && !anotherPlayersTownName.equals(player.playersName)) {
 					if(choosenCard.equals(firstRandomCardFromDeck.name)) {
-						addedToPlayersHand = town.addSpecificCardToHand(firstRandomCardFromDeck);
+						addedToPlayersHand = player.addSpecificCardToHand(firstRandomCardFromDeck);
 						if(addedToPlayersHand) {
 							deck.takeFromDeck(firstRandomCardFromDeck);
 						}
-						addedToAnotherPlayersHand = player.addSpecificCardToHand(secondRandomCardFromDeck);
+						addedToAnotherPlayersHand = playerFromPlayers.addSpecificCardToHand(secondRandomCardFromDeck);
 						if(addedToAnotherPlayersHand) {
 							deck.takeFromDeck(secondRandomCardFromDeck);
 						}
@@ -48,11 +48,11 @@ public class Teacher extends GreenCard{
 						break;
 					}
 					if(choosenCard.equals(secondRandomCardFromDeck.name)) {
-						addedToPlayersHand = town.addSpecificCardToHand(secondRandomCardFromDeck);
+						addedToPlayersHand = player.addSpecificCardToHand(secondRandomCardFromDeck);
 						if(addedToPlayersHand) {								
 							deck.takeFromDeck(secondRandomCardFromDeck);
 						}
-						addedToAnotherPlayersHand = player.addSpecificCardToHand(firstRandomCardFromDeck);
+						addedToAnotherPlayersHand = playerFromPlayers.addSpecificCardToHand(firstRandomCardFromDeck);
 						if(addedToAnotherPlayersHand) {
 							deck.takeFromDeck(firstRandomCardFromDeck);
 						}

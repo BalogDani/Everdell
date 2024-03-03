@@ -9,17 +9,17 @@ public class Judge extends BlueCard{
 		super("Judge",new Requirements(0,0,0,3),true,2,"Courthouse");
 	}
 	
-	public boolean blueCardEffect(Card cardToPlay, Town town){
+	public boolean blueCardEffect(Requirements requirementsToPayForCard, Card cardToPlay, Player player){
 		boolean usedBlueCardEffect = false;
 		boolean judgeIsUsed = false;
 		int sumOfRequirementsOnCard = cardToPlay.requirements.twig + cardToPlay.requirements.resin + cardToPlay.requirements.pebble + cardToPlay.requirements.berry;
 		
-		usedBlueCardEffect = town.useBlueCardOrNot(this, cardToPlay);
+		usedBlueCardEffect = useBlueCardOrNot(this, cardToPlay);
 		if(usedBlueCardEffect) {			
-			int twigInTown = town.requirements.twig;
-			int resinInTown = town.requirements.resin;
-			int pebbleInTown = town.requirements.pebble;
-			int berryInTown = town.requirements.berry;
+			int twigInTown = player.requirements.twig;
+			int resinInTown = player.requirements.resin;
+			int pebbleInTown = player.requirements.pebble;
+			int berryInTown = player.requirements.berry;
 			int twigOnCard = cardToPlay.requirements.twig;
 			int resinOnCard = cardToPlay.requirements.resin;
 			int pebbleOnCard = cardToPlay.requirements.pebble;
@@ -39,8 +39,8 @@ public class Judge extends BlueCard{
 			if((everythingIsChangeable || twigIsChangeable || resinIsChangeable || pebbleIsChangeable || berryIsChangeable) && sumOfRequirementsOnCard!=0) {
 				judgeIsUsed = true;
 				cardToPlay.printCardDetails();
-				town.changeRequirements(cardToPlay, town);
-				System.out.println("Changed requirements to pay: Twig = " + town.requirementsToPayForCard.twig + ", Resin = " + town.requirementsToPayForCard.resin + ", Pebble = " + town.requirementsToPayForCard.pebble + ", Berry = " + town.requirementsToPayForCard.berry);
+				cardToPlay.requirements.changeRequirements(requirementsToPayForCard, cardToPlay, player);
+				System.out.println("Changed requirements to pay: Twig = " + requirementsToPayForCard.twig + ", Resin = " + requirementsToPayForCard.resin + ", Pebble = " + requirementsToPayForCard.pebble + ", Berry = " + requirementsToPayForCard.berry);
 			}
 			else {
 				System.out.println("Not enough resource to use Judge.\n");

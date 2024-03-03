@@ -2,7 +2,8 @@ package GreenConstructions;
 
 import Main.Deck;
 import Main.Requirements;
-import Main.Town;
+import Main.Player;
+import Main.Players;
 
 public class Farm extends GreenConstruction{
 	
@@ -23,12 +24,12 @@ public class Farm extends GreenConstruction{
 		wifeOccupier = true;
 	}
 	
-	public void playCard(Town town, Deck deck){
-		activateGreenCard(town);
-		super.playCard(town, deck);
+	public void playCard(Player player, Deck deck, Players players){
+		activateGreenCard(player);
+		super.playCard(player, deck, players);
 	}
 	
-	public void activateGreenCard(Town town){
-		town.addRequirementsToTown(0, 0, 0, 1);
+	public void activateGreenCard(Player player){
+		player.requirements.addRequirementsToTown(player, 0, 0, 0, 1);
 	}
 }

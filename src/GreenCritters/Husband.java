@@ -3,7 +3,8 @@ package GreenCritters;
 import CardTypes.GreenCard;
 import Main.Deck;
 import Main.Requirements;
-import Main.Town;
+import Main.Player;
+import Main.Players;
 
 public class Husband extends GreenCard{
 	
@@ -13,20 +14,20 @@ public class Husband extends GreenCard{
 		super("Husband", new Requirements(0, 0, 0, 3), false, 2, "Farm");
 	}
 	
-	public void playCard(Town town, Deck deck){
-		activateGreenCard(town);
-		super.playCard(town, deck);
+	public void playCard(Player player, Deck deck, Players players){
+		activateGreenCard(player);
+//		super.playCard(player, deck, players);
 	}
 	
-	public void activateGreenCard(Town town){
-		if(town.isTheCardInArrayList("Farm", town.cards) && pairedWithWife) {
+	public void activateGreenCard(Player player){
+		if(player.isTheCardInArrayList("Farm", player.cards) && pairedWithWife) {
 			String resource = this.readResourceInput("add");
 			if(resource.equals("twig") || resource.equals("resin") || resource.equals("pebble") || resource.equals("berry")) {
-				town.addSpecificRequirementsToTown(resource,1);
-				System.out.println("A " + this.name + " card is played by " + town.playersName + ".");
+				player.requirements.addSpecificRequirementsToTown(player, resource,1);
+				System.out.println("A " + this.name + " card is played by " + player.playersName + ".");
 			}
 			else {
-				this.activateGreenCard(town);
+				this.activateGreenCard(player);
 			}
 		}
 	}

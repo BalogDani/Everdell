@@ -4,7 +4,7 @@ import CardTypes.Construction;
 import CardTypes.PurpleCard;
 import Main.Requirements;
 
-public class PurpleConstruction extends PurpleCard implements Construction{
+public abstract class PurpleConstruction extends PurpleCard implements Construction{
 
 	public boolean occupied = false;
 	

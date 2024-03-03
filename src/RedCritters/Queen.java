@@ -11,16 +11,16 @@ public class Queen extends RedCard{
 		super("Queen",new Requirements(0,0,0,5),true,4,"Palace");
 	}
 	
-	public void activateRedDestinaton(Card cardToPlay, Town town, Deck deck, Deck meadow, Players players){
+	public void activateRedDestinaton(Card cardToPlay, Player player, Deck deck, Deck meadow, Players players){
 		boolean cardIsPlayed = false;
 		
 		if(!workerSent) {			
 			if(cardToPlay.points<=3) {
-				if(town.workers>0) {
-					cardIsPlayed = town.playACardFree(cardToPlay, players, deck);
+				if(player.workers>0) {
+					cardIsPlayed = player.playACardFree(cardToPlay, players, player, deck);
 					if(cardIsPlayed) {						
 						workerSent = true;
-						town.workers--;
+						player.workers--;
 						if(meadow.isTheCardInDeck(cardToPlay, meadow)) {
 							meadow.takeCardAndRefillMeadow(cardToPlay, deck);
 						}

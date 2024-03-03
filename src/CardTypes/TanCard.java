@@ -1,5 +1,8 @@
 package CardTypes;
 import Main.Card;
+import Main.Deck;
+import Main.Player;
+import Main.Players;
 import Main.Requirements;
 
 public class TanCard extends Card {
@@ -12,4 +15,7 @@ public class TanCard extends Card {
 		super(name,requirements,cityLimit,points,relatedCard);
 	}
 
+	public void playCard(Player player, Deck deck, Players players){
+		System.out.println(this.name + " is played by " + player.playersName + ".");
+	}
 }

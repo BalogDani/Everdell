@@ -9,14 +9,14 @@ public class Fairgrounds extends GreenConstruction{
 		notACritter();
 	}
 	
-	public void playCard(Town town, Deck deck){
-		activateGreenCard(town, deck);	
-		super.playCard(town, deck);
+	public void playCard(Player player, Deck deck, Players players){
+		activateGreenCard(player, deck);	
+		super.playCard(player, deck, players);
 	}
 	
-	public void activateGreenCard(Town town, Deck deck){
+	public void activateGreenCard(Player player, Deck deck){
 		for (int i = 0; i < 2; i++) {
-			town.addRandomCardFromDeckToHand(deck);
+			player.addRandomCardFromDeckToHand(deck);
 		}
 	}
 }

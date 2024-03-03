@@ -2,7 +2,7 @@ package PurpleCritters;
 
 import CardTypes.PurpleCard;
 import Main.Requirements;
-import Main.Town;
+import Main.Player;
 
 public class Architect extends PurpleCard{
 	
@@ -10,11 +10,11 @@ public class Architect extends PurpleCard{
 		super("Architect", new Requirements(0, 0, 0, 4), true, 2, "Crane");
 	}
 	
-	public void activatePurpleCard(Town town){
-		int points = town.requirements.resin + town.requirements.pebble;
+	public void activatePurpleCard(Player player){
+		int points = player.requirements.resin + player.requirements.pebble;
 		if(points>6) {
 			points = 6;
 		}
-		town.addPoints(points);
+		player.addPoints(points);
 	}
 }

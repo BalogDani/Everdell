@@ -1,8 +1,9 @@
 package CardTypes;
 import Main.Card;
 import Main.Requirements;
+import Main.Player;
 
-public class PurpleCard extends Card {
+public abstract class PurpleCard extends Card {
 	
 	public PurpleCard() {
 		super("King", new Requirements(0,0,0,6),true,4,"Castle");
@@ -12,8 +13,6 @@ public class PurpleCard extends Card {
 		super(name,requirements,cityLimit,points,relatedCard);
 	}
 	
-	public void activatePurpleCard() {
-		System.out.println("It's activated.");
-	}
+	public abstract void activatePurpleCard(Player player);
 
 }

@@ -2,7 +2,7 @@ package PurpleCritters;
 
 import CardTypes.PurpleCard;
 import Main.Requirements;
-import Main.Town;
+import Main.Player;
 
 public class Wife extends PurpleCard{
 	
@@ -12,9 +12,9 @@ public class Wife extends PurpleCard{
 		super("Wife", new Requirements(0, 0, 0, 2), false, 2, "Farm");
 	}
 	
-	public void activatePurpleCard(Town town){
+	public void activatePurpleCard(Player player){
 		if(pairedWithHusband) {			
-			town.addPoints(3);
+			player.addPoints(3);
 		}
 	}
 	

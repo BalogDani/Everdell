@@ -7,7 +7,8 @@ import java.io.InputStreamReader;
 import CardTypes.GreenCard;
 import Main.Deck;
 import Main.Requirements;
-import Main.Town;
+import Main.Player;
+import Main.Players;
 
 public class Woodcarver extends GreenCard{
 	
@@ -15,12 +16,12 @@ public class Woodcarver extends GreenCard{
 		super("Woodcarver", new Requirements(0, 0, 0, 2), false, 2, "Storehouse");
 	}
 	
-	public void playCard(Town town, Deck deck){
-		activateGreenCard(town);
-		super.playCard(town, deck);
+	public void playCard(Player player, Deck deck, Players players){
+		activateGreenCard(player);
+//		super.playCard(player, deck, players);
 	}
 	
-	public void activateGreenCard(Town town){
+	public void activateGreenCard(Player player){
 		System.out.println("Select the ammount of twigs to pay up to 3: ");
 		BufferedReader ammountInput = new BufferedReader(new InputStreamReader(System.in));
 		try {
@@ -28,9 +29,9 @@ public class Woodcarver extends GreenCard{
 			if(ammount > 3) {
 				ammount = 3;
 			}
-			town.addSpecificRequirementsToTown("twig", -ammount);
-			town.specialPoints += ammount; 
-			System.out.println("A " + this.name + " card is played by " + town.playersName + ", " + ammount + " twig is paid.");
+			player.requirements.addSpecificRequirementsToTown(player, "twig", -ammount);
+			player.specialPoints += ammount; 
+			System.out.println("A " + this.name + " card is played by " + player.playersName + ", " + ammount + " twig is paid.");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -6,7 +6,7 @@ import org.junit.Test;
 import GreenConstructions.Farm;
 import Main.Deck;
 import Main.Players;
-import Main.Town;
+import Main.Player;
 import TanCritters.*;
 
 public class TestTanConstructions {
@@ -15,20 +15,20 @@ public class TestTanConstructions {
 	public void foolTest() {
 		Players players = new Players();
 		Deck deck = new Deck("deck");
-		Town dani = new Town("Dani",players);
-		dani.addRequirementsToTown(20, 20, 20, 20);
-		Town friendless = new Town("Friendless",players);
-		friendless.addRequirementsToTown(20, 20, 20, 20);
-		Town henike = new Town("Henike",players);
-		henike.addRequirementsToTown(20, 20, 20, 20);
+		Player dani = new Player("Dani",players);
+		dani.requirements.addRequirementsToTown(dani, 20, 20, 20, 20);
+		Player friendless = new Player("Friendless",players);
+		friendless.requirements.addRequirementsToTown(friendless, 20, 20, 20, 20);
+		Player henike = new Player("Henike",players);
+		henike.requirements.addRequirementsToTown(henike, 20, 20, 20, 20);
 		Fool fool = new Fool();
 		Farm farm = new Farm();
 		Wanderer wanderer = new Wanderer();
-		dani.playACard(fool,players,deck);		// play it to friendless
-		friendless.playACard(farm,players,deck);
-		henike.playACard(wanderer, players, deck);
-		dani.playACard(fool,players,deck);		// play it to friendless
-		dani.playACard(fool,players,deck);		// play it to henike
+		dani.playACard(fool,players,dani,deck);		// play it to friendless
+		friendless.playACard(farm,players,friendless,deck);
+		henike.playACard(wanderer, players, henike, deck);
+		dani.playACard(fool,players,dani,deck);		// play it to friendless
+		dani.playACard(fool,players,dani,deck);		// play it to henike
 		dani.printTownDetails();
 		friendless.printTownDetails();
 		henike.printTownDetails();
@@ -40,8 +40,8 @@ public class TestTanConstructions {
 	public void bardTest() {
 		Players players = new Players();
 		Deck deck = new Deck("deck");
-		Town dani = new Town("Dani",players);
-		dani.addRequirementsToTown(20, 20, 20, 20);
+		Player dani = new Player("Dani",players);
+		dani.requirements.addRequirementsToTown(dani, 20, 20, 20, 20);
 		deck.printDeckDetails(deck);
 		dani.addRandomCardFromDeckToHand(deck);
 		dani.addRandomCardFromDeckToHand(deck);
@@ -55,7 +55,7 @@ public class TestTanConstructions {
 		dani.printHand();
 		deck.printDeckDetails(deck);
 		Bard bard = new Bard();
-		dani.playACard(bard, players, deck);
+		dani.playACard(bard, players, dani, deck);
 		dani.printTownDetails();
 		dani.printHand();
 		deck.printDeckDetails(deck);
@@ -65,22 +65,24 @@ public class TestTanConstructions {
 	public void ruinsTest() {
 		Players players = new Players();
 		Deck deck = new Deck("deck");
-		Town dani = new Town("Dani",players);
-		dani.addRequirementsToTown(20, 20, 20, 20);
+		Player dani = new Player("Dani",players);
+		dani.requirements.addRequirementsToTown(dani, 20, 20, 20, 20);
 		dani.printTownDetails();
 		Ruins ruins = new Ruins();
 		Farm farmOne = new Farm();
 		Farm farmTwo = new Farm();
 		Wanderer wanderer = new Wanderer();
-		dani.playACard(ruins, players, deck);
+		dani.playACard(ruins, players, dani, deck);
 		dani.printTownDetails();
-		dani.playACard(wanderer, players, deck);
-		dani.playACard(ruins, players, deck);
+		dani.playACard(wanderer, players, dani, deck);
+		dani.playACard(ruins, players, dani, deck);
 		dani.printTownDetails();
-		dani.playACard(farmOne, players, deck);
-		dani.playACard(farmTwo, players, deck);
-		dani.playACard(ruins, players, deck);
+		dani.playACard(farmOne, players, dani, deck);
+		dani.playACard(farmTwo, players, dani, deck);
+		dani.playACard(ruins, players, dani, deck);
+		dani.playACard(ruins, players, dani, deck);
 		dani.printTownDetails();
+		dani.printHand();
 	}
 	
 	@Test
@@ -88,13 +90,13 @@ public class TestTanConstructions {
 		Players players = new Players();
 		Deck deck = new Deck("deck");
 		deck.printDeckDetails(deck);
-		Town dani = new Town("Dani",players);
-		dani.addRequirementsToTown(20, 20, 20, 20);
-		Town friendless = new Town("Friendless",players);
-		friendless.addRequirementsToTown(20, 20, 20, 20);
+		Player dani = new Player("Dani",players);
+		dani.requirements.addRequirementsToTown(dani, 20, 20, 20, 20);
+		Player friendless = new Player("Friendless",players);
+		friendless.requirements.addRequirementsToTown(friendless, 20, 20, 20, 20);
 		dani.printTownDetails();
 		PostalPigeon postalPigeon = new PostalPigeon();
-		dani.playACard(postalPigeon, players, deck);
+		dani.playACard(postalPigeon, players, dani, deck);
 		dani.printTownDetails();
 		friendless.printTownDetails();
 		deck.printDeckDetails(deck);

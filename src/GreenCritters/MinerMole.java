@@ -9,24 +9,24 @@ public class MinerMole extends GreenCard{
 		super("Miner Mole", new Requirements(0, 0, 0, 3), false, 2, "Mine");
 	}
 	
-	public void playCard(Town town, Deck deck, Players players){
-		activateGreenCard(town, deck, players);	
-		super.playCard(town, deck);
+	public void playCard(Player player, Deck deck, Players players){
+		activateGreenCard(player, deck, players);	
+//		super.playCard(player, deck, players);
 	}
 	
-	public void activateGreenCard(Town playersTown, Deck deck, Players players){
+	public void activateGreenCard(Player player, Deck deck, Players players){
 		boolean anotherTownIsChoosed = false;
-		String anotherPlayersTownName = chooseAnotherTownName();
+		String anotherPlayersTownName = chooseAnotherPlayersName();
 		
-		for(Town player: players.players) {
-			if(player.playersName.equals(anotherPlayersTownName) && !anotherPlayersTownName.equals(playersTown.playersName)) {
-				activateChoosenGreenCard(playersTown, player, deck, players);
+		for(Player playerFromPlayers: players.players) {
+			if(playerFromPlayers.playersName.equals(anotherPlayersTownName) && !anotherPlayersTownName.equals(player.playersName)) {
+				activateChoosenGreenCard(player, playerFromPlayers, deck, players);
 				anotherTownIsChoosed = true;
 				break;
 			}
 		}
 		if(!anotherTownIsChoosed) {
-			this.activateGreenCard(playersTown, deck, players);
+			this.activateGreenCard(player, deck, players);
 		}
 	}
 }

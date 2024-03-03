@@ -22,11 +22,15 @@ public class GreenCard extends Card {
 		super(name,requirements,cityLimit,points,relatedCard);
 	}
 	
-	public void activateGreenCard(){
+//	public void playCard(Player player, Deck deck, Players players){
+//		System.out.println(this.name + " is played by " + player.playersName + ".");
+//	}
+	
+	public void activateGreenCard(Player player){
 		System.out.println("It's activated.");
 	}
 	
-	public void activateChoosenGreenCard(Town playersTown, Town choosenTown, Deck deck, Players players) {
+	public void activateChoosenGreenCard(Player playersTown, Player choosenTown, Deck deck, Players players) {
 		Card choosenGreenCard = chooseGreenCardFromTheList(choosenTown);
 		if(choosenGreenCard instanceof Fairgrounds) {
 			Fairgrounds fairgrounds = (Fairgrounds) choosenGreenCard;
@@ -73,7 +77,6 @@ public class GreenCard extends Card {
 			Husband husband = (Husband) choosenGreenCard;
 			husband.activateGreenCard(playersTown);
 		}
-//		System.out.println("Miner Mole needs to be implemented.");
 		if(choosenGreenCard instanceof MinerMole) {
 			MinerMole minerMole = (MinerMole) choosenGreenCard;
 			minerMole.activateGreenCard(playersTown, deck, players);
@@ -97,11 +100,11 @@ public class GreenCard extends Card {
 		}
 	}
 	
-	public Card chooseGreenCardFromTheList(Town town) {
+	public Card chooseGreenCardFromTheList(Player player) {
 		String greenCardToTake = "greenCard";
 		String greenCardToCheckForTake = "";
 		String greenCardName = "";
-		ArrayList<Card> greenCards = sortGreenCards(town);
+		ArrayList<Card> greenCards = sortGreenCards(player);
 		Card choosenGreenCard = new GreenCard();
 		
 		while(!greenCardToTake.equals(greenCardName)) {
@@ -122,10 +125,10 @@ public class GreenCard extends Card {
 		return choosenGreenCard;
 	}
 
-	public ArrayList<Card> sortGreenCards(Town town){
+	public ArrayList<Card> sortGreenCards(Player player){
 		ArrayList<Card> greenCards = new ArrayList<Card>();
 		String nameOfGreenCards = "Available green cards: ";
-		for(Card card: town.cards) {
+		for(Card card: player.cards) {
 			if(card instanceof GreenCard) {
 				greenCards.add(card);
 				nameOfGreenCards += card.name + " ";

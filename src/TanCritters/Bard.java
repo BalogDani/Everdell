@@ -8,7 +8,8 @@ import CardTypes.TanCard;
 //import Main.Card;
 import Main.Deck;
 import Main.Requirements;
-import Main.Town;
+import Main.Player;
+import Main.Players;
 
 public class Bard extends TanCard{
 
@@ -16,7 +17,7 @@ public class Bard extends TanCard{
 		super("Bard",new Requirements(0,0,0,3),true,0,"Theater");
 	}
 	
-	public void playCard(Town town, Deck deck){
+	public void playCard(Player player, Deck deck, Players players){
 		String cardName = "";
 		boolean inHand = false;
 //		Card thisCard = null;
@@ -27,20 +28,20 @@ public class Bard extends TanCard{
 			if(ammount > 5) {
 				ammount = 5;
 			}
-			if(town.hand.size()>=ammount) {
-				for (int i = 0; i < ammount; i++) {
+			if(player.hand.size()>=ammount) {
+				for (int i = 1; i < ammount+1; i++) {
 					System.out.println("Select a card: ");
 					BufferedReader cardNameInput = new BufferedReader(new InputStreamReader(System.in));
 					try {
 						cardName = cardNameInput.readLine();
-						System.out.println(i + ". card " + cardName + " is in hand " + town.isTheCardInArrayList(cardName, town.hand));
-						inHand = town.isTheCardInArrayList(cardName, town.hand);
+						System.out.println(i + ". card " + cardName + " is in hand " + player.isTheCardInArrayList(cardName, player.hand));
+						inHand = player.isTheCardInArrayList(cardName, player.hand);
 						if(inHand) {
-							town.removeCardFromHand(cardName, deck);
+							player.removeCardFromHand(cardName, deck);
 //							System.out.println("Choosed " + cardName + " and in hand " + thisCard.name);
 							deck.addToDeck(cardName);
-							town.printHand();
-							town.specialPoints++;
+							player.printHand();
+							player.specialPoints++;
 						}
 						if(!inHand) {
 							System.out.println(cardName + " is not in hand.");
@@ -54,13 +55,13 @@ public class Bard extends TanCard{
 				}
 			}
 			else {
-				System.out.println(town.playersName + "'s hand has not enough card to discard " + ammount + " card.");
+				System.out.println(player.playersName + "'s hand has not enough card to discard " + ammount + " card.");
 			}
 		}
 		catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		super.playCard(town, deck);
+//		super.playCard(player, deck, players);
 	}
 }

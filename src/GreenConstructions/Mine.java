@@ -2,7 +2,8 @@ package GreenConstructions;
 
 import Main.Deck;
 import Main.Requirements;
-import Main.Town;
+import Main.Player;
+import Main.Players;
 
 public class Mine extends GreenConstruction{
 	
@@ -11,12 +12,11 @@ public class Mine extends GreenConstruction{
 		notACritter();
 	}
 	
-	public void playCard(Town town, Deck deck){
-		activateGreenCard(town);	
-		super.playCard(town, deck);
+	public void playCard(Player player, Deck deck, Players players){
+		activateGreenCard(player);
 	}
 	
-	public void activateGreenCard(Town town){
-		town.addSpecificRequirementsToTown("pebble",1);
+	public void activateGreenCard(Player player){
+		player.requirements.addSpecificRequirementsToTown(player, "pebble", 1);
 	}
 }

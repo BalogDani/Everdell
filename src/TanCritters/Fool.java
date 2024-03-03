@@ -9,16 +9,16 @@ public class Fool extends TanCard{
 		super("Fool", new Requirements(0, 0, 0, 3), true, -2, "Fairgrounds");
 	}
 	
-	public boolean playCard(String anotherPlayersTownName, Town playersTown, Players players, Deck deck) {
-		boolean anotherTownIsChoosed = false;
+	public boolean playCard(String anotherPlayersTownName, Player player, Players players, Deck deck) {
+		boolean anotherPlayerIsChoosed = false;
 		boolean isFoolInAnotherTown = false;
-		for(Town player: players.players) {
-			if(player.playersName.equals(anotherPlayersTownName) && !anotherPlayersTownName.equals(playersTown.playersName)) {
-				isFoolInAnotherTown = player.isTheCardInArrayList("Fool", player.cards);
+		for(Player playerFromPlayers: players.players) {
+			if(playerFromPlayers.playersName.equals(anotherPlayersTownName) && !anotherPlayersTownName.equals(player.playersName)) {
+				isFoolInAnotherTown = playerFromPlayers.isTheCardInArrayList("Fool", playerFromPlayers.cards);
 				if(!isFoolInAnotherTown) {
-					player.cards.add(this);
-					player.spaces++;
-					anotherTownIsChoosed = true;
+					playerFromPlayers.cards.add(this);
+					playerFromPlayers.spaces++;
+					anotherPlayerIsChoosed = true;
 					break;					
 				}
 				else {
@@ -26,18 +26,21 @@ public class Fool extends TanCard{
 				}
 			}
 		}
-		if(!anotherTownIsChoosed && !isFoolInAnotherTown) {
-			playersTown.playACard(this, players, deck);
+		if(!anotherPlayerIsChoosed && !isFoolInAnotherTown) {
+			player.playACard(this, players, player, deck);
 		}
-		super.playCard(playersTown, deck);
-		return anotherTownIsChoosed;
+		if(anotherPlayerIsChoosed) {
+			System.out.println("Fool is played by " + player.playersName + ".");
+		}
+//		super.playCard(player, deck, players);
+		return anotherPlayerIsChoosed;
 	}
 	
-	public boolean playFoolToAnotherTown(Card cardToplay, Town town, Players players, Deck deck) {
+	public boolean playFoolToAnotherTown(Card cardToplay, Player player, Players players, Deck deck) {
 		boolean foolIsPlayed = false;
-		String anotherPlayersTownName = chooseAnotherTownName();
+		String anotherPlayersTownName = chooseAnotherPlayersName();
 		Fool fool = (Fool) cardToplay;
-		foolIsPlayed = fool.playCard(anotherPlayersTownName, town, players, deck);
+		foolIsPlayed = fool.playCard(anotherPlayersTownName, player, players, deck);
 		return foolIsPlayed;
 	}
 }

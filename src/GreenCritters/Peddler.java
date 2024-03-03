@@ -3,7 +3,8 @@ package GreenCritters;
 import CardTypes.GreenCard;
 import Main.Deck;
 import Main.Requirements;
-import Main.Town;
+import Main.Player;
+import Main.Players;
 
 public class Peddler extends GreenCard{
 
@@ -11,21 +12,21 @@ public class Peddler extends GreenCard{
 		super("Peddler", new Requirements(0, 0, 0, 2), false, 1, "Ruins");
 	}
 	
-	public void playCard(Town town, Deck deck){
-		super.playCard(town, deck);
-		activateGreenCard(town);
+	public void playCard(Player player, Deck deck, Players players){
+		activateGreenCard(player);
+//		super.playCard(player, deck, players);
 	}
 	
-	public void activateGreenCard(Town town){
+	public void activateGreenCard(Player player){
 		int ammount = this.readResourceAmmount();
 		if(ammount > 2) {
 			ammount = 2;
 		}
 		
-		int sumOfRequirementsInTown = town.requirements.twig + town.requirements.resin + town.requirements.pebble + town.requirements.berry;
+		int sumOfRequirementsInTown = player.requirements.twig + player.requirements.resin + player.requirements.pebble + player.requirements.berry;
 		if(sumOfRequirementsInTown!=0) {
 			for(int i = 0; i < ammount; i++) {
-				this.changeResources(town);
+				this.changeResources(player);
 				System.out.println(i+1 + ". resource exchanged.\n");
 			}			
 		}

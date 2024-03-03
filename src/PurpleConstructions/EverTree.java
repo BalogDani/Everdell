@@ -13,10 +13,10 @@ public class EverTree extends PurpleConstruction{
 		super("Ever Tree", new Requirements(3, 3, 3, 0), true, 5, "Any");
 	}
 	
-	public void activatePurpleCard(Town town){
-		for(Card card: town.cards) {
+	public void activatePurpleCard(Player player){
+		for(Card card: player.cards) {
 			if(card instanceof PurpleCard) {
-				town.addPoints(1);
+				player.addPoints(1);
 			}
 		}
 	}

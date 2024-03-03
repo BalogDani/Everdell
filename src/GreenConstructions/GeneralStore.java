@@ -2,7 +2,8 @@ package GreenConstructions;
 
 import Main.Deck;
 import Main.Requirements;
-import Main.Town;
+import Main.Player;
+import Main.Players;
 
 public class GeneralStore extends GreenConstruction{
 
@@ -10,16 +11,16 @@ public class GeneralStore extends GreenConstruction{
 		super("General Store", new Requirements(0, 1, 1, 0), false, 1, "Shopkeeper");
 	}
 	
-	public void playCard(Town town, Deck deck){
-		activateGreenCard(town);
-		super.playCard(town, deck);
+	public void playCard(Player player, Deck deck, Players players){
+		activateGreenCard(player);
+		super.playCard(player, deck, players);
 	}
 	
-	public void activateGreenCard(Town town){
-		town.addSpecificRequirementsToTown("berry", 1);
-		boolean isFarmInTown = town.isTheCardInArrayList("Farm", town.cards);
+	public void activateGreenCard(Player player){
+		player.requirements.addSpecificRequirementsToTown(player, "berry", 1);
+		boolean isFarmInTown = player.isTheCardInArrayList("Farm", player.cards);
 		if (isFarmInTown) {
-			town.addSpecificRequirementsToTown("berry", 1);
+			player.requirements.addSpecificRequirementsToTown(player, "berry", 1);
 		}
 	}
 }

@@ -5,7 +5,8 @@ import GreenConstructions.Farm;
 import Main.Card;
 import Main.Deck;
 import Main.Requirements;
-import Main.Town;
+import Main.Player;
+import Main.Players;
 
 public class BargeToad extends GreenCard{
 
@@ -13,15 +14,15 @@ public class BargeToad extends GreenCard{
 		super("Barge Toad", new Requirements(0, 0, 0, 2), false, 1, "Twig Barge");
 	}
 	
-	public void playCard(Town town, Deck deck){
-		activateGreenCard(town);	
-		super.playCard(town, deck);
+	public void playCard(Player player, Deck deck, Players players){
+		activateGreenCard(player);	
+//		super.playCard(player, deck, players);
 	}
 	
-	public void activateGreenCard(Town town){
-		for(Card card: town.cards) {
+	public void activateGreenCard(Player player){
+		for(Card card: player.cards) {
 			if(card instanceof Farm) {
-				town.addSpecificRequirementsToTown("twig", 2);
+				player.requirements.addSpecificRequirementsToTown(player, "twig", 2);
 			}
 		}
 	}

@@ -16,8 +16,8 @@ public class TestBlueConstructions {
 	public void shopkeeperHistorianTest() throws Exception {
 		Players players = new Players();
 		Deck deck = new Deck("deck");
-		Town dani = new Town("Dani",players);
-		dani.addRequirementsToTown(20, 20, 20, 20);
+		Player dani = new Player("Dani",players);
+		dani.requirements.addRequirementsToTown(dani, 20, 20, 20, 20);
 		dani.printTownDetails();
 		System.out.println("Let's begin with 20 resource from everything!\n");
 		Wanderer wanderer = new Wanderer();
@@ -27,22 +27,22 @@ public class TestBlueConstructions {
 		Historian historian = new Historian();
 		Wanderer wandererTwo = new Wanderer();
 		Mine mine = new Mine();
-		dani.playACard(wanderer, players, deck);
-		dani.playACard(generalStore, players, deck);
+		dani.playACard(wanderer, players, dani, deck);
+		dani.playACard(generalStore, players, dani, deck);
 		dani.printTownDetails();
-		dani.playACard(shopkeeper, players, deck);
-		dani.printTownDetails();
-		dani.printHand();
-		dani.playACard(historian, players, deck);
+		dani.playACard(shopkeeper, players, dani, deck);
 		dani.printTownDetails();
 		dani.printHand();
-		dani.playACard(wife, players, deck);
+		dani.playACard(historian, players, dani, deck);
 		dani.printTownDetails();
 		dani.printHand();
-		dani.playACard(wandererTwo, players, deck);
+		dani.playACard(wife, players, dani, deck);
 		dani.printTownDetails();
 		dani.printHand();
-		dani.playACard(mine, players, deck);
+		dani.playACard(wandererTwo, players, dani, deck);
+		dani.printTownDetails();
+		dani.printHand();
+		dani.playACard(mine, players, dani, deck);
 		dani.printTownDetails();
 		dani.printHand();
 	}
@@ -51,21 +51,21 @@ public class TestBlueConstructions {
 	public void courthouseTest() throws Exception {
 		Players players = new Players();
 		Deck deck = new Deck("deck");
-		Town dani = new Town("Dani",players);
-		dani.addRequirementsToTown(20, 20, 20, 20);
+		Player dani = new Player("Dani",players);
+		dani.requirements.addRequirementsToTown(dani, 20, 20, 20, 20);
 		dani.printTownDetails();
 		System.out.println("Let's begin with 20 resource from everything!\n");
 		GeneralStore generalStore = new GeneralStore();
 		Courthouse courthouse = new Courthouse();
 		Farm farm = new Farm();
 		Wanderer wanderer = new Wanderer();
-		dani.playACard(generalStore, players, deck);
+		dani.playACard(generalStore, players, dani, deck);
 		dani.printTownDetails();
-		dani.playACard(courthouse, players, deck);
+		dani.playACard(courthouse, players, dani, deck);
 		dani.printTownDetails();
-		dani.playACard(farm, players, deck);
+		dani.playACard(farm, players, dani, deck);
 		dani.printTownDetails();
-		dani.playACard(wanderer, players, deck);
+		dani.playACard(wanderer, players, dani, deck);
 		dani.printTownDetails();
 	}
 	
@@ -73,8 +73,8 @@ public class TestBlueConstructions {
 	public void bluCardsBeforeOtherCardsTest() throws Exception {
 		Players players = new Players();
 		Deck deck = new Deck("deck");
-		Town dani = new Town("Dani",players);
-		dani.addRequirementsToTown(20, 20, 20, 20);
+		Player dani = new Player("Dani",players);
+		dani.requirements.addRequirementsToTown(dani, 20, 20, 20, 20);
 		dani.printTownDetails();
 		System.out.println("Let's begin with 20 resource from everything!\n");
 		Judge judge = new Judge();
@@ -83,23 +83,23 @@ public class TestBlueConstructions {
 		GeneralStore generalStore = new GeneralStore();
 		Ruins ruins = new Ruins();
 		Palace palace = new Palace();
-		dani.playACard(judge, players, deck);
+		dani.playACard(judge, players, dani, deck);
 		dani.printTownDetails();
-		dani.playACard(crane, players, deck);
+		dani.playACard(crane, players, dani, deck);
 		dani.printTownDetails();
-		dani.playACard(generalStore, players, deck);
+		dani.playACard(generalStore, players, dani, deck);
 		dani.printTownDetails();
-		dani.playACard(innkeeper, players, deck);
+		dani.playACard(innkeeper, players, dani, deck);
 		dani.printTownDetails();
 		Farm farm = new Farm();
 		Wanderer wanderer = new Wanderer();
-		dani.playACard(palace, players, deck);
+		dani.playACard(palace, players, dani, deck);
 		dani.printTownDetails();
-		dani.playACard(farm, players, deck);
+		dani.playACard(farm, players, dani, deck);
 		dani.printTownDetails();
-		dani.playACard(ruins, players, deck);
+		dani.playACard(ruins, players, dani, deck);
 		dani.printTownDetails();
-		dani.playACard(wanderer, players, deck);
+		dani.playACard(wanderer, players, dani, deck);
 		dani.printTownDetails();
 	}
 	
