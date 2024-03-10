@@ -1,0 +1,61 @@
+package com.digitalarcher.dani.everdell.cards.redconstructions;
+
+import com.digitalarcher.dani.everdell.main.*;
+
+public class Inn extends RedConstruction{
+
+	public boolean occupied = false;
+	public boolean workerSent = false;
+	
+	public Inn() {
+		super("Inn", new Requirements(2,1,0,0),false,2,"Inkeeper");
+		super.open = true;
+	}
+	
+	public void occupie(String name) {
+		this.occupied = true;
+		System.out.println(super.name + " is occupied by " + name + ".");
+	}
+	
+	public void activateRedDestination(Player player, Deck deck, Deck meadow, Players players) {
+		if(!workerSent) {			
+			if(player.workers>0) {
+				Card cardToPlay = meadow.chooseACardFromMeadow(meadow);
+				player.workers--;
+				
+				int sumOfRequirementsOnCard = cardToPlay.requirements.twig + cardToPlay.requirements.resin + cardToPlay.requirements.pebble + cardToPlay.requirements.berry;
+				int ammountOfSourceToTake = 3;
+				if(sumOfRequirementsOnCard<3) {
+					ammountOfSourceToTake=sumOfRequirementsOnCard;
+				}
+				
+				if(ammountOfSourceToTake!=0) {
+					boolean ownerCheck = ownerOrAnotherPlayer(this, open, player, players);
+					if(ownerCheck) {						
+						cardToPlay.printCardDetails();
+						Requirements requirementsToPayForCard = cardToPlay.requirements;
+						if(sumOfRequirementsOnCard<=3) {
+							player.playACardFree(cardToPlay, players, player, deck);
+						}
+						else {
+							System.out.println("You choosed " + cardToPlay.name);
+							requirementsToPayForCard = requirementsToPayForCard.decreaseRequirementsOnCard(requirementsToPayForCard, ammountOfSourceToTake, cardToPlay, player);
+							player.playACard(cardToPlay, players, player, deck);
+						}
+						meadow.takeCardAndRefillMeadow(cardToPlay,deck);
+						workerSent = true;
+					}
+				}
+				else {
+					System.out.println("Not enough resource to use Inn. You can play this card without using a worker.\n");
+				}
+			}
+			else {
+				System.out.println("No more workers left in town. " + name + "'s destination can't be activated.");
+			}
+		}
+		else {
+			System.out.println("Inn was used earlier.");
+		}
+	}
+}

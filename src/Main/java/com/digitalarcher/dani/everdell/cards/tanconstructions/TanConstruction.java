@@ -1,0 +1,20 @@
+package com.digitalarcher.dani.everdell.cards.tanconstructions;
+
+import com.digitalarcher.dani.everdell.cardtypes.*;
+import com.digitalarcher.dani.everdell.main.Requirements;
+
+public class TanConstruction extends TanCard implements Construction{
+
+	public boolean occupied = false;
+	
+	public TanConstruction(String name, Requirements requirements, Boolean cityLimit, int points, String relatedCard) {
+		super(name,requirements,cityLimit,points,relatedCard);
+		super.notACritter();
+	}
+	
+	public void occupie(String name) {
+		this.occupied = true;
+		System.out.println(super.name + " is occupied by " + name + ".");
+	}
+	
+}

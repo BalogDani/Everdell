@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-import com.digirtalarcvher.dani.everdell.cardtypes.GreenCard;
+import com.digitalarcher.dani.everdell.cardtypes.GreenCard;
 
 public class FirstCardTests {
 

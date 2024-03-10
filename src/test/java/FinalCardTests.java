@@ -1,22 +1,11 @@
 
 import org.junit.Test;
 
-import com.digirtalarcvher.dani.everdell.cards.greenconstructions.*;
-import com.digirtalarcvher.dani.everdell.cards.greencritters.ChipSweep;
-import com.digirtalarcvher.dani.everdell.cards.greencritters.Husband;
-import com.digirtalarcvher.dani.everdell.cards.greencritters.MinerMole;
-import com.digirtalarcvher.dani.everdell.cards.greencritters.Teacher;
-import com.digirtalarcvher.dani.everdell.cards.purplecritters.Wife;
-import com.digirtalarcvher.dani.everdell.cards.tanconstructions.Ruins;
-import com.digirtalarcvher.dani.everdell.cards.tancritters.Fool;
-import com.digirtalarcvher.dani.everdell.cards.tancritters.PostalPigeon;
-import com.digirtalarcvher.dani.everdell.cards.tancritters.Wanderer;
-import com.digirtalarcvher.dani.everdell.cardtypes.*;
-import com.digirtalarcvher.dani.everdell.main.Card;
-import com.digirtalarcvher.dani.everdell.main.Deck;
-import com.digirtalarcvher.dani.everdell.main.Player;
-import com.digirtalarcvher.dani.everdell.main.Players;
-import com.digirtalarcvher.dani.everdell.main.Requirements;
+import com.digitalarcher.dani.everdell.cardtypes.GreenCard;
+import com.digitalarcher.dani.everdell.cardtypes.TanCard;
+import com.digitalarcher.dani.everdell.main.Deck;
+import com.digitalarcher.dani.everdell.main.Player;
+import com.digitalarcher.dani.everdell.main.Players;
 
 public class FinalCardTests {
 		
